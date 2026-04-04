@@ -33,6 +33,7 @@
         <nav class="nav-links">
           <a href="/" class="nav-item">首页</a>
           <a href="/docs" class="nav-item">技术文档</a>
+          <a href="/products" class="nav-item">产品</a>
           <a href="/apps" class="nav-item">应用</a>
         </nav>
 

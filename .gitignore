@@ -23,3 +23,7 @@ Thumbs.db
 
 # 构建的文件
 dist/
+
+# IDE
+.idea/
+.vscode/

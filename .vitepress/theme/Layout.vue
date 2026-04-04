@@ -6,6 +6,7 @@ import HomePage from './components/HomePage.vue'
 import DocsPage from './components/DocsPage.vue'
 import DocDetailPage from './components/DocDetailPage.vue'
 import AppsPage from './components/AppsPage.vue'
+import ProductsPage from './components/ProductsPage.vue'
 import GlobalFooter from './components/GlobalFooter.vue'
 import ImageViewer from './components/ImageViewer.vue'
 import CustomHeader from './components/CustomHeader.vue'
@@ -78,6 +79,9 @@ const currentDoc = computed(() => {
   <!-- 友链页布局 -->
   <AppsPage v-else-if="frontmatter.layout === 'apps'" />
 
+  <!-- 产品页布局 -->
+  <ProductsPage v-else-if="frontmatter.layout === 'products'" />
+
   <!-- 默认 VitePress 布局 -->
   <DefaultTheme.Layout v-else>
     <template #layout-bottom>
@@ -86,7 +90,7 @@ const currentDoc = computed(() => {
   </DefaultTheme.Layout>
 
   <!-- 全局页脚（非默认布局） -->
-  <GlobalFooter v-if="['home', 'docs', 'apps', 'doc-detail'].includes(frontmatter.layout) || isDocDetail" />
+  <GlobalFooter v-if="['home', 'docs', 'apps', 'products', 'doc-detail'].includes(frontmatter.layout) || isDocDetail" />
 
   <!-- 全局图片预览组件 -->
   <ImageViewer />

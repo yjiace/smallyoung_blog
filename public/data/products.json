@@ -1,0 +1,24 @@
+[
+  {
+    "title": "流萤守护",
+    "type": "app",
+    "description": "专为独居人群设计的安全辅助工具。实时位置共享、智能超时预警、一键报平安。让在乎你的人更安心，让你的每一步都充满从容。",
+    "image": "https://guard.smallyoung.cn/how-it-works.png",
+    "link": "https://guard.smallyoung.cn/"
+  },
+  {
+    "title": "足迹明信片",
+    "type": "miniprogram",
+    "description": "3D 渲染实时展示窗外自然变幻，结合空气质量提供专属户外建议。让轻便的小程序也能拥有原生 APP 级别的视觉冲击。",
+    "image": "https://cdn.smallyoung.cn/smallyoung_blog/footprint-postcard.jpg",
+    "link": "#",
+    "qrcode": "/images/qrcode/footprint-postcard.jpg"
+  },
+  {
+    "title": "Supabase API",
+    "type": "web",
+    "description": "探索 Supabase 的强大功能，学习 API 使用方法，在线测试接口调用。为开发者提供完整的 Supabase 学习和实践环境。",
+    "image": "https://cdn.smallyoung.cn/smallyoung_blog/supabase-api.gif",
+    "link": "https://supabase.smallyoung.cn/"
+  }
+]

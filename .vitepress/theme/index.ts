@@ -12,6 +12,7 @@ import DocCard from './components/DocCard.vue'
 import DocCategoryNav from './components/DocCategoryNav.vue'
 import DocDetailPage from './components/DocDetailPage.vue'
 import AppsPage from './components/AppsPage.vue'
+import ProductsPage from './components/ProductsPage.vue'
 
 // 媒体组件
 import AudioPlayer from './components/AudioPlayer.vue'
@@ -41,6 +42,7 @@ export default {
 
     // 注册应用组件
     app.component('AppsPage', AppsPage)
+    app.component('ProductsPage', ProductsPage)
 
     // 注册媒体组件
     app.component('AudioPlayer', AudioPlayer)

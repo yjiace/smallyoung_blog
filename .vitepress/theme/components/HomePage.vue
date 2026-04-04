@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <h1 class="text-4xl lg:text-6xl font-black tracking-tighter mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-indigo-500 to-purple-600">
+        <h1 class="text-4xl lg:text-6xl font-black tracking-normal mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-indigo-500 to-purple-600" style="line-height: 1.25; padding-top: 0.1em; padding-bottom: 0.1em;">
           SmallYoung
         </h1>
         <p class="text-xl lg:text-2xl font-semibold text-text-light/80 dark:text-text-dark/80 mb-4">

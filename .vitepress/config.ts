@@ -109,6 +109,7 @@ export default withMermaid(defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '技术文档', link: '/docs' },
+      { text: '产品', link: '/products' },
       { text: '应用', link: '/apps' },
     ],
 
