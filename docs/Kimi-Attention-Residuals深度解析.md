@@ -7,10 +7,8 @@ author: smallyoung
 date: 2026-03-19
 dateModified: 2026-03-19
 keywords: [Attention Residuals, AttnRes, Kimi, 残差连接, PreNorm dilution, Transformer架构, Block AttnRes, 大语言模型]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/attention-residuals/cover.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/attention-residuals/cover.png
 ---
-
-# Kimi Attention Residuals：彻底重写 Transformer 残差连接的新底层框架
 
 > 残差连接自 2015 年 ResNet 诞生以来，始终是深度神经网络的"地基"，十年间几乎无人撼动。Kimi 团队在 2026 年 3 月发表的论文 *Attention Residuals* 正面挑战了这一惯例——用深度方向的 Softmax 注意力机制，替换掉"所有层等权相加"的固定残差累加，让每一层都能动态、按需地检索历史表征。在 48B 参数、1.4T Tokens 的工业级预训练验证下，Block AttnRes 等效于基线模型使用 1.25× 计算量的效果，GPQA-Diamond 推理基准提升 7.5 分。
 >
@@ -18,17 +16,17 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/attention-resi
 >
 > 📌 **适合人群**：对 Transformer 架构有基础认知的 AI 学习者、模型研究者、工程开发者
 
-![Kimi Attention Residuals 框架解析](//pub.smallyoung.cn/course_slidev/attention-residuals/0.png)
+![Kimi Attention Residuals 框架解析](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/0.png)
 
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/attention-residuals/Kimi注意力残差找回25_算力.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/Kimi注意力残差找回25_算力.m4a"
   author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/attention-residuals/现代AI的隐藏缺陷.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/现代AI的隐藏缺陷.mp4"
 />
 
 <MindMapFloat title="Attention Residuals 知识图谱">
@@ -102,7 +100,7 @@ flowchart LR
 
 这一机制的优势显而易见：梯度可以从输出层直接流向输入层而无需经过任何变换，彻底消解了深层网络的训练困难。然而，正是这种简洁性，埋下了一个十年后才被充分重视的隐患。
 
-![十年未变的梯度高速公路](//pub.smallyoung.cn/course_slidev/attention-residuals/1.png)
+![十年未变的梯度高速公路](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/1.png)
 
 ### 1.2 PreNorm 稀释问题：深层信息的"鸡尾酒会"困境
 
@@ -125,7 +123,7 @@ flowchart LR
 | 100 层 | ~10× 初始量级 | 严重稀释 | 训练不稳定，深层低效 |
 | 200 层 | ~14× 初始量级 | 几乎失效 | 极深网络性能严重受损 |
 
-![PreNorm 稀释](//pub.smallyoung.cn/course_slidev/attention-residuals/2.png)
+![PreNorm 稀释](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/2.png)
 
 ### 1.3 时间轴 vs 深度轴：一个被忽视的对称性
 
@@ -152,7 +150,7 @@ flowchart TB
 > [!NOTE]
 > 这就是 Attention Residuals 的核心直觉：如果 Transformer 在序列维度上用注意力替代了 RNN，那么在深度维度上，同样可以用注意力替代固定的残差累加。这是一个理论上最自然的设计选择。
 
-![时间轴 vs 深度轴](//pub.smallyoung.cn/course_slidev/attention-residuals/3.png)
+![时间轴 vs 深度轴](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/3.png)
 
 ## 2. Attention Residuals 的核心原理
 
@@ -202,13 +200,13 @@ flowchart TB
     style H3 fill:#e8f5e9
 ```
 
-![将残差累加升级为深度检索](//pub.smallyoung.cn/course_slidev/attention-residuals/4.png)
+![将残差累加升级为深度检索](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/4.png)
 
 ### 2.2 Full AttnRes 的显存瓶颈与 Block AttnRes 的解法
 
 Full AttnRes 的优雅是有代价的。要对所有前驱层进行注意力计算，必须在内存中保留所有历史隐状态 $\{v_0, v_1, \ldots, v_{l-1}\}$，内存开销为 $O(L \cdot d)$——对于层数 $L$ 高达数百的大型模型，这几乎是不可接受的。
 
-![灾难性的显存爆炸](//pub.smallyoung.cn/course_slidev/attention-residuals/5.png)
+![灾难性的显存爆炸](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/5.png)
 
 **Block AttnRes** 的解法是：将 $L$ 层分成 $N$ 个块（Block），每个块内部依然使用标准残差累加，跨块之间才使用注意力聚合。
 
@@ -253,7 +251,7 @@ flowchart LR
 > [!IMPORTANT]
 > 8 个块是目前实验发现的最优甜蜜点：性能几乎等同于 Full AttnRes，而内存和通信开销仅相当于存储 8 个隐向量，推理额外延迟控制在 2% 以内。
 
-![理论的代价](//pub.smallyoung.cn/course_slidev/attention-residuals/6.png)
+![理论的代价](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/6.png)
 
 ### 2.3 两阶段推理策略：把开销压到极致
 
@@ -277,7 +275,7 @@ flowchart TB
 > [!NOTE]
 > 两阶段策略的关键洞察：伪查询向量 $\mathbf{w}_l$ 是可学习参数而非输入激活，因此在推理时是固定已知的。这意味着所有的注意力分数计算可以在前向传播开始前一次性批量完成，完全避免了逐层重复计算的开销。
 
-![极致压榨开销](//pub.smallyoung.cn/course_slidev/attention-residuals/7.png)
+![极致压榨开销](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/7.png)
 
 ## 3. Full AttnRes 与 Block AttnRes 的变体详解
 
@@ -364,7 +362,7 @@ Kimi 团队在 5 个不同规模的模型上进行了扩展律（Scaling Law）�
 > [!IMPORTANT]
 > 1.25× 计算等效优势的含义：假设训练一个模型花费 100 万美元，引入 Block AttnRes 后，同等预算可获得相当于 125 万美元预算基线的模型性能。这是纯粹的架构改进带来的免费算力提升。
 
-![规模化验证](//pub.smallyoung.cn/course_slidev/attention-residuals/8.png)
+![规模化验证](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/8.png)
 
 ### 4.2 Kimi Linear 48B 下游任务全面提升
 
@@ -384,7 +382,7 @@ Kimi 团队在 5 个不同规模的模型上进行了扩展律（Scaling Law）�
 
 多步推理任务（GPQA-Diamond +7.5、Math +3.6）和代码生成任务（HumanEval +3.1）的提升最为显著，与"改善深度信息流后，后层能更精准地检索前层表征从而提升组合推理能力"的理论假设完全一致。
 
-![Kimi Linear 48B](//pub.smallyoung.cn/course_slidev/attention-residuals/9.png)
+![Kimi Linear 48B](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/9.png)
 
 ### 4.3 训练动态分析：为什么 AttnRes 更稳定？
 
@@ -476,7 +474,7 @@ flowchart TB
     end
 ```
 
-![DeepSeek mHC的拓扑防御战](//pub.smallyoung.cn/course_slidev/attention-residuals/10.png)
+![DeepSeek mHC的拓扑防御战](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/10.png)
 
 **mHC 的核心解法：Birkhoff 流形投影**
 
@@ -596,7 +594,7 @@ flowchart TB
 > - ✅ 选 **mHC**：你的任务需要丰富的多流并行表征，且有充足的显存预算（DeepSeek 系列架构 + 训练基础设施）
 > - ✅ 选 **AttnRes**：你需要一个轻量插件式方案，对内存和推理延迟敏感，或希望在已有架构上以最小改动获得最大增益
 
-![巅峰对决:AttnRes (Kimi) vs.mHC (DeepSeek)](//pub.smallyoung.cn/course_slidev/attention-residuals/11.png)
+![巅峰对决:AttnRes (Kimi) vs.mHC (DeepSeek)](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/11.png)
 
 ### 5.4 全方案综合对比
 
@@ -619,7 +617,7 @@ flowchart TB
 > - ❌ 对延迟极度敏感（< 0.5%）的推理服务场景需谨慎评估
 > - ❌ 模型层数较少（< 24 层）时，PreNorm Dilution 问题不突出，收益有限
 
-![架构师决策树](//pub.smallyoung.cn/course_slidev/attention-residuals/12.png)
+![架构师决策树](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/12.png)
 
 ## 6. 总结
 
@@ -641,7 +639,7 @@ Attention Residuals 的价值不仅在于提升了 Benchmark 数字，更在于�
 > 4. 对比阅读 mHC（arXiv:2512.24880）理解两条技术路线的设计取舍
 > 5. 关注后续工作（MUDDFormer、深度方向注意力的更多变体）
 
-![深度注意力的黎明](//pub.smallyoung.cn/course_slidev/attention-residuals/13.png)
+![深度注意力的黎明](//cdn.smallyoung.cn/smallyoung_blog/attention-residuals/13.png)
 
 ## 参考资料
 

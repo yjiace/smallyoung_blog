@@ -7,20 +7,20 @@ author: smallyoung
 date: 2025-12-14
 dateModified: 2025-12-15
 keywords: [GSW, 生成语义工作区, RAG, 检索增强生成, AI记忆系统, 大语言模型, 情景记忆, 知识图谱]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/gsw/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/gsw/1.png
 ---
 
-![AI记忆革命：GSW vs.传统 RAG](//pub.smallyoung.cn/course_slidev/gsw/0.png)
+![AI记忆革命：GSW vs.传统 RAG](//cdn.smallyoung.cn/smallyoung_blog/gsw/0.png)
 
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/gsw/AI从健忘到理解故事因果.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/gsw/AI从健忘到理解故事因果.m4a"
   author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/gsw/GSW：赋予人工智能类人记忆.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/gsw/GSW：赋予人工智能类人记忆.mp4"
 />
 
 
@@ -147,7 +147,7 @@ RAG（检索增强生成）是目前主流的让 AI 访问外部知识的技术�
 
 #### 2. 无法追踪演变 📈
 
-![无法追踪演变](//pub.smallyoung.cn/course_slidev/gsw/2.png)
+![无法追踪演变](//cdn.smallyoung.cn/smallyoung_blog/gsw/2.png)
 
 **场景举例**：一家公司的发展历程
 
@@ -165,7 +165,7 @@ RAG（检索增强生成）是目前主流的让 AI 访问外部知识的技术�
 
 #### 3. 时空信息缺失 🗺️
 
-![时空信息缺失](//pub.smallyoung.cn/course_slidev/gsw/3.png)
+![时空信息缺失](//cdn.smallyoung.cn/smallyoung_blog/gsw/3.png)
 
 **场景举例**：一个人物的行程
 
@@ -194,7 +194,7 @@ RAG（检索增强生成）是目前主流的让 AI 访问外部知识的技术�
 
 ### 人类是如何记忆的？
 
-![人类是如何记忆的](//pub.smallyoung.cn/course_slidev/gsw/4.png)
+![人类是如何记忆的](//cdn.smallyoung.cn/smallyoung_blog/gsw/4.png)
 
 人类大脑有两个关键部分负责记忆：
 
@@ -216,7 +216,7 @@ GSW 模仿人类大脑，不再简单地检索文本片段，而是：
 
 **构建一个动态的、结构化的"世界模型"**
 
-![GSW 的核心理念](//pub.smallyoung.cn/course_slidev/gsw/5.png)
+![GSW 的核心理念](//cdn.smallyoung.cn/smallyoung_blog/gsw/5.png)
 
 就像你脑海中的记忆一样，GSW 为 AI 创建了一个内在的"世界"，在这个世界里：
 - 每个人物都有自己的故事线
@@ -230,7 +230,7 @@ GSW 模仿人类大脑，不再简单地检索文本片段，而是：
 
 ### 双核心架构
 
-![双核心架构](//pub.smallyoung.cn/course_slidev/gsw/6.png)
+![双核心架构](//cdn.smallyoung.cn/smallyoung_blog/gsw/6.png)
 
 #### Operator（操作员）- AI 的"观察者"
 
@@ -315,7 +315,7 @@ Reconciler 的工作：
 
 让我们看看当你问 AI 一个问题时，GSW 是如何工作的：
 
-![GSW 是如何工作的](//pub.smallyoung.cn/course_slidev/gsw/7.png)
+![GSW 是如何工作的](//cdn.smallyoung.cn/smallyoung_blog/gsw/7.png)
 
 **阶段一：构建记忆（处理文档时）**
 
@@ -354,7 +354,7 @@ Reconciler 的工作：
 
 ### 对比案例 1：理解小说情节
 
-![理解小说情节](//pub.smallyoung.cn/course_slidev/gsw/8.png)
+![理解小说情节](//cdn.smallyoung.cn/smallyoung_blog/gsw/8.png)
 
 **问题**："主角的心态是如何变化的？"
 
@@ -395,7 +395,7 @@ AI 的回答：
 
 ### 对比案例 2：分析商业决策
 
-![分析商业决策](//pub.smallyoung.cn/course_slidev/gsw/9.png)
+![分析商业决策](//cdn.smallyoung.cn/smallyoung_blog/gsw/9.png)
 
 **问题**："公司为什么会做出这个战略调整？"
 
@@ -437,7 +437,7 @@ AI 的回答：
 
 ## GSW vs 传统 RAG：一目了然
 
-![AI记忆革命：GSW vs.传统 RAG](//pub.smallyoung.cn/course_slidev/gsw/10.png)
+![AI记忆革命：GSW vs.传统 RAG](//cdn.smallyoung.cn/smallyoung_blog/gsw/10.png)
 
 | 对比维度 | 传统 RAG | GSW |
 |---------|----------|-----|
@@ -453,7 +453,7 @@ AI 的回答：
 
 ## 真实应用场景
 
-![真实应用场景](//pub.smallyoung.cn/course_slidev/gsw/12.png)
+![真实应用场景](//cdn.smallyoung.cn/smallyoung_blog/gsw/12.png)
 
 ### 场景 1：法律文档分析
 
@@ -575,7 +575,7 @@ AI 的回答：
 
 ### Q2: GSW 的准确率有多高？
 
-![GSW 的准确率有多高](//pub.smallyoung.cn/course_slidev/gsw/11.png)
+![GSW 的准确率有多高](//cdn.smallyoung.cn/smallyoung_blog/gsw/11.png)
 
 **答：GSW 在 EpBench 测试中达到 F1-score 0.850（State-of-the-Art）。** 根据 UCLA 团队的论文数据：
 
@@ -598,7 +598,7 @@ AI 的回答：
 
 ### Q4: 如何评估 GSW 是否适合我的业务？
 
-![如何评估 GSW 是否适合我的业务](//pub.smallyoung.cn/course_slidev/gsw/13.png)
+![如何评估 GSW 是否适合我的业务](//cdn.smallyoung.cn/smallyoung_blog/gsw/13.png)
 
 **答：问自己三个问题，如果都是"是"，强烈建议尝试 GSW。**
 
@@ -615,7 +615,7 @@ AI 的回答：
 
 ## 总结：记忆系统的革命
 
-![记忆系统的革命](//pub.smallyoung.cn/course_slidev/gsw/14.png)
+![记忆系统的革命](//cdn.smallyoung.cn/smallyoung_blog/gsw/14.png)
 
 GSW 带来的不仅是技术改进，更是 AI 理解方式的革命：
 
@@ -663,7 +663,7 @@ GSW 迈出了重要的一步——让 AI 拥有了"记忆"。不是机械的存�
 - 💡 提供深度的洞察
 - 🎯 给出准确的答案
 
-![这不是 RAG 的终结，而是 AI 记忆系统的新开端](//pub.smallyoung.cn/course_slidev/gsw/15.png)
+![这不是 RAG 的终结，而是 AI 记忆系统的新开端](//cdn.smallyoung.cn/smallyoung_blog/gsw/15.png)
 
 **这不是 RAG 的终结，而是 AI 记忆系统的新开端。**
 

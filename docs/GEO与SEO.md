@@ -7,26 +7,24 @@ author: smallyoung
 date: 2026-01-04
 dateModified: 2026-01-04
 keywords: [GEO, SEO, 生成式引擎优化, Generative Engine Optimization, AI搜索优化, 内容营销, ChatGPT, Perplexity, AI可见性]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/geo-seo/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/geo-seo/1.png
 ---
-
-# 从SEO到GEO：AI时代的生成式引擎优化新范式
 
 > 当用户从"搜索关键词点击链接"转向"直接向AI提问获取答案"，传统SEO正在被一种全新的优化思维所补充——GEO（生成式引擎优化）。本文将深入解析两者的核心差异与协同策略，帮助你在AI时代保持内容竞争力。
 >
 > 📌 **核心论文**：[GEO: Generative Engine Optimization](https://arxiv.org/abs/2311.09735)（arXiv:2311.09735）  
 > 📌 **适合人群**：内容创作者、SEO从业者、数字营销人员
 
-![从SEO到GEO：AI时代的生成式引擎优化新范式](//pub.smallyoung.cn/course_slidev/geo-seo/0.png)
+![从SEO到GEO：AI时代的生成式引擎优化新范式](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/0.png)
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/geo-seo/零点击时代内容新玩法：SEO到GEO.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/geo-seo/零点击时代内容新玩法：SEO到GEO.m4a"
   \author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/geo-seo/SEO已死，GEO永生：AI搜索指南.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/geo-seo/SEO已死，GEO永生：AI搜索指南.mp4"
 />
 
 
@@ -54,7 +52,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/geo-seo/1.png
 
 ## 1. 为什么你需要关注GEO？
 
-![零点击搜索](//pub.smallyoung.cn/course_slidev/geo-seo/2.png)
+![零点击搜索](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/2.png)
 
 想象一下这个场景：用户问ChatGPT"如何选择向量数据库？"，AI直接给出了详细的对比分析和推荐建议。用户满意地获得了答案，**但没有点击任何链接进入你的网站**。
 
@@ -66,7 +64,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/geo-seo/1.png
 | AI综合多个来源生成回答 | 单一排名第一不再决定一切 |
 | 对话式查询取代关键词搜索 | 长尾内容价值提升 |
 
-![搜索行为变化](//pub.smallyoung.cn/course_slidev/geo-seo/3.png)
+![搜索行为变化](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/3.png)
 
 > [!IMPORTANT]
 > **核心问题**：如果你的内容不能被AI"看见"并引用，即使SEO做得再好，也可能在AI时代失去大量曝光机会。
@@ -75,7 +73,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/geo-seo/1.png
 
 ## 2. 基础概念：SEO与GEO的本质差异
 
-![基础概念：SEO与GEO的本质差异](//pub.smallyoung.cn/course_slidev/geo-seo/4.png)
+![基础概念：SEO与GEO的本质差异](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/4.png)
 
 ### 2.1 什么是SEO？
 
@@ -103,14 +101,14 @@ flowchart LR
     end
 ```
 
-![两个时代，两种优化哲学](//pub.smallyoung.cn/course_slidev/geo-seo/5.png)
+![两个时代，两种优化哲学](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/5.png)
 
 > [!NOTE]
 > GEO这一概念首次由普林斯顿大学、乔治亚理工学院等机构的研究人员在2023年的论文《GEO: Generative Engine Optimization》中系统提出，论文证明GEO方法可以将内容在AI搜索中的可见性提升高达40%。
 
 ### 2.3 核心对比表
 
-![核心对比表](//pub.smallyoung.cn/course_slidev/geo-seo/6.png)
+![核心对比表](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/6.png)
 
 | 维度 | SEO（搜索引擎优化） | GEO（生成式引擎优化） |
 |------|---------------------|----------------------|
@@ -127,7 +125,7 @@ flowchart LR
 
 ### 3.1 AI搜索的工作原理
 
-![AI搜索的工作原理](//pub.smallyoung.cn/course_slidev/geo-seo/7.png)
+![AI搜索的工作原理](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/7.png)
 
 ```mermaid
 flowchart TD
@@ -154,7 +152,7 @@ flowchart TD
 
 ### 3.2 AI引用内容的关键因素
 
-![AI在寻找什么](//pub.smallyoung.cn/course_slidev/geo-seo/8.png)
+![AI在寻找什么](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/8.png)
 
 根据研究论文和业界实践，AI倾向于引用具有以下特征的内容：
 
@@ -173,7 +171,7 @@ flowchart TD
 
 ### 4.1 内容结构化优化
 
-![内容结构化](//pub.smallyoung.cn/course_slidev/geo-seo/9.png)
+![内容结构化](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/9.png)
 
 ```markdown
 # 好的结构化示例
@@ -232,7 +230,7 @@ def geo_optimized_content(topic):
 
 ### 4.4 技术层面优化
 
-![用Schema标记为AI“划重点”](//pub.smallyoung.cn/course_slidev/geo-seo/10.png)
+![用Schema标记为AI“划重点”](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/10.png)
 
 | 技术手段 | 作用 |
 |----------|------|
@@ -365,7 +363,7 @@ flowchart LR
 
 #### 4.4.2 llms.txt 配置指南
 
-![用llms.txt主动与AI对话](//pub.smallyoung.cn/course_slidev/geo-seo/11.png)
+![用llms.txt主动与AI对话](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/11.png)
 
 `llms.txt` 是一种新兴标准，类似于 `robots.txt`，专门为LLM提供网站内容索引和访问指引。
 
@@ -439,7 +437,7 @@ GEO（生成式引擎优化）是针对AI搜索引擎的优化策略。
 
 ### 4.5 内容诊断与优化工具实操
 
-![内容结构化评估](//pub.smallyoung.cn/course_slidev/geo-seo/13.png)
+![内容结构化评估](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/13.png)
 
 在动手优化之前，先诊断现有内容的AI友好程度。
 
@@ -505,7 +503,7 @@ GEO（生成式引擎优化）是针对AI搜索引擎的优化策略。
 
 ### 4.6 从零开始的GEO优化实操流程
 
-![从零开始的GEO优化实操流程](//pub.smallyoung.cn/course_slidev/geo-seo/12.png)
+![从零开始的GEO优化实操流程](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/12.png)
 
 以下是一个完整的GEO优化工作流程：
 
@@ -561,7 +559,7 @@ flowchart TD
 
 ### 5.2 常见误区与正确做法
 
-![常见误区与正确做法](//pub.smallyoung.cn/course_slidev/geo-seo/14.png)
+![常见误区与正确做法](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/14.png)
 
 | 误区 | 正确做法 |
 |------|----------|
@@ -598,7 +596,7 @@ flowchart TD
 
 ## 6. 总结：AI时代的内容优化新思维
 
-![拥抱新思想](//pub.smallyoung.cn/course_slidev/geo-seo/15.png)
+![拥抱新思想](//cdn.smallyoung.cn/smallyoung_blog/geo-seo/15.png)
 
 GEO并非要取代SEO，而是在AI搜索时代对传统优化策略的必要延伸。核心转变在于：
 

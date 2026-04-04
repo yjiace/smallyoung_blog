@@ -7,10 +7,8 @@ author: smallyoung
 date: 2026-03-16
 dateModified: 2026-03-16
 keywords: [Harness Engineering, AI Agent, 上下文工程, AGENTS.md, Coding Agent]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/harness-engineering/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/harness-engineering/1.png
 ---
-
-# Harness Engineering：重塑Al Agent时代的软件工程
 
 > 模型越来越强，但决定 AI Agent 好坏的最大变量，往往不是模型本身，而是模型被放在什么样的"环境"里运行。2026年2月，一种正式命名为 **Harness Engineering（驾驭工程）** 的工程实践横扫开发者社区——它解释了为什么同一个模型在不同系统里表现天壤之别，也重新定义了软件工程师在 AI 时代的职责边界。本文从零到生产，系统讲解 Harness Engineering 的来龙去脉、核心架构与实战方法。
 >
@@ -18,16 +16,16 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/harness-engine
 >
 > 📌 **适合人群**：AI 应用开发者、Coding Agent 实践者、对 LLM 工程化感兴趣的软件工程师
 
-![Harness Engineering：AI Agent 时代不可不知的驾驭工程](//pub.smallyoung.cn/course_slidev/harness-engineering/0.png)
+![Harness Engineering：AI Agent 时代不可不知的驾驭工程](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/0.png)
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/harness-engineering/驾驭工程防止AI_Agent失控.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/驾驭工程防止AI_Agent失控.m4a"
   author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/harness-engineering/驾驭工程：驯服AI智能体.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/驾驭工程：驯服AI智能体.mp4"
 />
 
 <MindMapFloat title="Harness Engineering 知识图谱">
@@ -103,7 +101,7 @@ flowchart LR
 > [!IMPORTANT]
 > 上下文工程（Context Engineering）可以告诉 Agent **"知道什么"**，但无法阻止 Agent **"做不该做的事"**。在环境层面的约束与验证，才是系统可靠性的真正来源。
 
-![为什么"更强的模型"依然会带来灾难](//pub.smallyoung.cn/course_slidev/harness-engineering/2.png)
+![为什么"更强的模型"依然会带来灾难](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/2.png)
 
 ### 1.2 "提示词/上下文工程"的边界在哪里？
 
@@ -117,7 +115,7 @@ flowchart LR
 
 Martin Fowler 在他的分析文章中一针见血地总结：Harness 包含上下文工程，但走得更远——它管理的是**工具执行、状态持久化、架构约束和垃圾回收**，让 Agent 生成的代码在架构层面保持长期一致性。
 
-![工程范式的跃迁：从“对话”到“驾驭”](//pub.smallyoung.cn/course_slidev/harness-engineering/3.png)
+![工程范式的跃迁：从“对话”到“驾驭”](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/3.png)
 
 ### 1.3 Harness Engineering 的诞生时刻
 
@@ -178,7 +176,7 @@ flowchart TB
 > [!NOTE]
 > 这个架构的精髓在于：**模型提供智能，Harness 让智能有用。** 正如 LangChain CEO Harrison Chase 所说，"模型是 CPU，Harness 是操作系统——CPU 再强，OS 拉胯也白搭。"
 
-![核心架构解构](//pub.smallyoung.cn/course_slidev/harness-engineering/4.png)
+![核心架构解构](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/4.png)
 
 ### 2.2 Harness 与传统软件工程的核心区别
 
@@ -200,7 +198,7 @@ Harness Engineering 借鉴了大量传统软件工程的概念：模块化设计
 > [!IMPORTANT]
 > OpenAI 工程团队在报告中坦言："我们**最困难的挑战**现在集中在设计环境、反馈回路和控制系统上。" 工程师的工作，从写代码变成了**设计让 AI 能写好代码的环境**。
 
-![思维转换](//pub.smallyoung.cn/course_slidev/harness-engineering/5.png)
+![思维转换](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/5.png)
 
 ### 2.3 Harness 核心组件全景
 
@@ -242,7 +240,7 @@ flowchart TB
 
 OpenAI 实验报告经过 Martin Fowler 团队的 Thoughtworks 工程师 Birgitta Böckeler 深度分析后，被归纳为三个彼此依存的支柱。理解这三个支柱，就理解了 Harness Engineering 的全部核心。
 
-![三大支柱](//pub.smallyoung.cn/course_slidev/harness-engineering/6.png)
+![三大支柱](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/6.png)
 
 ### 3.1 支柱一：上下文工程（Context Engineering）
 
@@ -273,7 +271,7 @@ flowchart LR
 
 这里存在一个反直觉的设计原则：**约束反而提升效率**。当 Agent 面对"可以生成任何东西"的开放空间时，它会浪费 Token 探索死路。而当 Harness 通过文档和规则定义了清晰的边界后，Agent 能更快收敛到正确的解决方案。
 
-![支柱一：上下文工程](//pub.smallyoung.cn/course_slidev/harness-engineering/7.png)
+![支柱一：上下文工程](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/7.png)
 
 ### 3.2 支柱二：架构约束（Architectural Constraints）
 
@@ -317,7 +315,7 @@ flowchart TB
     style F fill:#ffebee
 ```
 
-![支柱二：架构约束](//pub.smallyoung.cn/course_slidev/harness-engineering/8.png)
+![支柱二：架构约束](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/8.png)
 
 ### 3.3 支柱三：熵管理（Entropy Management）
 
@@ -339,7 +337,7 @@ OpenAI 团队最初靠人工来解决这个问题：每周五，整个团队（2
 > [!NOTE]
 > 这正是 Mitchell Hashimoto 理念的系统化体现：**"每当 Agent 犯一个新类型的错误，就回头加一条约束。"** 日积月累，Harness 越来越健壮，Agent 能犯的错越来越少——这是一个正向的复利飞轮。
 
-![支柱三：熵管理](//pub.smallyoung.cn/course_slidev/harness-engineering/9.png)
+![支柱三：熵管理](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/9.png)
 
 
 ## 4. 核心组件深探：让 Agent 跨越会话工作
@@ -406,7 +404,7 @@ flowchart LR
     style 方案 fill:#e8f5e9
 ```
 
-![跨会话架构：对抗无状态与上下文腐烂](//pub.smallyoung.cn/course_slidev/harness-engineering/10.png)
+![跨会话架构：对抗无状态与上下文腐烂](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/10.png)
 
 ### 4.3 自验证循环（Self-Verification Loop）
 
@@ -421,7 +419,7 @@ LangChain 在 Harness 中引入了 `PreCompletionChecklistMiddleware`：在 Agen
 
 这个简单的 Build-Verify 循环，直接把他们的 Coding Agent 在 Terminal Bench 2.0 上的得分从 52.8% 提升到了 66.5%，**从全球第 30 名跃升至第 5 名，底层模型一个参数都没有改变**。
 
-![自验证循环](//pub.smallyoung.cn/course_slidev/harness-engineering/11.png)
+![自验证循环](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/11.png)
 
 ## 5. 横向对比：三代工程范式全景
 
@@ -469,7 +467,7 @@ flowchart LR
 
 ## 6. 代码实战：从零搭建一个基础 Harness
 
-![全息架构蓝图](//pub.smallyoung.cn/course_slidev/harness-engineering/12.png)
+![全息架构蓝图](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/12.png)
 
 ### 6.1 第一步：编写 AGENTS.md（项目地图）
 
@@ -784,7 +782,7 @@ flowchart LR
 > [!WARNING]
 > **可撕裂原则（Rippable Harness）**：随着模型能力提升，今天需要的脚手架可能明天就成了累赘。Manus 的核心团队发现，他们最大的性能提升来自于**删除**复杂的 RAG 管道和路由逻辑，转而依赖更强的基础模型。每隔 3-6 个月，重新审视 Harness 的每一个组件——如果模型已经能原生处理，果断删除。
 
-![最佳实践](//pub.smallyoung.cn/course_slidev/harness-engineering/13.png)
+![最佳实践](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/13.png)
 
 ### 7.3 Harness 健壮性自检清单
 
@@ -800,7 +798,7 @@ flowchart LR
 | ✅ 费用上限 | 部署了 API 调用预算监控与硬限制 | 监控告警 |
 | ✅ 人类审批节点 | 不可逆操作（部署/删除）需要人工确认 | Human-in-Loop |
 
-![Harness 健壮性自检清单](//pub.smallyoung.cn/course_slidev/harness-engineering/14.png)
+![Harness 健壮性自检清单](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/14.png)
 
 ## 8. 行业格局与未来展望
 
@@ -847,7 +845,7 @@ LangChain 正在探索让 Agent 分析自身执行 Trace，自动识别并修复
 > [!NOTE]
 > Martin Fowler 在分析中提出了一个值得思考的问题：OpenAI 的 Harness 聚焦于内部代码质量和可维护性，但对于"代码是否真的实现了用户需要的功能"，目前仍缺乏有效的验证机制。功能正确性的验证，是整个领域尚待解决的开放课题。
 
-![终局视野：从单一驾驭到系统级创造力](//pub.smallyoung.cn/course_slidev/harness-engineering/15.png)
+![终局视野：从单一驾驭到系统级创造力](//cdn.smallyoung.cn/smallyoung_blog/harness-engineering/15.png)
 
 ## 9. 总结
 

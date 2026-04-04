@@ -17,6 +17,7 @@
             v-for="item in section.items"
             :key="item.link"
             :href="item.link"
+            target="_blank"
             class="sidebar-item"
             :class="{ 'is-active': isActive(item.link) }"
           >

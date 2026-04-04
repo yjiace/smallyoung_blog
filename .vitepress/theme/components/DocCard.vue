@@ -2,6 +2,7 @@
   <div class="doc-card-wrapper">
     <a
       :href="doc.docUrl"
+      target="_blank"
       class="flex cursor-pointer flex-col gap-3 rounded-xl border border-solid border-transparent bg-card-light p-4 transition-all hover:-translate-y-1 hover:shadow-xl hover:border-primary/50 dark:bg-card-dark dark:hover:border-primary/50"
     >
       <!-- 封面图片 16:9 -->

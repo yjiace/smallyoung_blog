@@ -7,17 +7,15 @@ author: smallyoung
 date: 2026-01-06
 dateModified: 2026-01-06
 keywords: [DeepSeek, mHC, Manifold-Constrained Hyper-Connections, 流形约束超连接, 双随机矩阵, Sinkhorn-Knopp, 残差连接, 大模型训练]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/deepseek-mhc/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/1.png
 ---
-
-# DeepSeek mHC深度解析：流形约束超连接如何重塑大模型训练
 
 > 2026年新年第一天，DeepSeek悄然发布了一篇可能改变AI行业训练范式的论文——**mHC（Manifold-Constrained Hyper-Connections）**。这项被业界称为"惊人突破"的技术，通过优雅的数学约束解决了困扰大模型训练多年的稳定性难题。
 >
 > 📌 **核心论文**：[mHC: Manifold-Constrained Hyper-Connections](https://arxiv.org/abs/2512.24880)（arXiv:2512.24880）  
 > 📌 **适合人群**：AI研究者、深度学习工程师、对大模型架构感兴趣的技术人员
 
-![DeepSeek mHC深度解析](//pub.smallyoung.cn/course_slidev/deepseek-mhc/0.png)
+![DeepSeek mHC深度解析](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/0.png)
 
 <MindMapFloat title="mHC知识图谱">
 
@@ -49,7 +47,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/deepseek-mhc/1
 
 ### 1.1 深层网络的"原罪"：训练不稳定
 
-![深层网络的"原罪"](//pub.smallyoung.cn/course_slidev/deepseek-mhc/2.png)
+![深层网络的"原罪"](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/2.png)
 
 想象一下：你正在训练一个拥有**数百层**的神经网络。每一层都在对输入数据进行变换，而信息就像水流一样从第一层流向最后一层。问题是——随着层数增加，这股"水流"可能会：
 
@@ -60,7 +58,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/deepseek-mhc/1
 
 ### 1.2 残差连接的局限性
 
-![残差连接的局限性](//pub.smallyoung.cn/course_slidev/deepseek-mhc/3.png)
+![残差连接的局限性](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/3.png)
 
 然而，经典残差连接并不完美。它存在两个主要变体：
 
@@ -73,7 +71,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/deepseek-mhc/1
 
 ### 1.3 一个形象的比喻：单行道 vs 多行道
 
-![一个形象的比喻](//pub.smallyoung.cn/course_slidev/deepseek-mhc/4.png)
+![一个形象的比喻](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/4.png)
 
 理解残差连接、超连接和mHC的区别，可以用**道路系统**来类比：
 
@@ -109,7 +107,7 @@ flowchart LR
 
 ### 1.4 超连接的致命缺陷
 
-![超连接的致命缺陷](//pub.smallyoung.cn/course_slidev/deepseek-mhc/5.png)
+![超连接的致命缺陷](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/5.png)
 
 当研究者尝试将HC应用于大规模模型时，发现了一个惊人的现象：
 
@@ -123,13 +121,13 @@ flowchart LR
 
 ## 2. mHC的核心创新：用数学"驯服"混乱
 
-![mHC的核心创新](//pub.smallyoung.cn/course_slidev/deepseek-mhc/6.png)
+![mHC的核心创新](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/6.png)
 
 DeepSeek的解决方案优雅而强大：**将残差混合矩阵约束在一个特定的数学流形上**。
 
 ### 2.1 双随机矩阵：mHC的数学基石
 
-![双随机矩阵：mHC的数学基石](//pub.smallyoung.cn/course_slidev/deepseek-mhc/7.png)
+![双随机矩阵：mHC的数学基石](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/7.png)
 
 mHC的核心约束是要求残差混合矩阵成为**双随机矩阵（Doubly Stochastic Matrix）**：
 
@@ -160,7 +158,7 @@ flowchart LR
 
 ### 2.2 Sinkhorn-Knopp算法：如何实现约束
 
-![Sinkhorn-Knopp算法](//pub.smallyoung.cn/course_slidev/deepseek-mhc/8.png)
+![Sinkhorn-Knopp算法](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/8.png)
 
 将任意矩阵变成双随机矩阵，DeepSeek采用了1967年提出的经典算法：**Sinkhorn-Knopp迭代**。
 
@@ -209,7 +207,7 @@ DeepSeek在3B、9B、27B三个规模的模型上验证了mHC的效果：
 
 ### 3.1 稳定性对比
 
-![稳定性对比](//pub.smallyoung.cn/course_slidev/deepseek-mhc/9.png)
+![稳定性对比](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/9.png)
 
 | 指标 | 传统HC | mHC | 改善幅度 |
 |------|--------|-----|----------|
@@ -219,7 +217,7 @@ DeepSeek在3B、9B、27B三个规模的模型上验证了mHC的效果：
 
 ### 3.2 性能提升
 
-![性能提升](//pub.smallyoung.cn/course_slidev/deepseek-mhc/10.png)
+![性能提升](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/10.png)
 
 在27B参数模型上的基准测试结果：
 
@@ -232,7 +230,7 @@ DeepSeek在3B、9B、27B三个规模的模型上验证了mHC的效果：
 
 ### 3.3 计算开销
 
-![计算开销](//pub.smallyoung.cn/course_slidev/deepseek-mhc/11.png)
+![计算开销](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/11.png)
 
 > [!TIP]
 > **惊喜低开销**：尽管引入了复杂的数学约束和迭代算法，mHC的额外训练开销仅为**6-7%**（扩展率n=4时约6.7%）。
@@ -247,7 +245,7 @@ DeepSeek通过以下工程优化实现了这一目标：
 
 ### 4.1 架构层面的根本创新
 
-![架构层面的根本创新](//pub.smallyoung.cn/course_slidev/deepseek-mhc/12.png)
+![架构层面的根本创新](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/12.png)
 
 mHC的贡献不在于：
 - ❌ 新的注意力机制
@@ -275,7 +273,7 @@ flowchart TB
 
 ### 4.2 行业评价
 
-![行业评价](//pub.smallyoung.cn/course_slidev/deepseek-mhc/13.png)
+![行业评价](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/13.png)
 
 | 来源 | 评价 |
 |------|------|
@@ -286,7 +284,7 @@ flowchart TB
 
 ### 4.3 战略意义
 
-![战略意义](//pub.smallyoung.cn/course_slidev/deepseek-mhc/14.png)
+![战略意义](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/14.png)
 
 DeepSeek创始人**梁文锋**亲自署名这篇论文，这在公司技术论文中极为罕见，凸显了mHC的战略重要性：
 
@@ -345,7 +343,7 @@ mHC约束要求权重矩阵 **A = [α_ij]** 必须是双随机的：
 
 ## 7. 总结
 
-![总结](//pub.smallyoung.cn/course_slidev/deepseek-mhc/15.png)
+![总结](//cdn.smallyoung.cn/smallyoung_blog/deepseek-mhc/15.png)
 
 mHC的本质是用**优雅的数学约束**解决了一个**工程难题**——如何让信息在极深的网络中既自由流动，又不失控。
 

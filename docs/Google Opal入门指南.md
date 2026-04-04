@@ -7,26 +7,24 @@ author: smallyoung
 date: 2026-01-05
 dateModified: 2026-01-05
 keywords: [Google Opal, 无代码AI, AI应用构建, Gemini, Vibe Coding, 可视化工作流]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/google-opal/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/google-opal/1.png
 ---
-
-# Google Opal 入门指南：零代码构建 AI 应用的完整教程
 
 > 想用 AI 创建一个自动生成营销文案的工具，却不会写代码？Google Opal 让你用自然语言描述需求，几分钟就能构建出实用的 AI 小程序。
 >
 > 📌 **官方来源**：[Google Labs Opal](https://labs.google/)  
 > 📌 **适合人群**：AI 初学者、内容创作者、营销人员、小型企业主
 
-![Google Opal入门指南](//pub.smallyoung.cn/course_slidev/google-opal/0.png)
+![Google Opal入门指南](//cdn.smallyoung.cn/smallyoung_blog/google-opal/0.png)
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/google-opal/用聊天创建AI应用_Opal.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/google-opal/用聊天创建AI应用_Opal.m4a"
   author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/google-opal/Google_Opal_入门指南.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/google-opal/Google_Opal_入门指南.mp4"
 />
 
 <MindMapFloat title="Google Opal 知识图谱">
@@ -55,7 +53,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/google-opal/1.
 
 ## 1. 为什么需要了解 Google Opal？
 
-![为什么需要了解 Google Opal](//pub.smallyoung.cn/course_slidev/google-opal/2.png)
+![为什么需要了解 Google Opal](//cdn.smallyoung.cn/smallyoung_blog/google-opal/2.png)
 
 想象这样一个场景：你是一名自媒体博主，每天需要为 YouTube 视频撰写 SEO 优化的描述文案、生成社交媒体推广图片、总结视频内容要点。这些工作重复且耗时，你希望有一个 AI 工具能帮你自动完成——但你不会编程。
 
@@ -64,19 +62,19 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/google-opal/1.
 - 了解 API 调用和数据处理
 - 部署服务器或使用云平台
 
-![传统路径](//pub.smallyoung.cn/course_slidev/google-opal/3.png)
+![传统路径](//cdn.smallyoung.cn/smallyoung_blog/google-opal/3.png)
 
 **而 Google Opal 的出现改变了这一切**。它让你只需要用日常语言描述需求，就能创建出功能完整的 AI 小程序。
 
 ## 2. 什么是 Google Opal？
 
-![什么是 Google Opal](//pub.smallyoung.cn/course_slidev/google-opal/4.png)
+![什么是 Google Opal](//cdn.smallyoung.cn/smallyoung_blog/google-opal/4.png)
 
 Google Opal 是 Google Labs 于 **2025 年 7 月**推出的实验性**无代码 AI 应用构建平台**。它的核心理念是：**让任何人都能用自然语言创建 AI 驱动的应用程序**。
 
 ### 2.1 核心概念对比
 
-![核心概念](//pub.smallyoung.cn/course_slidev/google-opal/5.png)
+![核心概念](//cdn.smallyoung.cn/smallyoung_blog/google-opal/5.png)
 
 | 概念 | 定义 | 生活类比 |
 |------|------|----------|
@@ -109,7 +107,7 @@ flowchart LR
 
 ## 3. Google Opal 的工作原理
 
-![Google Opal 的工作原理](//pub.smallyoung.cn/course_slidev/google-opal/6.png)
+![Google Opal 的工作原理](//cdn.smallyoung.cn/smallyoung_blog/google-opal/6.png)
 
 ### 3.1 核心架构
 
@@ -183,7 +181,7 @@ flowchart LR
 
 ### 4.2 创建内容生成工具
 
-![创建你的第一个 Opal 应用](//pub.smallyoung.cn/course_slidev/google-opal/7.png)
+![创建你的第一个 Opal 应用](//cdn.smallyoung.cn/smallyoung_blog/google-opal/7.png)
 
 **目标**：创建一个博客标题生成器，输入主题后自动生成 5 个 SEO 优化的标题。
 
@@ -280,7 +278,7 @@ if __name__ == "__main__":
 
 ### 5.1 内容创作自动化
 
-![内容创作自动化](//pub.smallyoung.cn/course_slidev/google-opal/8.png)
+![内容创作自动化](//cdn.smallyoung.cn/smallyoung_blog/google-opal/8.png)
 
 | 应用类型 | 功能描述 | 使用的 AI 模型 |
 |----------|----------|----------------|
@@ -291,7 +289,7 @@ if __name__ == "__main__":
 
 ### 5.2 工作效率提升
 
-![工作效率提升](//pub.smallyoung.cn/course_slidev/google-opal/9.png)
+![工作效率提升](//cdn.smallyoung.cn/smallyoung_blog/google-opal/9.png)
 
 | 应用类型 | 功能描述 | 使用的 AI 模型 |
 |----------|----------|----------------|
@@ -317,7 +315,7 @@ flowchart LR
 
 ## 6. 最佳实践与常见误区
 
-![最佳实践与常见误区](//pub.smallyoung.cn/course_slidev/google-opal/10.png)
+![最佳实践与常见误区](//cdn.smallyoung.cn/smallyoung_blog/google-opal/10.png)
 
 ### 6.1 使用最佳实践
 
@@ -343,7 +341,7 @@ flowchart LR
 
 ## 7. Google Opal 与其他 AI 工具的对比
 
-![对比](//pub.smallyoung.cn/course_slidev/google-opal/11.png)
+![对比](//cdn.smallyoung.cn/smallyoung_blog/google-opal/11.png)
 
 ### 7.1 Google 生态系统内的定位
 
@@ -435,7 +433,7 @@ flowchart TB
 
 #### 各平台核心优势
 
-![各平台核心优势](//pub.smallyoung.cn/course_slidev/google-opal/12.png)
+![各平台核心优势](//cdn.smallyoung.cn/smallyoung_blog/google-opal/12.png)
 
 **Google Opal 的独特优势**：
 - 🎯 **极致简单**：真正的"说即得"体验，无需理解任何技术概念
@@ -457,7 +455,7 @@ flowchart TB
 - 📊 **完善的可观测性**：内置日志、监控、调试工具
 - 🔄 **RAG 原生支持**：知识库管理开箱即用
 
-![如何选择](//pub.smallyoung.cn/course_slidev/google-opal/13.png)
+![如何选择](//cdn.smallyoung.cn/smallyoung_blog/google-opal/13.png)
 
 > [!TIP]
 > **如何选择？**
@@ -477,7 +475,7 @@ flowchart TB
 
 ## 8. 总结
 
-![总结](//pub.smallyoung.cn/course_slidev/google-opal/14.png)
+![总结](//cdn.smallyoung.cn/smallyoung_blog/google-opal/14.png)
 
 > **一句话理解 Google Opal**：它是用自然语言"说"出你的 AI 应用，而不是"写"出代码。
 
@@ -502,7 +500,7 @@ flowchart LR
     E --> F[释放更多创意可能性]
 ```
 
-![立刻开始你的创造之旅](//pub.smallyoung.cn/course_slidev/google-opal/15.png)
+![立刻开始你的创造之旅](//cdn.smallyoung.cn/smallyoung_blog/google-opal/15.png)
 
 ## 9. 参考资料
 

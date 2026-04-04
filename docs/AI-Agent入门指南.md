@@ -7,26 +7,24 @@ author: smallyoung
 date: 2026-01-01
 dateModified: 2026-01-01
 keywords: [AI Agent, 智能体, 人工智能代理, LLM Agent, LangChain, AutoGPT, 多Agent协作, Agentic AI]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/ai-agent/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/ai-agent/1.png
 ---
-
-# AI Agent 入门指南：从概念到实践的完整解读
 
 > 本文将带你深入理解 AI Agent（智能体）的核心原理，从"是什么"到"怎么用"，帮助你掌握这一改变 AI 应用范式的关键技术。
 >
 > 📌 **核心论文**：[A Survey on Large Language Model based Autonomous Agents](https://arxiv.org/abs/2308.11432)（arXiv:2308.11432）  
 > 📌 **适合人群**：AI 初学者、后端开发者、对智能应用感兴趣的技术人员
 
-![AI Agent 入门指南](//pub.smallyoung.cn/course_slidev/ai-agent/0.png)
+![AI Agent 入门指南](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/0.png)
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/ai-agent/AI_Agent：数字员工如何自主工作2.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/ai-agent/AI_Agent：数字员工如何自主工作2.m4a"
   author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/ai-agent/AI_智能体：深入解读.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/ai-agent/AI_智能体：深入解读.mp4"
 />
 
 <MindMapFloat title="AI Agent 知识图谱">
@@ -69,7 +67,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/ai-agent/1.png
 > [!IMPORTANT]
 > **AI Agent 的核心价值**：从"人指挥 AI"转变为"AI 自主完成"。传统 AI 是被动响应，Agent 是主动规划和执行。
 
-![AI Agent 的核心价值](//pub.smallyoung.cn/course_slidev/ai-agent/2.png)
+![AI Agent 的核心价值](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/2.png)
 
 与传统 ChatGPT 对话的区别：
 
@@ -85,7 +83,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/ai-agent/1.png
 
 ### 2.1 核心定义
 
-![什么是 AI Agent](//pub.smallyoung.cn/course_slidev/ai-agent/3.png)
+![什么是 AI Agent](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/3.png)
 
 **AI Agent（人工智能代理）** 是一种能够 **感知环境**、**自主决策** 并 **采取行动** 以实现特定目标的智能实体。
 
@@ -112,7 +110,7 @@ flowchart LR
 
 ### 2.2 AI Agent 的核心特性
 
-![AI Agent 的核心特性](//pub.smallyoung.cn/course_slidev/ai-agent/4.png)
+![AI Agent 的核心特性](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/4.png)
 
 | 特性 | 定义 | 生活类比 |
 |------|------|----------|
@@ -128,7 +126,7 @@ flowchart LR
 
 在 AI 领域，有很多概念容易与 AI Agent 混淆。理解它们的区别，有助于准确把握 Agent 的定位。
 
-![多维度综合对比](//pub.smallyoung.cn/course_slidev/ai-agent/8.png)
+![多维度综合对比](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/8.png)
 
 #### 多维度综合对比表
 
@@ -184,7 +182,7 @@ flowchart TB
 
 **1. 自主性维度**
 
-![自主性维度](//pub.smallyoung.cn/course_slidev/ai-agent/9.png)
+![自主性维度](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/9.png)
 
 | 等级 | 概念 | 说明 |
 |------|------|------|
@@ -223,7 +221,7 @@ flowchart LR
 
 #### 常见混淆澄清
 
-![常见混淆澄清](//pub.smallyoung.cn/course_slidev/ai-agent/10.png)
+![常见混淆澄清](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/10.png)
 
 > [!IMPORTANT]
 > **三个最常见的混淆**：
@@ -282,7 +280,7 @@ flowchart TB
 
 ## 3. AI Agent 是如何工作的？
 
-![ AI Agent 是如何工作的](//pub.smallyoung.cn/course_slidev/ai-agent/5.png)
+![ AI Agent 是如何工作的](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/5.png)
 
 AI Agent 的工作原理围绕一个 **"感知-规划-行动-记忆"** 的闭环架构展开：
 
@@ -325,7 +323,7 @@ Agent 通过多种方式获取信息：
 
 ### 3.2 决策层 (Decision Layer)
 
-![决策层](//pub.smallyoung.cn/course_slidev/ai-agent/6.png)
+![决策层](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/6.png)
 
 这是 Agent 的"大脑"，通常由 **大型语言模型 (LLM)** 驱动：
 
@@ -339,7 +337,7 @@ Agent 通过多种方式获取信息：
 
 ### 3.3 执行层 (Execution Layer)
 
-![执行层](//pub.smallyoung.cn/course_slidev/ai-agent/7.png)
+![执行层](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/7.png)
 
 Agent 通过 **工具调用** 与外部世界交互：
 
@@ -416,7 +414,7 @@ flowchart TB
 
 ## 5. 主流 AI Agent 框架
 
-![主流 AI Agent 框架](//pub.smallyoung.cn/course_slidev/ai-agent/11.png)
+![主流 AI Agent 框架](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/11.png)
 
 ### 5.1 LangChain
 
@@ -481,7 +479,7 @@ flowchart LR
 
 ### 5.3 其他主流框架
 
-![其他主流框架](//pub.smallyoung.cn/course_slidev/ai-agent/12.png)
+![其他主流框架](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/12.png)
 
 | 框架 | 特点 | 适用场景 |
 |------|------|----------|
@@ -492,7 +490,7 @@ flowchart LR
 
 ## 6. 2025 年 AI Agent 发展趋势
 
-![2025 年 AI Agent 发展趋势](//pub.smallyoung.cn/course_slidev/ai-agent/13.png)
+![2025 年 AI Agent 发展趋势](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/13.png)
 
 根据 Gartner 预测，**代理型 AI（Agentic AI）** 是 2025 年最重要的技术趋势之一。
 
@@ -530,7 +528,7 @@ mindmap
 
 ## 7. 最佳实践与常见误区
 
-![最佳实践与常见误区](//pub.smallyoung.cn/course_slidev/ai-agent/14.png)
+![最佳实践与常见误区](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/14.png)
 
 ### 7.1 构建 Agent 的最佳实践
 
@@ -557,7 +555,7 @@ mindmap
 
 ## 8. 总结
 
-![总结](//pub.smallyoung.cn/course_slidev/ai-agent/15.png)
+![总结](//cdn.smallyoung.cn/smallyoung_blog/ai-agent/15.png)
 
 AI Agent 代表了人工智能应用的新范式，从"人机对话"迈向"人机协作"。
 

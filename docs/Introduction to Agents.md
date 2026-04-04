@@ -7,7 +7,7 @@ author: smallyoung
 date: 2025-12-26
 dateModified: 2025-12-26
 keywords: [AI Agents, 智能体, Agentic AI, Kaggle, Model Context Protocol, MCP, RAG, 上下文工程, ADK, Agent Development Kit, A2A]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/IntroductionToAgents/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/1.png
 ---
 
 ## 写在前面
@@ -15,16 +15,16 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/IntroductionTo
 > 本文核心内容严谨基于 Google 与 Kaggle 联合推出的 **[5-Day AI Agents Intensive Course](https://www.kaggle.com/learn-guide/5-day-agents)** 及其配套白皮书。这是 Google 官方为全球开发者提供的关于 AI 智能体设计、构建与部署的权威指南。
 
 
-![让AI生成UI：A2UI协议完全指南](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/0.png)
+![让AI生成UI：A2UI协议完全指南](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/0.png)
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/IntroductionToAgents/IntroductionToAgents.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/IntroductionToAgents.m4a"
   author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/IntroductionToAgents/IntroductionToAgents.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/IntroductionToAgents.mp4"
 />
 
 
@@ -103,11 +103,11 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/IntroductionTo
 
 本文将为您详细还原这门由 Google 顶级专家打造的 5 天强化课程，带您从理论到实践，掌握构建生产级智能体系统的全貌。
 
-![从 ChatBot 到 Agent](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/2.png)
+![从 ChatBot 到 Agent](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/2.png)
 
 ## 课程全景图 (The 5-Day Roadmap)
 
-![课程课程全景图背景](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/3.png)
+![课程课程全景图背景](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/3.png)
 
 这门课程的设计非常精妙，它并不是简单地堆砌技术，而是模拟了一个开发者的成长路径：
 
@@ -151,7 +151,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/IntroductionTo
 
 ### 核心解剖学：三大支柱
 
-![三大支柱](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/4.png)
+![三大支柱](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/4.png)
 
 如果把 AI 智能体比作一个人，我们可以拆解为三大核心组件：
 
@@ -204,7 +204,7 @@ graph LR
 
 ### 认知架构：Agent 如何"思考"
 
-![Agent 如何"思考"](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/5.png)
+![Agent 如何"思考"](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/5.png)
 
 
 Google 在白皮书中介绍了几种主流的认知架构，它们决定了 Agent 如何处理复杂任务：
@@ -335,7 +335,7 @@ flowchart LR
 
 ### 什么是 MCP？(Model Context Protocol)
 
-![什么是 MCP](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/6.png)
+![什么是 MCP](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/6.png)
 
 对于初学者来说，MCP 就像是 **AI 时代的 USB 接口**。
 
@@ -386,7 +386,7 @@ flowchart TB
 
 Prompt Engineering (提示工程) 是教 AI **"怎么说话"**，而 Context Engineering (上下文工程) 是给 AI **"植入记忆"**。
 
-![上下文工程](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/7.png)
+![上下文工程](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/7.png)
 
 ### 提示工程 vs 上下文工程
 
@@ -419,7 +419,7 @@ flowchart LR
 
 ### 记忆的层级
 
-![记忆的层级](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/8.png)
+![记忆的层级](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/8.png)
 
 在 Google 的架构中，智能体的记忆不仅仅是聊天记录，它被设计为多层结构：
 
@@ -486,7 +486,7 @@ flowchart LR
 
 ## Day 4: 智能体质量 (Agent Quality / Agent Ops)
 
-![智能体质量](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/9.png)
+![智能体质量](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/9.png)
 
 这是从"玩具"迈向"产品"最关键的一步。传统的软件测试（Output == "Hello"）在 AI 时代失效了，因为 LLM 的输出是概率性的。我们需要新的方法论。
 
@@ -501,7 +501,7 @@ flowchart LR
 
 ### Agent 评估的三大支柱
 
-![评估的三大支柱](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/10.png)
+![评估的三大支柱](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/10.png)
 
 ```mermaid
 flowchart TB
@@ -631,7 +631,7 @@ flowchart LR
 
 ### 从单打独斗到团队协作 (Multi-Agent Systems)
 
-![从单打独斗到团队协作](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/11.png)
+![从单打独斗到团队协作](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/11.png)
 
 随着任务变复杂，一个全能的 Agent 往往会顾此失彼。Google 提倡 **"专家团队"** 模式：
 
@@ -662,7 +662,7 @@ flowchart TB
 
 ### Agent2Agent (A2A) 协议
 
-![Agent2Agent (A2A) 协议](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/12.png)
+![Agent2Agent (A2A) 协议](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/12.png)
 
 这是 Google 对未来的愿景——让不同公司、不同平台的 Agent 能够互相协作。
 
@@ -732,7 +732,7 @@ Google Cloud 提供的生产级 Agent 部署平台：
 
 ## 总结
 
-![总结](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/13.png)
+![总结](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/13.png)
 
 Google 的这门 5 天课程不仅是技术的教学，更是一种思维的升级。它告诉我们：
 
@@ -764,7 +764,7 @@ flowchart LR
 
 踏出这一步，你就不再只是 Prompt Engineer，而是 **Agent Architect (智能体架构师)**。
 
-![智能体架构师](//pub.smallyoung.cn/course_slidev/IntroductionToAgents/14.png)
+![智能体架构师](//cdn.smallyoung.cn/smallyoung_blog/IntroductionToAgents/14.png)
 
 ## 权威参考资料
 

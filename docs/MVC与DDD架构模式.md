@@ -7,27 +7,25 @@ author: smallyoung
 date: 2025-12-31
 dateModified: 2025-12-31
 keywords: [MVC, DDD, 领域驱动设计, 架构模式, Spring Boot, 软件架构, 贫血模型, 充血模型]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/mvc-ddd/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/1.png
 ---
-
-# MVC与DDD架构模式：从UI分离到领域建模的演进之路
 
 > 当你的项目从简单的CRUD逐渐演变成复杂的业务系统时，传统的MVC架构是否已经力不从心？本文将带你理解MVC与DDD两种架构模式的本质区别，帮助你在正确的场景选择正确的架构方案。
 >
 > 📌 **核心著作**：[《领域驱动设计：软件核心复杂性应对之道》](https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215) - Eric Evans  
 > 📌 **适合人群**：后端开发者、架构师、技术负责人
 
-![MVC与DDD架构模式](//pub.smallyoung.cn/course_slidev/mvc-ddd/0.png)
+![MVC与DDD架构模式](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/0.png)
 
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/mvc-ddd/从MVC贫血到DDD充血模型转型实战.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/从MVC贫血到DDD充血模型转型实战.m4a"
   author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/mvc-ddd/MVC_与_DDD：驯服复杂性.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/MVC_与_DDD：驯服复杂性.mp4"
 />
 
 <MindMapFloat title="MVC与DDD知识图谱">
@@ -85,14 +83,14 @@ public class OrderService {
 }
 ```
 
-![贫血模型](//pub.smallyoung.cn/course_slidev/mvc-ddd/2.png)
+![贫血模型](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/2.png)
 
 **这就是典型的"贫血模型"困境**：业务逻辑全部堆积在Service层，Entity只是数据容器，系统越来越难以维护。
 
 > [!IMPORTANT]
 > **MVC解决的是UI与业务的分离问题，DDD解决的是复杂业务的建模问题。** 两者不是替代关系，而是在不同层面发挥作用。
 
-![两种模式，两种焦点](//pub.smallyoung.cn/course_slidev/mvc-ddd/3.png)
+![两种模式，两种焦点](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/3.png)
 
 ## 2. MVC架构模式：经典的关注点分离
 
@@ -131,7 +129,7 @@ MVC带来的最大价值是**并行开发**和**代码复用**：
 
 ### 2.3 MVC在Web开发中的演变
 
-![MVC](//pub.smallyoung.cn/course_slidev/mvc-ddd/4.png)
+![MVC](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/4.png)
 
 随着Web技术的发展，MVC模式也在不断演变：
 
@@ -155,7 +153,7 @@ timeline
 
 ### 2.4 MVC的局限性
 
-![MVC的局限性](//pub.smallyoung.cn/course_slidev/mvc-ddd/5.png)
+![MVC的局限性](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/5.png)
 
 当业务复杂度上升时，MVC会暴露出明显的问题：
 
@@ -171,7 +169,7 @@ timeline
 
 ### 3.1 什么是DDD？
 
-![什么是DDD](//pub.smallyoung.cn/course_slidev/mvc-ddd/6.png)
+![什么是DDD](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/6.png)
 
 DDD（Domain-Driven Design，领域驱动设计）是由Eric Evans在其2003年的同名著作中提出的软件开发方法论。它的核心思想是：**软件的核心复杂性在于业务领域本身，因此应该以领域模型为核心来驱动软件设计。**
 
@@ -180,7 +178,7 @@ DDD（Domain-Driven Design，领域驱动设计）是由Eric Evans在其2003年�
 
 ### 3.2 DDD的核心概念
 
-![DDD的核心概念](//pub.smallyoung.cn/course_slidev/mvc-ddd/7.png)
+![DDD的核心概念](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/7.png)
 
 DDD引入了一系列概念来帮助建模复杂业务：
 
@@ -223,7 +221,7 @@ flowchart TB
 
 #### 战略设计概念
 
-![战略设计](//pub.smallyoung.cn/course_slidev/mvc-ddd/8.png)
+![战略设计](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/8.png)
 
 | 概念 | 定义 | 示例 |
 |------|------|------|
@@ -233,7 +231,7 @@ flowchart TB
 
 ### 3.3 DDD的分层架构
 
-![架构层次的演变](//pub.smallyoung.cn/course_slidev/mvc-ddd/10.png)
+![架构层次的演变](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/10.png)
 
 DDD推荐的分层架构比传统三层更加精细：
 
@@ -266,7 +264,7 @@ flowchart TB
 
 ### 3.4 贫血模型 vs 充血模型
 
-![贫血模型 vs 充血模型](//pub.smallyoung.cn/course_slidev/mvc-ddd/9.png)
+![贫血模型 vs 充血模型](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/9.png)
 
 理解DDD的关键在于理解"充血模型"：
 
@@ -407,7 +405,7 @@ src/
 
 ## 5. 实际应用场景
 
-![选择你的架构之路](//pub.smallyoung.cn/course_slidev/mvc-ddd/11.png)
+![选择你的架构之路](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/11.png)
 
 ### 5.1 何时使用MVC？
 
@@ -514,7 +512,7 @@ flowchart TB
 
 ## 6. DDD最新趋势（2024-2025）
 
-![DDD最新趋势](//pub.smallyoung.cn/course_slidev/mvc-ddd/12.png)
+![DDD最新趋势](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/12.png)
 
 ### 6.1 AI增强的领域建模
 
@@ -567,7 +565,7 @@ DDD越来越被视为**社会技术设计**的基础：
 
 ### 7.3 从MVC迁移到DDD的路径
 
-![从MVC迁移到DDD的路径](//pub.smallyoung.cn/course_slidev/mvc-ddd/13.png)
+![从MVC迁移到DDD的路径](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/13.png)
 
 > [!WARNING]
 > **渐进式迁移，避免大爆炸重写！**
@@ -581,7 +579,7 @@ DDD越来越被视为**社会技术设计**的基础：
 
 ## 8. 总结
 
-![核心回顾](//pub.smallyoung.cn/course_slidev/mvc-ddd/14.png)
+![核心回顾](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/14.png)
 
 | 概念 | 一句话解释 |
 |------|-----------|
@@ -606,7 +604,7 @@ DDD越来越被视为**社会技术设计**的基础：
   → 系统可持续演进
 ```
 
-![驾驭复杂度，而非消除它](//pub.smallyoung.cn/course_slidev/mvc-ddd/15.png)
+![驾驭复杂度，而非消除它](//cdn.smallyoung.cn/smallyoung_blog/mvc-ddd/15.png)
 
 
 ## 9. 参考资料

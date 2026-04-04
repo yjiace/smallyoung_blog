@@ -7,20 +7,25 @@ author: smallyoung
 date: 2026-04-03
 dateModified: 2026-04-03
 keywords: [Claude Code, 记忆系统, 持久记忆, MEMORY.md, Fork Agent, 团队记忆, KAIROS]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/claude-code-memory/cover.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/1.png
 ---
-
-# Claude Code 记忆系统深度分析：基于源码泄露的三层架构解密
 
 > Claude Code 不是一个有记忆的聊天机器人——它是一个拥有**三层递进知识管理体系**的工程级 AI Agent。2026 年 3 月 31 日，Anthropic 因 npm 打包失误意外泄露了完整的 Claude Code 源码（约 512,000 行 TypeScript），让外界首次得以窥见其记忆系统的全貌。本文基于 `src/memdir/`、`src/services/extractMemories/`、`src/services/SessionMemory/`、`src/services/teamMemorySync/` 等核心模块，逐层拆解这套"会话记忆 → 持久记忆 → 团队记忆"的完整架构。
 >
 > 📌 **适合人群**：AI 工程师、Claude Code 重度用户、对 LLM Agent 记忆机制感兴趣的开发者
 
-![Claude Code 记忆系统深度分析](//pub.smallyoung.cn/course_slidev/claude-code-memory/0.png)
+![Claude Code 记忆系统深度分析](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/0.png)
 
-<!--
-  MindMapFloat 知识维度地图（完成正文后填写）
--->
+> 🎧 **更喜欢听？试试本文的音频版本**
+<AudioPlayer
+src="//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/51万行源码曝光的AI记忆.m4a"
+author="SmallYoung"
+/>
+
+<VideoPlayer
+src="//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/意外的大脑：Claude记忆系统揭秘.mp4"
+/>
+
 <MindMapFloat title="Claude Code 记忆系统知识图谱">
 
 ```mindmap-data
@@ -59,8 +64,6 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/claude-code-me
 - ✅ 团队记忆同步协议：Delta 上传、乐观锁与冲突解决
 - ✅ 30 种秘密扫描规则与多层路径安全防护设计
 
----
-
 ## 1. 源码泄露事件与记忆系统的核心问题
 
 ### 1.1 一次意外的"透明化"
@@ -84,6 +87,8 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/claude-code-me
 | 过期信息污染 | 旧的记忆被当作事实引用，导致错误决策 | 准确性下降 |
 
 Claude Code 的解法是构建一个**三层递进的知识管理体系**，每一层解决不同时间维度和作用范围的问题。
+
+![LLM记忆的根本工程困境](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/2.png)
 
 ### 1.3 三层架构的设计哲学
 
@@ -113,7 +118,7 @@ flowchart TB
 
 三层设计的本质是**时间维度的知识分层**：会话记忆管"今天"，持久记忆管"这个项目"，团队记忆管"整个团队"。
 
----
+![三层设计](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/3.png)
 
 ## 2. 持久记忆系统：跨会话知识的核心载体
 
@@ -141,6 +146,8 @@ type: feedback
 > [!TIP]
 > 在终端运行 `/memory` 命令，可以打开记忆文件选择器，查看 Claude Code 为你保存的所有记忆文件。路径在 `~/.claude/projects/<项目>/memory/` 下。
 
+![人类可读优先的持久记忆](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/4.png)
+
 ### 2.2 四种记忆类型的精确定义
 
 源码中硬编码了四种记忆类型，每种都有明确的触发时机和隐私作用域：
@@ -157,6 +164,8 @@ const MEMORY_TYPES = ['user', 'feedback', 'project', 'reference'] as const
 | **reference** | 外部系统指针 | "线上告警看板: https://grafana/xxx" | 通常团队共享 |
 
 `feedback` 和 `project` 类型有一个强制结构要求：必须包含 `**Why:**` 和 `**How to apply:**` 两行。这不是风格建议，而是系统提示词中的硬性规定——没有上下文的结论容易被错误地应用。
+
+![记忆的精确定义与绝对排除边界](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/5.png)
 
 ### 2.3 明确不保存的内容：六类排除项
 
@@ -256,7 +265,7 @@ flowchart LR
 
 这意味着即使攻击者控制了一个仓库并在 `.claude/settings.json` 中设置了恶意路径，Claude Code 也不会将其用作记忆目录。
 
----
+![路径安全](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/6.png)
 
 ## 3. 自动记忆提取：Fork Agent 的隔离执行
 
@@ -344,7 +353,7 @@ if (turnsSinceLastExtraction < turnsBeforeExtraction) {
 
 提取成功后，写入的文件路径列表会以 `SystemMemorySavedMessage` 的形式追加到主对话中。这样主 Agent 在下一轮对话时能感知到"记忆已更新"，而不需要重新读取整个目录。
 
----
+![“潜意识”提取：ForkAgent的非阻塞运行](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/7.png)
 
 ## 4. AI 驱动的语义召回：findRelevantMemories
 
@@ -419,7 +428,7 @@ Verify against current code before asserting as fact.`
 > [!WARNING]
 > "记忆说 X 存在"不等于"X 现在存在"。这是记忆系统设计文档中最重要的一句话。记忆是某个时间点的观察，不是实时状态。
 
----
+![语义召回：AI的关联与时间感知](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/8.png)
 
 ## 5. 会话记忆：专为上下文压缩而生
 
@@ -437,6 +446,8 @@ Verify against current code before asserting as fact.`
 | **提取工具权限** | 仅 FileEdit | Read/Write/Edit/Grep |
 
 会话记忆的存在意义：当对话上下文即将被压缩时，Claude Code 会优先使用已有的会话记忆内容作为摘要基础，而不是让 Fork Agent 重新生成——这是一条**优先路径（preferred path）**。
+
+![会话记忆 vs 持久记忆](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/9.png)
 
 ### 5.2 精确的触发阈值设计
 
@@ -475,8 +486,6 @@ const defaults = {
 ```
 
 这 10 个章节的结构保证了压缩时的信息完整性：一个 Fork Agent 在压缩时，不需要从零理解上下文，只需要读取这份结构化摘要即可快速恢复状态。
-
----
 
 ## 6. 团队记忆同步：分布式知识的工程挑战
 
@@ -558,7 +567,7 @@ fs.watch(teamMemDir, { recursive: true })
 
 额外的安全硬性要求直接写进系统提示词：`MUST avoid saving sensitive data within shared team memories`。
 
----
+![团队记忆同步](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/10.png)
 
 ## 7. 秘密扫描保护：30 种凭证检测规则
 
@@ -622,7 +631,7 @@ const prefix = ['sk', 'ant', 'api'].join('-')
 > [!NOTE]
 > 设计原则：**匹配到的秘密值永远不被记录或返回——只返回规则 ID 和人类可读标签**。即使扫描到了泄露的凭证，系统也不会在日志中记录凭证内容本身。
 
----
+![30层凭证守卫：团队共享的终极防线](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/11.png)
 
 ## 8. KAIROS 模式：夜间蒸馏与未来方向
 
@@ -660,7 +669,7 @@ autoDream 是 KAIROS 的核心组件，类似人类睡眠时的记忆巩固过�
 > [!TIP]
 > 根据泄露代码中的注释，KAIROS 的完整公开发布计划是：2026 年 4 月 1-7 日小范围测试，5 月开始从 Anthropic 内部员工开始灰度放量。
 
----
+![KAIROS模式：AI的“快速眼动（REM）睡眠”](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/12.png)
 
 ## 9. 记忆系统的生命周期全景
 
@@ -693,8 +702,6 @@ flowchart TB
     style R fill:#fff3e0
 ```
 
----
-
 ## 10. 关键设计决策总结
 
 这些设计决策共同构成了 Claude Code 记忆系统的工程哲学：
@@ -720,7 +727,7 @@ flowchart TB
 > 3. 了解四种记忆类型的边界，练习区分哪些信息属于哪种类型
 > 4. 如果使用团队模式，阅读官方文档中关于团队记忆作用域的说明，避免意外共享敏感信息
 
----
+![Agentic记忆工程的哲学顶点](//cdn.smallyoung.cn/smallyoung_blog/claude-code-memory/13.png)
 
 ## 11. 参考资料
 

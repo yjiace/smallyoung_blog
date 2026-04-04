@@ -7,10 +7,8 @@ author: smallyoung
 date: 2025-12-30
 dateModified: 2025-12-30
 keywords: [RAG, 向量数据库, Vector Database, Embedding, 语义搜索, FAISS, Milvus, Pinecone, OpenAI, BGE]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/rag-vector/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/rag-vector/1.png
 ---
-
-# 为什么 RAG 要使用向量数据库
 
 > 本文**面向初学者**，从问题出发，一步步讲透 RAG 的底层核心原理。我们先提出核心问题，再逐层解构答案，让你真正理解：**为什么 RAG 离不开向量数据库？**
 >
@@ -18,16 +16,16 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/rag-vector/1.p
 > 📌 **发布时间**：2020 年 5 月（Meta AI / Facebook AI Research）  
 > 📌 **适合人群**：AI 初学者、对 RAG 感兴趣的开发者
 
-![为什么 RAG 要使用向量数据库](//pub.smallyoung.cn/course_slidev/rag-vector/0.png)
+![为什么 RAG 要使用向量数据库](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/0.png)
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/rag-vector/RAG为何必须依赖向量数据库.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/rag-vector/RAG为何必须依赖向量数据库.m4a"
   \author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/rag-vector/为什么RAG需要向量数据库.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/rag-vector/为什么RAG需要向量数据库.mp4"
 />
 
 <MindMapFloat title="RAG 与向量数据库知识图谱">
@@ -94,7 +92,7 @@ RAG（Retrieval-Augmented Generation，检索增强生成）的工作流程可�
 
 ### 2.1 向量的直观定义
 
-![万物皆可向量化](//pub.smallyoung.cn/course_slidev/rag-vector/4.png)
+![万物皆可向量化](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/4.png)
 
 **向量就是一组有序的数字**。就这么简单。
 
@@ -184,14 +182,14 @@ graph TB
     style C fill:#ffebee
 ```
 
-![Embedding 的核心思想](//pub.smallyoung.cn/course_slidev/rag-vector/5.png)
+![Embedding 的核心思想](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/5.png)
 
 > [!IMPORTANT]
 > **核心公式**：Embedding 的本质是一个函数 `f(text) → vector`，它把文本映射到高维空间，使得**语义相似的文本在空间中距离更近**。这是 RAG 能够"理解语义"的根本原理。
 
 ### 3.3 为什么 Embedding 能捕捉语义？
 
-![为什么 Embedding 能捕捉语义](//pub.smallyoung.cn/course_slidev/rag-vector/6.png)
+![为什么 Embedding 能捕捉语义](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/6.png)
 
 Embedding 模型（如 BERT、GPT）是通过**海量文本数据训练**出来的。
 
@@ -223,7 +221,7 @@ Embedding 模型（如 BERT、GPT）是通过**海量文本数据训练**出来�
 
 ### 4.1 主流 Embedding 模型对比（2026）
 
-![模型对比](//pub.smallyoung.cn/course_slidev/rag-vector/7.png)
+![模型对比](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/7.png)
 
 | 厂商 | 模型名称 | 向量维度 | 特点 |
 |------|----------|----------|------|
@@ -274,7 +272,7 @@ Embedding 模型（如 BERT、GPT）是通过**海量文本数据训练**出来�
 
 ### 5.1 余弦相似度（Cosine Similarity）
 
-![宇宙中的“引力”](//pub.smallyoung.cn/course_slidev/rag-vector/8.png)
+![宇宙中的“引力”](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/8.png)
 
 **余弦相似度**是最常用的相似度指标，它测量两个向量**方向**上的相似程度。
 
@@ -318,7 +316,7 @@ B = [2, 4, 6]
 > 余弦相似度**忽略向量的"长度"，只关注"方向"**。这正好符合我们的需求：判断语义是否相似，而不是文本长度是否相同。
 ## 6. 把它们连起来：RAG 的完整工作原理
 
-![完整工作流](//pub.smallyoung.cn/course_slidev/rag-vector/9.png)
+![完整工作流](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/9.png)
 
 现在我们已经理解了所有基础概念，可以把它们串起来，看 RAG 是如何工作的。
 
@@ -433,11 +431,11 @@ chunk_overlap = 50    # 相邻块重叠 50 个 token
 
 
 
-![两全其美：混合检索](//pub.smallyoung.cn/course_slidev/rag-vector/11.png)
+![两全其美：混合检索](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/11.png)
 
 ## 9. 主流向量数据库对比（2024）
 
-![向量数据库星图](//pub.smallyoung.cn/course_slidev/rag-vector/12.png)
+![向量数据库星图](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/12.png)
 
 ### 7.1 开源向量数据库
 
@@ -478,7 +476,7 @@ flowchart TD
     K -->|否，追求性能| M[Qdrant / Milvus]
 ```
 
-![如何选择](//pub.smallyoung.cn/course_slidev/rag-vector/13.png)
+![如何选择](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/13.png)
 
 ### 9.4 各数据库性能特点
 
@@ -512,7 +510,7 @@ top_k = sorted(similarities)[:k]
 
 ### 8.2 ANN 算法：近似但快速
 
-![毫秒级响应的密码](//pub.smallyoung.cn/course_slidev/rag-vector/14.png)
+![毫秒级响应的密码](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/14.png)
 
 向量数据库使用 **ANN（Approximate Nearest Neighbor，近似最近邻）** 算法。
 
@@ -589,7 +587,7 @@ graph TB
 
 ### 为什么 RAG 必须使用向量数据库？
 
-![总结](//pub.smallyoung.cn/course_slidev/rag-vector/15.png)
+![总结](//cdn.smallyoung.cn/smallyoung_blog/rag-vector/15.png)
 
 ```
 1. RAG 需要"检索"外部知识来增强 LLM

@@ -7,10 +7,9 @@ author: smallyoung
 date: 2026-02-27
 dateModified: 2026-02-27
 keywords: [Agentic RAG, AI Agent, 检索增强生成, RAG, 智能体检索, 多智能体, LangChain, LlamaIndex, 动态检索, 自主决策]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/agentic-rag/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/agentic-rag/1.png
 ---
 
-# Agentic RAG：AI Agent 驱动的检索增强生成新范式
 
 > **Agentic RAG** 是将 AI Agent 的自主决策能力与检索增强生成（RAG）深度融合的新一代技术范式。它让 AI 系统从「被动执行检索」进化为「主动规划、动态决策」——这不是一次小修小补，而是 RAG 的根本性范式升级。
 >
@@ -18,16 +17,16 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/agentic-rag/1.
 > 📌 **相关论文**：[Self-RAG: Learning to Retrieve, Generate, and Critique](https://arxiv.org/abs/2310.11511)（自我反思机制）  
 > 📌 **适合人群**：有 RAG 基础的 AI 开发者、后端工程师、AI 应用架构师
 
-![Agentic RAG](//pub.smallyoung.cn/course_slidev/agentic-rag/0.png)
+![Agentic RAG](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/0.png)
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/agentic-rag/Agentic_RAG让AI学会自主思考.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/Agentic_RAG让AI学会自主思考.m4a"
   author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/agentic-rag/Agentic_RAG：当AI需要大脑而非图书馆.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/Agentic_RAG：当AI需要大脑而非图书馆.mp4"
 />
 
 
@@ -106,12 +105,12 @@ flowchart LR
 | **跨源整合困难** | 无法灵活调用不同类型数据源 | 问题需要结合向量库、SQL 数据库、实时 API 三者 |
 | **多跳推理缺失** | 无法将多次检索结果关联推理 | 「A 的老板的母校在哪里？」需要链式推理 |
 
-![五大瓶颈](//pub.smallyoung.cn/course_slidev/agentic-rag/3.png)
+![五大瓶颈](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/3.png)
 
 > [!IMPORTANT]
 > **核心矛盾**：传统 RAG 是一个「固定管道」——输入问题，输出答案，中间流程不可变。但现实中的复杂问题需要的是「动态导航」——根据中间结果灵活调整策略。
 
-![核心矛盾](//pub.smallyoung.cn/course_slidev/agentic-rag/2.png)
+![核心矛盾](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/2.png)
 
 ### 1.3 让 AI 自己决定怎么检索
 
@@ -193,7 +192,7 @@ Final Answer（最终答案）: [综合两次检索结果生成对比分析...]
 > [!NOTE]
 > ReAct 论文（[arxiv:2210.03629](https://arxiv.org/abs/2210.03629)）证明，推理与行动的交替循环比单独使用任一方式都能显著提升复杂任务的完成质量。
 
-![推理引擎](//pub.smallyoung.cn/course_slidev/agentic-rag/4.png)
+![推理引擎](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/4.png)
 
 ### 2.3 核心工作流程
 
@@ -252,7 +251,7 @@ flowchart LR
 
 **局限**：无法处理需要多源联合的问题。
 
-![Router Agent（路由智能体）](//pub.smallyoung.cn/course_slidev/agentic-rag/5.png)
+![Router Agent（路由智能体）](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/5.png)
 
 ### 3.2 Planner Agent（规划智能体）
 
@@ -279,7 +278,7 @@ flowchart TB
 | **依赖管理** | 上一步结果影响下一步策略 |
 | **可审查性** | 执行计划可视化，便于调试 |
 
-![Planner Agent（规划智能体）](//pub.smallyoung.cn/course_slidev/agentic-rag/6.png)
+![Planner Agent（规划智能体）](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/6.png)
 
 ### 3.3 Reflective Agent（反思智能体）
 
@@ -313,7 +312,7 @@ flowchart TB
 > [!TIP]
 > Reflective Agent 正是 **SELF-RAG** 和 **CRAG** 的核心思路——让 AI 自我评估检索质量，而非盲目使用任何检索结果。
 
-![Reflective Agent（反思智能体）](//pub.smallyoung.cn/course_slidev/agentic-rag/7.png)
+![Reflective Agent（反思智能体）](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/7.png)
 
 ## 4. 多智能体 RAG 架构
 
@@ -377,7 +376,7 @@ gantt
     综合生成      :4, 6
 ```
 
-![多智能体 RAG 架构](//pub.smallyoung.cn/course_slidev/agentic-rag/8.png)
+![多智能体 RAG 架构](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/8.png)
 
 ## 5. 与传统 RAG 的全面对比
 
@@ -423,7 +422,7 @@ flowchart LR
 > - ❌ 简单 FAQ / 单文档问答 → 用传统 RAG 更合适
 > - ❌ 对延迟极度敏感（<1秒响应）→ 用传统 RAG 更合适
 
-![与传统 RAG 的全面对比](//pub.smallyoung.cn/course_slidev/agentic-rag/9.png)
+![与传统 RAG 的全面对比](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/9.png)
 
 ## 6. 主流框架实现
 
@@ -600,7 +599,7 @@ result = app.invoke({"question": "...", "retry_count": 0})
 | **LangGraph** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 复杂流程、生产环境 |
 | **AutoGen** | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 多 Agent 协作 |
 
-![主流框架](//pub.smallyoung.cn/course_slidev/agentic-rag/10.png)
+![主流框架](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/10.png)
 
 ## 7. 实战最佳实践
 
@@ -673,7 +672,7 @@ relevance_evaluator = ChatPromptTemplate.from_messages([
 > - 对重复问题启用结果缓存
 > - 根据问题复杂度动态决定使用 Agentic RAG 还是传统 RAG
 
-![最佳实践](//pub.smallyoung.cn/course_slidev/agentic-rag/11.png)
+![最佳实践](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/11.png)
 
 ## 8. Agentic RAG 的五大核心优势
 
@@ -709,7 +708,7 @@ mindmap
 | **金融分析报告** | 需结合实时行情、历史数据、研报 | 多源工具 + 并行检索 |
 | **客户服务升级** | 复杂投诉需关联多个系统数据 | Router Agent + 工单系统集成 |
 
-![最佳适用场景](//pub.smallyoung.cn/course_slidev/agentic-rag/13.png)
+![最佳适用场景](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/13.png)
 
 ### 9.2 不适合的场景
 
@@ -720,7 +719,7 @@ mindmap
 > - **实时性要求极高**（< 1 秒响应）：Agent 的多次 LLM 调用难以满足
 > - **预算极为有限**：Agentic RAG 的 API 调用成本是传统 RAG 的 3-10 倍
 
-![何时使用](//pub.smallyoung.cn/course_slidev/agentic-rag/12.png)
+![何时使用](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/12.png)
 
 ## 10. 未来展望
 
@@ -757,7 +756,7 @@ flowchart LR
 4. **隐私保护检索**：联邦学习 + Agentic RAG，在保护数据的同时跨机构协作
 5. **端到端优化**：检索器与生成器联合微调，彻底打通两端性能瓶颈
 
-![未来展望](//pub.smallyoung.cn/course_slidev/agentic-rag/14.png)
+![未来展望](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/14.png)
 
 ## 11. 总结
 
@@ -771,7 +770,7 @@ flowchart LR
 | **多智能体 RAG** | 多个专业 Agent 并行协作处理复杂任务 |
 | **工具描述** | Agent 选择工具的核心依据，精准度至关重要 |
 
-![总结](//pub.smallyoung.cn/course_slidev/agentic-rag/15.png)
+![总结](//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/15.png)
 
 > [!TIP]
 > **学习路径建议**：

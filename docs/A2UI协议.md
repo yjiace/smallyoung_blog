@@ -7,10 +7,8 @@ author: smallyoung
 date: 2025-12-20
 dateModified: 2025-12-20
 keywords: [A2UI, Agent to UI, Google A2UI, AI UI协议, LLM UI, 智能体界面, 声明式UI, JSONL, 流式渲染, surfaceUpdate, dataModelUpdate, beginRendering]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/a2ui/1.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/a2ui/1.png
 ---
-
-# A2UI 协议完全指南 | Google AI智能体界面协议教程
 
 > **A2UI (Agent to UI)** 是由 Google 创建的声明式 UI 协议，用于智能体驱动的界面。它允许 AI 智能体生成丰富的、交互式的用户界面，这些界面可以在 Web、移动端和桌面等不同平台上以原生方式渲染，而无需执行任意代码。
 > 
@@ -36,16 +34,16 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/a2ui/1.png
 
 **关键词**：A2UI、Agent to UI、Google A2UI、AI UI 协议、LLM UI、智能体界面、声明式 UI、JSONL、流式渲染、React A2UI、Flutter A2UI、Angular A2UI
 
-![让AI生成UI：A2UI协议完全指南](//pub.smallyoung.cn/course_slidev/a2ui/0.png)
+![让AI生成UI：A2UI协议完全指南](//cdn.smallyoung.cn/smallyoung_blog/a2ui/0.png)
 
 > 🎧 **更喜欢听？试试本文的音频版本**
 <AudioPlayer 
-  src="//pub.smallyoung.cn/course_slidev/a2ui/A2UI_%E5%AE%89%E5%85%A8%E7%94%9F%E6%88%90%E4%BA%A4%E4%BA%92%E5%BC%8F_AI_%E7%95%8C%E9%9D%A2.m4a"
+  src="//cdn.smallyoung.cn/smallyoung_blog/a2ui/A2UI_%E5%AE%89%E5%85%A8%E7%94%9F%E6%88%90%E4%BA%A4%E4%BA%92%E5%BC%8F_AI_%E7%95%8C%E9%9D%A2.m4a"
   author="SmallYoung"
 />
 
 <VideoPlayer 
-  src="//pub.smallyoung.cn/course_slidev/a2ui/A2UI%EF%BC%9AAI_%E7%95%8C%E9%9D%A2%E7%9A%84%E9%80%9A%E7%94%A8%E8%AF%AD%E8%A8%80.mp4"
+  src="//cdn.smallyoung.cn/smallyoung_blog/a2ui/A2UI%EF%BC%9AAI_%E7%95%8C%E9%9D%A2%E7%9A%84%E9%80%9A%E7%94%A8%E8%AF%AD%E8%A8%80.mp4"
 />
 
 <MindMapFloat title="让 AI 生成 UI：A2UI 协议完全指南">
@@ -109,7 +107,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/a2ui/1.png
 
 #### 传统方案的局限
 
-![传统方案的局限](//pub.smallyoung.cn/course_slidev/a2ui/2.png)
+![传统方案的局限](//cdn.smallyoung.cn/smallyoung_blog/a2ui/2.png)
 
 | 方案 | 问题 |
 |------|------|
@@ -121,7 +119,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/a2ui/1.png
 
 A2UI 让智能体发送**声明式组件描述**（JSON 格式），客户端使用自己的原生组件库进行渲染。这就像让智能体说一种"通用 UI 语言"，客户端负责翻译和展示。
 
-![声明式组件](//pub.smallyoung.cn/course_slidev/a2ui/3.png)
+![声明式组件](//cdn.smallyoung.cn/smallyoung_blog/a2ui/3.png)
 
 **核心优势**：
 - 智能体只能使用预先批准的组件，无法执行任意代码
@@ -139,7 +137,7 @@ A2UI 让智能体发送**声明式组件描述**（JSON 格式），客户端使
 
 ### 协议特点
 
-![协议特点](//pub.smallyoung.cn/course_slidev/a2ui/4.png)
+![协议特点](//cdn.smallyoung.cn/smallyoung_blog/a2ui/4.png)
 
 | 特点 | 详细说明 |
 |------|---------|
@@ -171,7 +169,7 @@ sequenceDiagram
 
 ### 数据流的六个阶段
 
-![数据流的六个阶段](//pub.smallyoung.cn/course_slidev/a2ui/6.png)
+![数据流的六个阶段](//cdn.smallyoung.cn/smallyoung_blog/a2ui/6.png)
 
 | 阶段 | 描述 | 关键操作 |
 |------|------|---------|
@@ -195,7 +193,7 @@ A2UI 协议围绕三个核心思想构建，这是理解整个协议的基础：
 
 ### 三大解耦元素
 
-![三大解耦元素](//pub.smallyoung.cn/course_slidev/a2ui/5.png)
+![三大解耦元素](//cdn.smallyoung.cn/smallyoung_blog/a2ui/5.png)
 
 A2UI 的核心设计哲学是**解耦**——将 UI 生成过程中的三个关键元素分离：
 
@@ -259,7 +257,7 @@ flowchart TD
 ```
 ## 消息类型
 
-![消息类型](//pub.smallyoung.cn/course_slidev/a2ui/7.png)
+![消息类型](//cdn.smallyoung.cn/smallyoung_blog/a2ui/7.png)
 
 A2UI 使用 **JSONL（JSON Lines）** 格式传输消息，每行是一个独立的 JSON 对象。通常通过 **SSE（Server-Sent Events）** 进行传输。
 
@@ -381,7 +379,7 @@ A2UI 使用 **JSONL（JSON Lines）** 格式传输消息，每行是一个独立
 | 数组 | `valueArray` | 值对象数组 |
 ### beginRendering 消息详解
 
-![beginRendering 消息详解](//pub.smallyoung.cn/course_slidev/a2ui/10.png)
+![beginRendering 消息详解](//cdn.smallyoung.cn/smallyoung_blog/a2ui/10.png)
 
 `beginRendering` 消息通知客户端已有足够信息进行初始渲染。
 
@@ -426,7 +424,7 @@ A2UI 使用 **JSONL（JSON Lines）** 格式传输消息，每行是一个独立
 
 ### 邻接列表模型（Adjacency List Model）
 
-![邻接列表](//pub.smallyoung.cn/course_slidev/a2ui/8.png)
+![邻接列表](//cdn.smallyoung.cn/smallyoung_blog/a2ui/8.png)
 
 A2UI 使用**邻接列表模型**定义 UI——将整个 UI 定义为**扁平的组件列表**，通过 ID 引用隐式构建树形结构。
 
@@ -579,7 +577,7 @@ A2UI 使用**邻接列表模型**定义 UI——将整个 UI 定义为**扁平�
 
 ### 三种绑定方式
 
-![三种绑定方式](//pub.smallyoung.cn/course_slidev/a2ui/9.png)
+![三种绑定方式](//cdn.smallyoung.cn/smallyoung_blog/a2ui/9.png)
 
 #### 方式 1：仅字面量值（静态）
 
@@ -645,7 +643,7 @@ flowchart LR
 
 ### userAction 消息详解
 
-![事件处理](//pub.smallyoung.cn/course_slidev/a2ui/11.png)
+![事件处理](//cdn.smallyoung.cn/smallyoung_blog/a2ui/11.png)
 
 当用户与定义了 `action` 属性的组件交互时，客户端发送 `userAction` 消息。
 
@@ -719,7 +717,7 @@ sequenceDiagram
 
 ## 快速入门
 
-![快速入门](//pub.smallyoung.cn/course_slidev/a2ui/13.png)
+![快速入门](//cdn.smallyoung.cn/smallyoung_blog/a2ui/13.png)
 
 ### 5分钟运行 A2UI Demo
 
@@ -797,7 +795,7 @@ npm run demo:all
 
 ### 示例 1：用户资料卡片
 
-![用户资料卡片](//pub.smallyoung.cn/course_slidev/a2ui/12.png)
+![用户资料卡片](//cdn.smallyoung.cn/smallyoung_blog/a2ui/12.png)
 
 以下是渲染用户资料卡片的完整 JSONL 流：
 
@@ -853,7 +851,7 @@ npm run demo:all
 ```
 ## 常见问题
 
-![常见问题](//pub.smallyoung.cn/course_slidev/a2ui/14.png)
+![常见问题](//cdn.smallyoung.cn/smallyoung_blog/a2ui/14.png)
 
 ### Q1: A2UI 与传统 UI 框架（如 React）有什么区别？
 
@@ -887,7 +885,7 @@ JSONL 支持**流式传输**——智能体可以边生成边发送，客户端�
 | **WebSocket** | 支持双向通信的场景 |
 | **A2A 消息** | 通过 A2A 协议嵌入 A2UI 消息 |
 
-![未来畅想](//pub.smallyoung.cn/course_slidev/a2ui/15.png)
+![未来畅想](//cdn.smallyoung.cn/smallyoung_blog/a2ui/15.png)
 
 ## 学习资源
 
