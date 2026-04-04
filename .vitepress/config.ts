@@ -244,12 +244,7 @@ export default withMermaid(defineConfig({
 
   // Mermaid 配置
   mermaid: {
-    theme: 'base',
-    themeVariables: {
-      primaryColor: '#137fec',
-      edgeLabelBackground: 'transparent',
-      tertiaryColor: '#f6f7f8'
-    },
+    theme: 'default',
     flowchart: {
       htmlLabels: true,
       useMaxWidth: true,

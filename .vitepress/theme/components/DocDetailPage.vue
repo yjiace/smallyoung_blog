@@ -277,30 +277,9 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 </script>
 
 <style>
-/* 0. Mermaid 深色模式适配 */
+/* 0. Mermaid 深色模式适配 - 最小化干预 */
 .dark .mermaid-diagram svg {
   filter: brightness(0.9) contrast(1.1);
-}
-.dark .mermaid-diagram .node rect,
-.dark .mermaid-diagram .node circle,
-.dark .mermaid-diagram .node ellipse,
-.dark .mermaid-diagram .node polygon,
-.dark .mermaid-diagram .node path {
-  fill: #1a2530 !important;
-  stroke: #137fec !important;
-}
-.dark .mermaid-diagram .label,
-.dark .mermaid-diagram .edgeLabel,
-.dark .mermaid-diagram text {
-  fill: #e0e0e0 !important;
-  color: #e0e0e0 !important;
-}
-.dark .mermaid-diagram .edgePath .path {
-  stroke: #2c3a47 !important;
-}
-.dark .mermaid-diagram .marker {
-  fill: #2c3a47 !important;
-  stroke: #2c3a47 !important;
 }
 
 /* 1. 标题渲染修复 */
