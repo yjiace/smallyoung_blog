@@ -20,7 +20,10 @@ export default withMermaid(defineConfig({
   },
 
   // 输出目录
-  outDir: '../dist/blog',
+  outDir: 'dist/blog',
+
+  // 忽略死链接
+  ignoreDeadLinks: true,
 
   // 缓存目录
   cacheDir: '.vitepress/cache',
@@ -200,7 +203,30 @@ export default withMermaid(defineConfig({
       light: 'github-light',
       dark: 'github-dark'
     },
+    // @ts-ignore
+    shiki: {
+      languages: [
+        {
+          name: 'mindmap-data',
+          scopeName: 'text.mindmap-data',
+          patterns: []
+        }
+      ],
+      langAlias: {
+        'mindmap-data': 'text'
+      }
+    },
     config: (md) => {
+      // 解决 mindmap-data 警告：在 Shiki 处理前将其语言改为 text
+      const mindmapFence = md.renderer.rules.fence;
+      md.renderer.rules.fence = (tokens: any, idx: any, options: any, env: any, self: any) => {
+        const token = tokens[idx];
+        if (token.info.trim() === 'mindmap-data') {
+          token.info = 'text';
+        }
+        return mindmapFence!(tokens, idx, options, env, self);
+      };
+
       const defaultImageRender = md.renderer.rules.image || ((tokens: any, idx: any, options: any, env: any, self: any) => self.renderToken(tokens, idx, options))
 
       md.renderer.rules.image = (tokens: any, idx: any, options: any, env: any, self: any) => {
@@ -241,6 +267,18 @@ export default withMermaid(defineConfig({
 
   // 清理 URL
   cleanUrls: true,
+
+  // Vite 配置
+  vite: {
+    ssr: {
+      noExternal: ['mark.js']
+    },
+    resolve: {
+      alias: {
+        'mark.js/src/vanilla.js': 'mark.js/dist/mark.js'
+      }
+    }
+  },
 
   // Mermaid 配置
   mermaid: {

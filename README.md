@@ -124,7 +124,7 @@ npm run preview
 
 ## 📄 开源协议
 
-本项目采用 [MIT License](LICENSE) 许可协议。
+本项目采用 MIT License 许可协议 (LICENSE 文件位于项目根目录)。
 
 ---
 Created by **SmallYoung** 
