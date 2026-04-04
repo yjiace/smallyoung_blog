@@ -1,0 +1,51 @@
+# SmallYoung 课件系统 - Robots.txt
+# 主域名: https://www.smallyoung.cn (EdgeOne)
+# 备用域名: https://smallyoung.cn (Cloudflare)
+
+# ========== 通用爬虫规则 ==========
+User-agent: *
+Allow: /
+Crawl-delay: 1
+
+# 禁止爬取系统目录
+Disallow: /.vitepress/
+Disallow: /node_modules/
+Disallow: /assets/chunks/
+
+# ========== 国内搜索引擎专用规则 ==========
+# 百度爬虫
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 1
+
+# 360搜索
+User-agent: 360Spider
+Allow: /
+Crawl-delay: 1
+
+# 搜狗搜索
+User-agent: Sogou web spider
+Allow: /
+Crawl-delay: 1
+
+# 神马搜索（移动端）
+User-agent: YisouSpider
+Allow: /
+Crawl-delay: 1
+
+# 头条搜索
+User-agent: Bytespider
+Allow: /
+Crawl-delay: 1
+
+# 必应爬虫
+User-agent: bingbot
+Allow: /
+Crawl-delay: 1
+
+# Google 爬虫
+User-agent: Googlebot
+Allow: /
+
+# ========== 站点地图 ==========
+Sitemap: https://www.smallyoung.cn/sitemap.xml

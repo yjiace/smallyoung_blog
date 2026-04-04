@@ -1,0 +1,46 @@
+# llms.txt - LLM Content Index
+# 网站：www.smallyoung.cn
+# 更新日期：2026-04-03
+# 本文件由构建脚本自动生成，请勿手动编辑
+
+## 网站概述
+SmallYoung 是一个技术博客与课件系统，专注于 AI、大模型、软件开发领域的技术分享与教学。
+
+## 内容索引
+
+### 后端开发
+- /docs/MVC与DDD架构模式 - MVC与DDD架构模式：从UI分离到领域建模的演进之路: 深入解析MVC与DDD两大架构模式的核心区别，从UI分离到复杂业务建模，帮助开发者选择合适的架构方案。包含实战代码和最佳实践。
+
+### 人工智能
+- /docs/Claude_Code记忆系统深度分析 - Claude Code 记忆系统深度分析：基于源码泄露的三层架构解密: 2026年3月31日 Claude Code 源码意外泄露，暴露了其完整的三层记忆架构。本文基于 512K 行 TypeScript 源码，深入解析持久记忆、会话记忆与团队记忆的实现机制、安全设计与 KAIROS 未来方向。
+- /docs/Kimi-Attention-Residuals深度解析 - Kimi Attention Residuals：彻底重写 Transformer 残差连接的新底层框架: Kimi 团队于 2026 年 3 月发布 Attention Residuals（AttnRes），用深度方向的 Softmax 注意力替代固定等权累加残差连接，等效于 1.25× 计算量，GPQA-Diamond 提升 7.5 分。本文从原理到代码，带你全面理解这项 LLM 底层架构突破。
+- /docs/Harness Engineering：重塑Al Agent时代的软件工程 - Harness Engineering：重塑Al Agent时代的软件工程: 2026年最热工程范式！本文带你彻底理解 Harness Engineering 的核心原理、三大支柱与实战方法——从 OpenAI 百万行代码实验到 LangChain 排名从第30跃升第5，看清是什么决定了 AI Agent 的真实战斗力。
+- /docs/数字人完全指南：技术原理、主流模型与选型实战 - 数字人完全指南：技术原理、主流模型与选型实战: 数字人技术全栈入门指南。涵盖2D与3D实现原理、SadTalker/MuseTalk/Wav2Lip等主流模型深度对比、2026最新模型动态、产业链全景与保姆级选型决策树，适合AI初学者、短视频创作者与产品经理阅读。
+- /docs/Agentic-RAG智能体驱动的检索增强生成 - AgenticRAG：智能体驱动的检索增强生成: 深入解析 Agentic RAG 的核心原理与工作机制，从传统 RAG 的局限出发，揭示 AI Agent 如何驱动动态检索决策，覆盖单智能体、多智能体架构，以及 LangChain、LlamaIndex 等主流实现方案。
+- /docs/氛围编程实践指南 - 氛围编程实践指南：如何减少AI幻觉并构建模块化代码: 深入探讨氛围编程（Vibe Coding）的最佳实践，从需求文档到模块化开发，系统性地减少AI生成代码中的幻觉问题，提升开发效率与代码质量。
+- /docs/DeepSeek mHC深度解析 - DeepSeek mHC深度解析：流形约束超连接如何重塑大模型训练: 深入解析DeepSeek最新发布的mHC论文，揭示流形约束超连接如何通过双随机矩阵约束解决大规模模型训练的稳定性难题，探讨其技术原理与行业影响。
+- /docs/Google Opal入门指南 - Google Opal 入门指南：零代码构建 AI 应用的完整教程: 深入解析 Google Opal 无代码 AI 应用构建平台，从核心概念到实战操作，教你用自然语言快速创建 AI 小程序。
+- /docs/GEO与SEO - 从SEO到GEO：AI时代的生成式引擎优化新范式: 全面解析GEO（生成式引擎优化）与SEO（搜索引擎优化）的区别与联系，掌握AI时代内容优化的核心策略，提升品牌在AI搜索中的可见性。
+- /docs/大模型的开源与闭源 - AI大模型的航线抉择：开源与闭源的战略罗盘: 以讨论的视角全面剖析大模型开源与闭源的本质差异、各自利弊、真实挑战与安全风险，帮助读者形成独立判断。
+- /docs/AI-Agent入门指南 - AI Agent 入门指南：从概念到实践的完整解读: 全面解读AI Agent（智能体）的核心概念、工作原理和实践应用。从零开始理解AI Agent如何感知、决策、执行，以及如何使用LangChain等框架构建自己的智能代理。
+- /docs/RAG检索增强生成入门指南 - RAG 检索增强生成入门指南: 全面介绍 RAG（检索增强生成）技术的核心概念、三种主流架构对比（Naive/Advanced/Modular）、2024 年前沿技术（GraphRAG、SELF-RAG、CRAG）以及实践指南。面向初学者的权威教程。
+- /docs/为什么RAG要使用向量数据库 - 为什么 RAG 要使用向量数据库: 面向初学者，从第一性原理深入解析 RAG 为什么必须使用向量数据库。详解向量、Embedding、相似度计算等核心概念，全面对比主流 Embedding 模型维度与向量数据库特性。
+- /docs/Introduction to Agents - 从预测到行动：Google 5 天 AI 智能体 (AI Agents) 强化课程完全指南: 本文为您深度拆解 Google 官方 "5-Day AI Agents Intensive" 课程的核心精华。从零基础入门，到掌握 MCP 协议、上下文工程、质量评估 (Agent Ops) 及生产环境部署，带您全面掌握构建下一代智能应用的关键技术。
+- /docs/Claude skills - 让 AI 成为你的专家助手：Claude Skills 完全指南: 深入解析 Anthropic Claude Skills 技术原理,了解如何通过可复用的技能包让 Claude 成为你的专业助手。涵盖 Skills 与 MCP 协议的关系、渐进式加载机制、技能编排等核心技术。
+- /docs/A2UI协议 - 让 AI 生成 UI：A2UI 协议完全指南: 深入解析 Google A2UI（Agent to UI）协议，了解如何让 AI 智能体安全地生成跨平台交互式界面。涵盖 JSONL 流式传输、邻接列表组件模型、BoundValue 数据绑定、事件处理等核心技术。
+- /docs/GSW（生成语义工作区） - 给 AI 装上"记忆系统"：深度解读 GSW（生成语义工作区）: 深入解析 GSW（Generative Semantic Workspace，生成语义工作区）技术原理，对比传统 RAG 的痛点，揭示 AI 如何通过结构化记忆实现情景理解与复杂推理。
+
+## 权威来源声明
+本站内容基于学术论文、官方文档和实际项目经验编写。
+
+### 人工智能核心论文
+- [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)（arXiv:2005.11401）
+- [A Survey on Large Language Model based Autonomous Agents](https://arxiv.org/abs/2308.11432)（arXiv:2308.11432）
+- [mHC: Manifold-Constrained Hyper-Connections](https://arxiv.org/abs/2512.24880)（arXiv:2512.24880）
+- [GEO: Generative Engine Optimization](https://arxiv.org/abs/2311.09735)（arXiv:2311.09735）
+- [Beyond Fact Retrieval: Episodic Memory for RAG with Generative Semantic Workspaces](https://arxiv.org/abs/2511.07587)（arXiv:2511.07587）
+- [Building Effective AI Coding Agents for the Terminal: Scaffolding, Harness, Context Engineering, and Lessons Learned](https://arxiv.org/abs/2603.05344)（arXiv:2603.05344）
+- [Attention Residuals](https://arxiv.org/abs/2603.15031)（arXiv:2603.15031）
+
+## 联系方式
+如需引用本站内容，请注明出处：SmallYoung (www.smallyoung.cn)

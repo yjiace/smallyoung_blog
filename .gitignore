@@ -1,0 +1,22 @@
+# Node.js 依赖
+node_modules/
+
+# VitePress 构建产物和缓存
+.vitepress/dist/
+.vitepress/cache/
+
+# 环境变量 (视你是否使用而定)
+.env
+.env.*.local
+
+# 日志文件
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 操作系统生成文件
+.DS_Store
+Thumbs.db

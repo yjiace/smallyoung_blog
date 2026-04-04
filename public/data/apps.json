@@ -1,0 +1,72 @@
+[
+  {
+    "avatar": "https://guard.smallyoung.cn/logo.png",
+    "name": "流萤守护",
+    "introduction": "专为独居人群设计的安全辅助工具",
+    "url": "https://guard.smallyoung.cn/",
+    "title": "开启守护"
+  },
+  {
+    "avatar": "https://supabase.smallyoung.cn/favicon.svg",
+    "name": "Supabase API",
+    "introduction": "探索 Supabase 的强大功能",
+    "url": "https://supabase.smallyoung.cn/",
+    "title": "调用接口"
+  },
+  {
+    "avatar": "https://cdn.smallyoung.cn/libs/image/logo.png",
+    "name": "TTS",
+    "introduction": "文本转语音工具",
+    "url": "https://tts.smallyoung.cn/",
+    "title": "生成语音"
+  },
+  {
+    "avatar": "https://cdn.smallyoung.cn/libs/image/logo.png",
+    "name": "A2UI",
+    "introduction": "让 AI 智能体安全地向客户端发送丰富的用户界面",
+    "url": "https://a2ui.smallyoung.cn/",
+    "title": "调用接口"
+  },
+  {
+    "avatar": "https://chat.smallyoung.cn/icons/icon-192x192.png",
+    "name": "Lobe Chat",
+    "introduction": "现代化设计 AI 聊天框架",
+    "url": "https://chat.smallyoung.cn/chat/",
+    "title": "前去聊天"
+  },
+  {
+    "avatar": "https://tools.smallyoung.cn/android-chrome-192x192.png",
+    "name": "it-tools",
+    "introduction": "助力开发人员和 IT 工作者",
+    "url": "https://tools.smallyoung.cn/",
+    "title": "前去学习"
+  },
+  {
+    "avatar": "https://email.smallyoung.cn/logo.png",
+    "name": "临时邮件",
+    "introduction": "免费收发 临时域名邮箱",
+    "url": "https://email.smallyoung.cn/",
+    "title": "前去使用"
+  },
+  {
+    "avatar": "https://pub.smallyoung.cn/mockingBird/lib/img/logo.png",
+    "name": "MFA",
+    "introduction": "稳定可靠的模拟API服务",
+    "url": "https://mock.smallyoung.cn/",
+    "title": "开始调用"
+  },
+  {
+    "avatar": "https://b.smallyoung.cn/favicon-32x32.png",
+    "name": "Excalidraw",
+    "introduction": "虚拟白板，用于绘制手绘图表",
+    "url": "https://b.smallyoung.cn/",
+    "title": "立即使用"
+  },
+  {
+    "avatar": "https://cdn.smallyoung.cn/article/n8n.png",
+    "name": "N8N",
+    "introduction": "工作流自动化平台",
+    "url": "https://smallyoung-n8n.hf.space/",
+    "title": "开启自动"
+  }
+]

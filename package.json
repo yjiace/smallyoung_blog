@@ -1,0 +1,29 @@
+{
+  "name": "smallyoung-blog",
+  "version": "1.0.0",
+  "description": "SmallYoung 技术博客 - VitePress 文档站点",
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/generate-sidebar.js",
+    "prebuild": "node scripts/generate-sidebar.js",
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "keywords": ["blog", "vitepress", "tech-docs"],
+  "author": "SmallYoung",
+  "license": "MIT",
+  "dependencies": {
+    "vitepress": "^1.0.0",
+    "vue": "^3.4.0",
+    "mermaid": "^11.12.2",
+    "vitepress-plugin-mermaid": "^2.0.17"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "fast-glob": "^3.3.3",
+    "gray-matter": "^4.0.3",
+    "markdown-it-mathjax3": "^4.3.2",
+    "typescript": "^5.3.0"
+  }
+}
