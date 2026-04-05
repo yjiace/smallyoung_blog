@@ -28,38 +28,49 @@
               </div>
 
               <!-- 分页 -->
-              <div v-if="totalPages > 1" class="flex items-center justify-center gap-2 mt-8">
-                <button @click="currentPage = 1" :disabled="currentPage === 1"
-                  class="px-3 py-2 rounded-lg border border-border-light dark:border-border-dark hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
-                  <span class="material-symbols-outlined text-sm">first_page</span>
-                </button>
-                <button @click="currentPage--" :disabled="currentPage === 1"
-                  class="px-3 py-2 rounded-lg border border-border-light dark:border-border-dark hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
-                  <span class="material-symbols-outlined text-sm">chevron_left</span>
-                </button>
+              <div v-if="totalPages > 1" class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+                <div class="flex items-center gap-1.5">
+                  <button @click="currentPage = 1" :disabled="currentPage === 1"
+                    class="hidden sm:flex px-2.5 py-1.5 rounded-lg border border-border-light dark:border-border-dark hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    title="首页">
+                    <span class="material-symbols-outlined text-[18px]">first_page</span>
+                  </button>
+                  <button @click="currentPage--" :disabled="currentPage === 1"
+                    class="px-2.5 py-1.5 rounded-lg border border-border-light dark:border-border-dark hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    title="上一页">
+                    <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+                  </button>
 
-                <div class="flex items-center gap-1">
-                  <template v-for="page in displayedPages" :key="page">
-                    <button v-if="page !== '...'" @click="currentPage = page as number"
-                      :class="['px-4 py-2 rounded-lg border transition-colors', currentPage === page ? 'bg-primary text-white border-primary' : 'border-border-light dark:border-border-dark hover:bg-gray-100 dark:hover:bg-gray-800']">
-                      {{ page }}
-                    </button>
-                    <span v-else class="px-2 text-text-light/50 dark:text-text-dark/50">...</span>
-                  </template>
+                  <div class="flex items-center gap-1 mx-1">
+                    <template v-for="page in displayedPages" :key="page">
+                      <button v-if="page !== '...'" @click="currentPage = page as number"
+                        :class="[
+                          'min-w-[36px] h-[36px] flex items-center justify-center rounded-lg border transition-all text-sm font-medium',
+                          currentPage === page 
+                            ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' 
+                            : 'border-border-light dark:border-border-dark hover:bg-gray-100 dark:hover:bg-gray-800'
+                        ]">
+                        {{ page }}
+                      </button>
+                      <span v-else class="px-1 text-text-light/40 dark:text-text-dark/40">...</span>
+                    </template>
+                  </div>
+
+                  <button @click="currentPage++" :disabled="currentPage === totalPages"
+                    class="px-2.5 py-1.5 rounded-lg border border-border-light dark:border-border-dark hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    title="下一页">
+                    <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                  </button>
+                  <button @click="currentPage = totalPages" :disabled="currentPage === totalPages"
+                    class="hidden sm:flex px-2.5 py-1.5 rounded-lg border border-border-light dark:border-border-dark hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    title="末页">
+                    <span class="material-symbols-outlined text-[18px]">last_page</span>
+                  </button>
                 </div>
 
-                <button @click="currentPage++" :disabled="currentPage === totalPages"
-                  class="px-3 py-2 rounded-lg border border-border-light dark:border-border-dark hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
-                  <span class="material-symbols-outlined text-sm">chevron_right</span>
-                </button>
-                <button @click="currentPage = totalPages" :disabled="currentPage === totalPages"
-                  class="px-3 py-2 rounded-lg border border-border-light dark:border-border-dark hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
-                  <span class="material-symbols-outlined text-sm">last_page</span>
-                </button>
-
-                <span class="ml-4 text-sm text-text-light/60 dark:text-text-dark/60">
+                <div class="text-[13px] font-medium text-text-light/50 dark:text-text-dark/50 bg-gray-100/50 dark:bg-gray-800/30 px-3 py-1 rounded-full border border-border-light/50 dark:border-border-dark/30">
                   共 {{ filteredDocs.length }} 篇文档
-                </span>
+                </div>
               </div>
             </div>
 

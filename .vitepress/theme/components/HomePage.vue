@@ -9,7 +9,7 @@
       <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-20 -left-20 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
 
-      <div class="relative mx-auto max-w-5xl px-6 pt-32 pb-20 lg:pt-40 lg:pb-28 text-center">
+      <div class="relative mx-auto max-w-5xl px-6 pt-28 pb-20 lg:pb-28 text-center">
         <!-- 头像 -->
         <div class="flex justify-center mb-8">
           <div class="relative group cursor-default">

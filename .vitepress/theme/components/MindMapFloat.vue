@@ -12,7 +12,7 @@ const scale = ref(1)
 const minScale = 0.3
 const maxScale = 3
 
-// 按钮位置（动态计算）
+// 按钮位置已由父组件统一管理，不再需要动态计算
 const buttonRight = ref('32px')
 
 // 隐藏插槽容器的 ref
@@ -77,18 +77,6 @@ const renderMermaid = async () => {
     renderError.value = err.message || '图表渲染失败'
   } finally {
     isRendering.value = false
-  }
-}
-
-// 计算按钮位置：基于 VitePress 内容区域
-const calculateButtonPosition = () => {
-  const contentEl = document.querySelector('.VPDoc .content-container') as HTMLElement
-  if (contentEl) {
-    const rect = contentEl.getBoundingClientRect()
-    const rightOffset = window.innerWidth - rect.right - 100
-    buttonRight.value = `${Math.max(16, rightOffset)}px`
-  } else {
-    buttonRight.value = '16px'
   }
 }
 
@@ -159,14 +147,10 @@ const handleKeydown = (e: KeyboardEvent) => {
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
-  window.addEventListener('resize', calculateButtonPosition)
-  calculateButtonPosition()
-  setTimeout(calculateButtonPosition, 500)
 })
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
-  window.removeEventListener('resize', calculateButtonPosition)
 })
 </script>
 
@@ -177,10 +161,9 @@ onUnmounted(() => {
       <slot></slot>
     </div>
     
-    <!-- 浮动按钮 -->
+    <!-- 浮动按钮 (现在位置由父组件控制) -->
     <button 
-      class="mindmap-float-btn"
-      :style="{ right: buttonRight }"
+      class="mindmap-action-btn"
       @click="openModal"
       :title="title || '查看思维导图'"
     >
@@ -265,13 +248,8 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* 浮动按钮 */
-.mindmap-float-btn {
-  position: fixed;
-  right: 32px !important;
-  bottom: 80px !important;
-  z-index: 100;
-  
+/* 按钮基础样式 (不再带 position: fixed) */
+.mindmap-action-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -289,19 +267,17 @@ onUnmounted(() => {
   transition: all 0.3s ease;
 }
 
-.mindmap-float-btn:hover {
+.mindmap-action-btn:hover {
   transform: translateY(-2px) scale(1.1);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
-.mindmap-float-btn:active {
+.mindmap-action-btn:active {
   transform: translateY(0) scale(1);
 }
 
 @media (max-width: 768px) {
-  .mindmap-float-btn {
-    right: 16px !important;
-    bottom: 80px;
+  .mindmap-action-btn {
     width: 40px;
     height: 40px;
   }

@@ -4,6 +4,8 @@ node_modules/
 # VitePress 构建产物和缓存
 .vitepress/dist/
 .vitepress/cache/
+.vitepress/sidebar.generated.js
+
 
 # 环境变量 (视你是否使用而定)
 .env

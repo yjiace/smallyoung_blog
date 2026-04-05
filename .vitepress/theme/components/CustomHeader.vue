@@ -51,28 +51,96 @@
             </div>
           </button>
         </div>
+
+        <!-- 移动端菜单按钮 -->
+        <button 
+          class="mobile-menu-btn" 
+          @click="isMobileMenuOpen = !isMobileMenuOpen"
+          :aria-expanded="isMobileMenuOpen"
+          aria-label="切换菜单"
+        >
+          <span class="material-symbols-outlined">
+            {{ isMobileMenuOpen ? 'close' : 'menu' }}
+          </span>
+        </button>
       </div>
     </div>
+
+    <!-- 移动端导航遮罩层 -->
+    <Transition name="fade">
+      <div v-if="isMobileMenuOpen" class="mobile-menu-overlay" @click="isMobileMenuOpen = false"></div>
+    </Transition>
+
+    <!-- 移动端导航菜单 -->
+    <Transition name="slide">
+      <div v-if="isMobileMenuOpen" class="mobile-menu-panel">
+        <div class="mobile-menu-header">
+          <span class="mobile-menu-title">菜单导航</span>
+          <button class="mobile-menu-close" @click="isMobileMenuOpen = false">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        
+        <div class="mobile-menu-search" @click="handleMobileSearch">
+          <div class="search-box-wrapper mobile">
+            <span class="material-symbols-outlined search-icon text-[18px]">search</span>
+            <span class="search-placeholder">搜索文章...</span>
+          </div>
+        </div>
+
+        <nav class="mobile-nav-links">
+          <a href="/" class="mobile-nav-item" @click="isMobileMenuOpen = false">
+            <span class="material-symbols-outlined">home</span>
+            首页
+          </a>
+          <a href="/docs" class="mobile-nav-item" @click="isMobileMenuOpen = false">
+            <span class="material-symbols-outlined">description</span>
+            技术文档
+          </a>
+          <a href="/products" class="mobile-nav-item" @click="isMobileMenuOpen = false">
+            <span class="material-symbols-outlined">inventory_2</span>
+            产品
+          </a>
+          <a href="/apps" class="mobile-nav-item" @click="isMobileMenuOpen = false">
+            <span class="material-symbols-outlined">apps</span>
+            应用
+          </a>
+        </nav>
+
+        <div class="mobile-menu-footer">
+          <div class="mobile-theme-info">
+            <span class="text-sm font-medium">当前外观：{{ isDark ? '深色模式' : '浅色模式' }}</span>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </header>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { useRouter } from 'vitepress'
 
 const searchQuery = ref('')
 const searchInput = ref<HTMLInputElement | null>(null)
-let searchTimeout: ReturnType<typeof setTimeout> | null = null
 const isDark = ref(false)
+const isMobileMenuOpen = ref(false)
 
 const emit = defineEmits<{ 'search': [query: string] }>()
+const router = useRouter()
+
+// 监听路由变化，关闭移动端菜单
+watch(() => router.route.path, () => {
+  isMobileMenuOpen.value = false
+})
 
 function openSearch() {
   emit('search')
 }
 
-function onSearchInput() {
-  // 由于设置了 readonly，该函数不再需要处理实时输入，
-  // 所有的输入将在弹出的搜索模态框中进行。
+function handleMobileSearch() {
+  isMobileMenuOpen.value = false
+  openSearch()
 }
 
 function toggleTheme() {
@@ -90,7 +158,6 @@ function toggleTheme() {
 function loadTheme() {
   try {
     const savedTheme = localStorage.getItem('theme')
-    // 同时也检查系统偏好或 VitePress 默认类名
     const hasDarkClass = document.documentElement.classList.contains('dark')
     if (savedTheme === 'dark' || (!savedTheme && hasDarkClass)) {
       isDark.value = true
@@ -207,10 +274,6 @@ onMounted(() => {
   box-shadow: 0 4px 12px -4px var(--vp-c-brand-soft);
 }
 
-.search-box-wrapper:focus-within .search-icon {
-  color: var(--vp-c-brand-1);
-}
-
 .search-icon {
   color: var(--vp-c-text-3);
   margin-right: 10px;
@@ -316,11 +379,145 @@ onMounted(() => {
   color: #94a3b8;
 }
 
+/* 移动端菜单样式 */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--vp-c-text-1);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.mobile-menu-btn:hover {
+  background-color: var(--vp-c-bg-soft);
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 998;
+}
+
+.mobile-menu-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background-color: var(--vp-c-bg);
+  z-index: 999;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-menu-header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.mobile-menu-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--vp-c-text-1);
+}
+
+.mobile-menu-close {
+  background: transparent;
+  border: none;
+  color: var(--vp-c-text-3);
+  cursor: pointer;
+}
+
+.mobile-menu-search {
+  padding: 20px;
+}
+
+.search-box-wrapper.mobile {
+  max-width: 100%;
+}
+
+.search-placeholder {
+  font-size: 14px;
+  color: var(--vp-c-text-3);
+}
+
+.mobile-nav-links {
+  flex: 1;
+  padding: 10px 0;
+}
+
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  color: var(--vp-c-text-2);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.mobile-nav-item .material-symbols-outlined {
+  font-size: 20px;
+  opacity: 0.7;
+}
+
+.mobile-nav-item:hover {
+  background-color: var(--vp-c-bg-soft);
+  color: var(--vp-c-brand-1);
+}
+
+.mobile-menu-footer {
+  padding: 20px;
+  border-top: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-3);
+}
+
+/* 动画效果 */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide-enter-from, .slide-leave-to {
+  transform: translateX(100%);
+}
+
 @media (max-width: 960px) {
   .header-center {
     display: none;
   }
   .nav-links {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .header-container {
+    padding: 0 16px;
+  }
+  .search-kbd {
     display: none;
   }
 }

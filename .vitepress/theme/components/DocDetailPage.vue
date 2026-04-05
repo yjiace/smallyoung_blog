@@ -92,41 +92,112 @@
         </aside>
       </Transition>
 
-      <!-- 交互控制 -->
-      <button 
-        @click="isTocVisible = !isTocVisible"
-        class="fixed right-8 bottom-32 z-50 flex items-center justify-center w-11 h-11 rounded-full bg-primary text-white shadow-lg hover:scale-110 hover:shadow-primary/30 transition-all duration-300 active:scale-95"
-        title="展示/隐藏目录"
-      >
-        <span class="material-symbols-outlined text-[20px]">{{ isTocVisible ? 'menu_open' : 'toc' }}</span>
-      </button>
-
+      <!-- 响应式目录抽屉 (移动端) -->
       <Transition name="fade">
-        <button 
-          v-if="showBackToTop"
-          @click="scrollToTop"
-          class="fixed right-8 bottom-8 z-50 flex items-center justify-center w-11 h-11 rounded-full bg-card-light dark:bg-card-dark text-primary border border-border-light dark:border-border-dark shadow-lg hover:scale-110 hover:border-primary/50 transition-all duration-300 active:scale-95"
-          title="回到顶部"
-        >
-          <span class="material-symbols-outlined text-[20px]">arrow_upward</span>
-        </button>
+        <div v-show="isMobileTocOpen" class="fixed inset-0 z-[60] lg:hidden bg-black/50 backdrop-blur-sm" @click="isMobileTocOpen = false"></div>
       </Transition>
+      <Transition name="slide-up">
+        <aside 
+          v-show="isMobileTocOpen"
+          class="fixed bottom-0 left-0 right-0 z-[70] lg:hidden bg-white dark:bg-slate-900 rounded-t-3xl max-h-[70vh] flex flex-col shadow-2xl transition-all duration-300"
+        >
+          <div class="p-6 border-b border-border-light/50 dark:border-border-dark/50 flex items-center justify-between">
+            <h3 class="text-lg font-bold">文章目录</h3>
+            <button @click="isMobileTocOpen = false" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          <nav class="toc-mobile flex-1 overflow-y-auto p-6 custom-scrollbar">
+            <ul class="space-y-4">
+              <template v-for="(item, index) in toc" :key="item.slug">
+                <li 
+                  :style="{ paddingLeft: `${(item.level - 2) * 1.5}rem` }"
+                >
+                  <a
+                    :href="`#${item.slug}`"
+                    :class="[
+                      'block py-1 transition-all duration-300',
+                      activeSlug === item.slug 
+                        ? 'text-primary font-bold' 
+                        : 'text-text-light/80 dark:text-text-dark/80'
+                    ]"
+                    @click="handleMobileTocClick(item)"
+                  >
+                    {{ item.text }}
+                  </a>
+                </li>
+              </template>
+            </ul>
+          </nav>
+        </aside>
+      </Transition>
+
+      <!-- 统一浮动操作按钮容器 -->
+      <div class="fixed right-6 bottom-6 lg:right-10 lg:bottom-10 z-50 flex flex-col gap-4 items-center">
+        <!-- 目录控制按钮 -->
+        <button 
+          @click="handleTocToggle"
+          class="flex items-center justify-center w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-primary text-white shadow-lg hover:scale-110 hover:shadow-primary/30 transition-all duration-300 active:scale-95"
+          :title="isTocVisible ? '隐藏目录' : '显示目录'"
+        >
+          <span class="material-symbols-outlined text-[20px]">{{ isTocVisible ? 'menu_open' : 'toc' }}</span>
+        </button>
+
+        <!-- 思维导图按钮 (由组件自身提供其内建逻辑，但作为容器子项对齐) -->
+        <MindMapFloat v-if="doc?.mindmap" :title="doc?.title">
+          <div v-html="doc?.mindmap"></div>
+        </MindMapFloat>
+
+        <!-- 回到顶部按钮 -->
+        <Transition name="fade">
+          <button 
+            v-if="showBackToTop"
+            @click="scrollToTop"
+            class="flex items-center justify-center w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-white dark:bg-slate-800 text-primary border border-border-light dark:border-border-dark shadow-lg hover:scale-110 hover:border-primary/50 transition-all duration-300 active:scale-95"
+            title="回到顶部"
+          >
+            <span class="material-symbols-outlined text-[20px]">arrow_upward</span>
+          </button>
+        </Transition>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useData } from 'vitepress'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { useData, useRouter } from 'vitepress'
 import type { Doc, TocItem } from '../../data/docs.data'
+import MindMapFloat from './MindMapFloat.vue'
 
 const props = defineProps<{ doc: Doc | null }>()
 const { page } = useData()
+const router = useRouter()
 
 const activeSlug = ref('')
 const isTocVisible = ref(true) 
+const isMobileTocOpen = ref(false)
 const showBackToTop = ref(false)
 const expandedSections = ref<Set<string>>(new Set())
+
+// 监听路由变化，关闭移动端目录
+watch(() => router.route.path, () => {
+  isMobileTocOpen.value = false
+})
+
+function handleTocToggle() {
+  if (window.innerWidth < 1024) {
+    isMobileTocOpen.value = !isMobileTocOpen.value
+  } else {
+    isTocVisible.value = !isTocVisible.value
+  }
+}
+
+function handleMobileTocClick(item: TocItem) {
+  isMobileTocOpen.value = false
+  scrollToHeading(item)
+}
 
 const colorStyles = [
   { bg: 'bg-blue-100',   text: 'text-blue-800',   darkBg: 'dark:bg-blue-900',   darkText: 'dark:text-blue-200'   },
@@ -359,9 +430,24 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
   background: rgba(19, 127, 236, 0.5);
 }
 
+/* 7. 移动端目录滑动动画 */
+.slide-up-enter-active, .slide-up-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide-up-enter-from, .slide-up-leave-to {
+  transform: translateY(100%);
+}
+
 /* 响应式调整 */
 @media (max-width: 1024px) {
+  .doc-detail-wrapper { padding-top: 56px; }
+  .main-layout { flex-direction: column; }
+  main { padding: 1.5rem !important; padding-top: 2rem !important; }
   .doc-content { font-size: 1rem; }
-  .vp-doc h1 { font-size: 2.25rem !important; }
+  .vp-doc h1 { font-size: 2rem !important; }
+}
+
+@media (max-width: 640px) {
+  .fixed.right-6.bottom-6 { right: 1rem; bottom: 1rem; }
 }
 </style>

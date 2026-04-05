@@ -36,18 +36,18 @@
       
       <div class="relative mx-auto max-w-7xl px-6 w-full">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div class="space-y-8 animate-in slide-in-from-left duration-700">
-            <h1 class="text-6xl lg:text-7xl font-black tracking-tighter leading-[1.2]">
+          <div class="space-y-6 lg:space-y-8 animate-in slide-in-from-left duration-700">
+            <h1 class="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-[1.2]">
               创新驱动<br/>
               <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-indigo-500 to-purple-600">
                 全场景产品矩阵
               </span>
             </h1>
-            <p class="text-xl text-text-light/60 dark:text-text-dark/60 max-w-lg leading-relaxed font-medium">
+            <p class="text-lg lg:text-xl text-text-light/60 dark:text-text-dark/60 max-w-lg leading-relaxed font-medium">
               在这里，我们集中展示了在 AI 智能助手、移动端 APP 及高性能 Web 平台上的核心研发成果。每一款产品都是对“效能与体验”的极致诠释。
             </p>
             <div class="flex gap-4">
-              <button @click="scrollToNode(1)" class="px-8 py-4 rounded-full bg-primary text-white font-bold shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all active:scale-95">
+              <button @click="scrollToNode(1)" class="px-6 py-3 md:px-8 md:py-4 rounded-full bg-primary text-white font-bold shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all active:scale-95">
                 浏览产品详情
               </button>
             </div>
@@ -62,10 +62,10 @@
 
       <!-- 底部下滑提示 -->
       <div 
-        class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-40 cursor-pointer hover:opacity-100 transition-opacity"
+        class="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce opacity-40 cursor-pointer hover:opacity-100 transition-opacity"
         @click="scrollToNode(1)"
       >
-        <span class="material-symbols-outlined text-3xl">expand_more</span>
+        <span class="material-symbols-outlined text-2xl lg:text-3xl">expand_more</span>
       </div>
     </section>
 
@@ -75,10 +75,10 @@
         v-for="(item, index) in products" 
         :key="item.title"
         :id="'node-' + (index + 1)"
-        class="snap-node h-[calc(100vh-64px)] flex items-center px-6 snap-start scroll-mt-16 overflow-hidden border-t border-border-light/50 dark:border-border-dark/30"
+        class="snap-node min-h-[calc(100vh-64px)] lg:h-[calc(100vh-64px)] flex items-center px-6 snap-start scroll-mt-16 overflow-hidden border-t border-border-light/50 dark:border-border-dark/30 py-12 lg:py-0"
       >
         <div class="mx-auto max-w-7xl w-full">
-          <div class="group grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
+          <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-24 items-center">
             
             <!-- 图片区域 (Mockup) -->
             <div 
@@ -90,7 +90,7 @@
               <div 
                 class="relative transition-all duration-700"
                 :class="[
-                  item.type === 'web' ? 'w-full max-w-2xl' : 'w-full max-w-[320px] lg:max-w-[360px]'
+                  item.type === 'web' ? 'w-full max-w-2xl' : 'w-full max-w-[280px] lg:max-w-[360px]'
                 ]"
               >
                 <!-- 手机边框特效 -->
@@ -99,7 +99,7 @@
                 <div 
                   class="relative overflow-hidden shadow-3xl transition-all duration-500 group-hover:shadow-primary/40"
                   :class="[
-                    item.type === 'web' ? 'rounded-[1.5rem] aspect-[16/10]' : 'rounded-[2.5rem] aspect-[9/16] border-[8px] border-card-dark dark:border-border-dark max-h-[82vh]'
+                    item.type === 'web' ? 'rounded-[1rem] lg:rounded-[1.5rem] aspect-[16/10]' : 'rounded-[2rem] lg:rounded-[2.5rem] aspect-[9/16] border-[6px] lg:border-[8px] border-card-dark dark:border-border-dark max-h-[60vh] lg:max-h-[82vh]'
                   ]"
                 >
                   <img :src="item.image" :alt="item.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
@@ -111,24 +111,24 @@
             <!-- 文字区域 -->
             <div 
               :class="[
-                'lg:col-span-5 space-y-8 animate-in slide-in-from-bottom-8 duration-700 delay-200',
-                index % 2 === 0 ? 'lg:order-2 lg:col-start-8' : 'lg:order-1 lg:col-start-1 text-right lg:items-end flex flex-col'
+                'lg:col-span-5 space-y-6 lg:space-y-8 animate-in slide-in-from-bottom-8 duration-700 delay-200',
+                index % 2 === 0 ? 'lg:order-2 lg:col-start-8' : 'lg:order-1 lg:col-start-1 lg:text-right lg:items-end flex flex-col'
               ]"
             >
-              <div class="space-y-4">
-                <h2 class="text-5xl lg:text-7xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-text-light to-text-light/60 dark:from-text-dark dark:to-text-dark/60 leading-tight">
+              <div class="space-y-2 lg:space-y-4">
+                <h2 class="text-3xl md:text-4xl lg:text-6xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-text-light to-text-light/60 dark:from-text-dark dark:to-text-dark/60 leading-tight">
                   {{ item.title }}
                 </h2>
               </div>
-              <p class="text-xl text-text-light/60 dark:text-text-dark/60 leading-relaxed font-medium">
+              <p class="text-base lg:text-xl text-text-light/60 dark:text-text-dark/60 leading-relaxed font-medium">
                 {{ item.description }}
               </p>
-              <div :class="['flex gap-4 pt-4', index % 2 !== 0 && 'justify-end']">
+              <div :class="['flex gap-4 pt-2 lg:pt-4', index % 2 !== 0 && 'lg:justify-end']">
                 <button 
                   @click="handleAction(item)"
-                  class="px-10 py-4 rounded-full bg-primary text-white font-bold text-sm shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                  class="px-8 py-3 lg:px-10 lg:py-4 rounded-full bg-primary text-white font-bold text-sm shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
                 >
-                  {{ item.type === 'miniprogram' ? '扫码快速体验' : '查看详情' }}
+                  {{ item.type === 'miniprogram' ? '扫码体验' : '查看详情' }}
                 </button>
               </div>
             </div>
