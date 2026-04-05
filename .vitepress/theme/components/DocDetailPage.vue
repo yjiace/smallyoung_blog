@@ -43,42 +43,42 @@
       <Transition name="slide-fade">
         <aside 
           v-if="isTocVisible"
-          class="hidden lg:block fixed right-10 top-24 w-64 max-h-[calc(85vh-120px)] rounded-2xl border border-white/20 dark:border-white/10 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] overflow-hidden flex flex-col z-40 transition-all duration-500"
+          class="hidden lg:block fixed right-10 top-24 w-60 max-h-[calc(100vh-360px)] min-h-[150px] rounded-xl border border-white/20 dark:border-white/10 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] overflow-hidden flex flex-col z-40 transition-all duration-500"
         >
-          <div class="p-6 border-b border-border-light/50 dark:border-border-dark/50 flex items-center justify-between bg-white/30 dark:bg-black/20">
+          <div class="px-4 py-3 border-b border-border-light/50 dark:border-border-dark/50 flex items-center justify-between bg-white/30 dark:bg-black/20">
             <h3 class="text-[11px] font-bold uppercase tracking-[0.2em] text-text-light/50 dark:text-text-dark/50">目录预览</h3>
             <span class="text-[9px] bg-primary/10 text-primary px-2 py-0.5 rounded-md font-black tracking-tighter">TOC</span>
           </div>
-          <nav class="toc flex-1 overflow-y-auto p-4 custom-scrollbar">
-            <ul class="space-y-1">
+          <nav class="toc flex-1 overflow-y-auto px-3 py-3 custom-scrollbar">
+            <ul class="space-y-0.5">
               <template v-for="(item, index) in toc" :key="item.slug">
                 <li 
                   v-if="isItemVisible(item)"
-                  :style="{ paddingLeft: `${(item.level - 2) * 0.75}rem` }"
+                  :style="{ paddingLeft: `${(item.level - 2) * 0.6}rem` }"
                   class="group"
                 >
-                  <div class="flex items-center gap-1">
+                  <div class="flex items-center gap-0.5">
                     <!-- 折叠开关图标 -->
                     <button 
                       v-if="item.level === 2 && hasChildren(item.slug, index)"
                       @click="toggleSection(item.slug)"
-                      class="w-5 h-5 flex items-center justify-center rounded hover:bg-primary/10 text-text-light/40 hover:text-primary transition-colors"
+                      class="w-4 h-4 flex items-center justify-center rounded hover:bg-primary/10 text-text-light/40 hover:text-primary transition-colors"
                     >
-                      <span class="material-symbols-outlined text-[16px] transition-transform duration-200" :class="{ 'rotate-90': expandedSections.has(item.slug) }">
+                      <span class="material-symbols-outlined text-[14px] transition-transform duration-200" :class="{ 'rotate-90': expandedSections.has(item.slug) }">
                         chevron_right
                       </span>
                     </button>
-                    <div v-else-if="item.level > 2" class="w-1.5 h-1.5 rounded-full bg-border-light dark:bg-border-dark ml-2 mr-2 opacity-50"></div>
+                    <div v-else-if="item.level > 2" class="w-1 h-1 rounded-full bg-border-light dark:bg-border-dark ml-1.5 mr-1.5 opacity-50"></div>
                     
                     <a
                       :href="`#${item.slug}`"
                       :class="[
-                        'flex-1 block py-2 text-sm transition-all duration-300 border-l-2 pl-4 rounded-r-lg',
+                        'flex-1 block py-1.5 text-[13px] transition-all duration-300 border-l pl-3 rounded-r-md',
                         activeSlug === item.slug 
                           ? 'text-primary font-bold border-primary bg-primary/10' 
                           : item.level === 2 
                             ? 'text-text-light/80 dark:text-text-dark/80 border-transparent hover:text-primary hover:bg-primary/5'
-                            : 'text-text-light/50 dark:text-text-dark/50 border-transparent hover:text-primary hover:bg-primary/5 text-[13px]'
+                            : 'text-text-light/50 dark:text-text-dark/50 border-transparent hover:text-primary hover:bg-primary/5 text-xs'
                       ]"
                       @click.prevent="scrollToHeading(item)"
                     >
@@ -138,14 +138,17 @@
         <button 
           @click="handleTocToggle"
           class="flex items-center justify-center w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-primary text-white shadow-lg hover:scale-110 hover:shadow-primary/30 transition-all duration-300 active:scale-95"
-          :title="isTocVisible ? '隐藏目录' : '显示目录'"
+          :title="isCurrentTocVisible ? '隐藏目录' : '显示目录'"
         >
-          <span class="material-symbols-outlined text-[20px]">{{ isTocVisible ? 'menu_open' : 'toc' }}</span>
+          <span class="material-symbols-outlined text-[20px]">{{ isCurrentTocVisible ? 'menu_open' : 'toc' }}</span>
         </button>
 
-        <!-- 思维导图按钮 (由组件自身提供其内建逻辑，但作为容器子项对齐) -->
-        <MindMapFloat v-if="doc?.mindmap" :title="doc?.title">
-          <div v-html="doc?.mindmap"></div>
+        <!-- 给 Markdown 内容区内部的 MindMap 组件准备传送门目的地 -->
+        <div id="mindmap-fab-container" class="flex flex-col gap-4 empty:hidden"></div>
+
+        <!-- 对于在 Frontmatter 中配置了 mindmap 的旧方案兼容 -->
+        <MindMapFloat v-if="doc?.meta?.mindmap" :title="doc?.title">
+          <div v-html="doc?.meta?.mindmap"></div>
         </MindMapFloat>
 
         <!-- 回到顶部按钮 -->
@@ -180,14 +183,26 @@ const isTocVisible = ref(true)
 const isMobileTocOpen = ref(false)
 const showBackToTop = ref(false)
 const expandedSections = ref<Set<string>>(new Set())
+const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200)
+
+// 监听窗口大小变化
+const handleResize = () => {
+  windowWidth.value = window.innerWidth
+}
 
 // 监听路由变化，关闭移动端目录
 watch(() => router.route.path, () => {
   isMobileTocOpen.value = false
 })
 
+const isCurrentTocVisible = computed(() => {
+  const isMobile = windowWidth.value < 1024
+  return isMobile ? isMobileTocOpen.value : isTocVisible.value
+})
+
 function handleTocToggle() {
-  if (window.innerWidth < 1024) {
+  const isMobile = !window.matchMedia('(min-width: 1024px)').matches
+  if (isMobile) {
     isMobileTocOpen.value = !isMobileTocOpen.value
   } else {
     isTocVisible.value = !isTocVisible.value
@@ -342,9 +357,13 @@ function handleScroll() {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('resize', handleResize)
   if (toc.value.length > 0) activeSlug.value = toc.value[0].slug
 })
-onUnmounted(() => window.removeEventListener('scroll', handleScroll))
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('resize', handleResize)
+})
 </script>
 
 <style>

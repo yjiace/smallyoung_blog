@@ -11,6 +11,8 @@ const isVisible = ref(false)
 const scale = ref(1)
 const minScale = 0.3
 const maxScale = 3
+const isMounted = ref(false)
+const hasContainer = ref(false)
 
 // 按钮位置已由父组件统一管理，不再需要动态计算
 const buttonRight = ref('32px')
@@ -28,16 +30,21 @@ const renderError = ref('')
 const extractSlotContent = (): string => {
   if (!slotContainer.value) return ''
   
-  // 查找代码块元素
-  const codeBlocks = slotContainer.value.querySelectorAll('pre code, code')
+  // 1. 尝试查找 .vp-doc 中的代码块（VitePress 默认渲染格式）
+  const codeBlocks = slotContainer.value.querySelectorAll('pre code, .vp-doc pre code')
   if (codeBlocks.length > 0) {
-    // 获取第一个代码块的文本内容
     const code = codeBlocks[0] as HTMLElement
     return code.textContent || code.innerText || ''
   }
   
-  // 如果没有代码块，获取整个文本内容
-  return slotContainer.value.textContent || slotContainer.value.innerText || ''
+  // 2. 尝试查找自定义的数据块
+  const dataBlock = slotContainer.value.querySelector('[class*="language-"]')
+  if (dataBlock) {
+    return dataBlock.textContent || dataBlock.innerText || ''
+  }
+
+  // 3. 回退：获取容器内所有文本内容，并过滤掉可能的空行
+  return (slotContainer.value.textContent || slotContainer.value.innerText || '').trim()
 }
 
 // 渲染 Mermaid 图表
@@ -147,6 +154,11 @@ const handleKeydown = (e: KeyboardEvent) => {
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
+  isMounted.value = true
+  // 延迟检测，确保容器渲染
+  setTimeout(() => {
+    hasContainer.value = !!document.getElementById('mindmap-fab-container')
+  }, 0)
 })
 
 onUnmounted(() => {
@@ -161,24 +173,26 @@ onUnmounted(() => {
       <slot></slot>
     </div>
     
-    <!-- 浮动按钮 (现在位置由父组件控制) -->
-    <button 
-      class="mindmap-action-btn"
-      @click="openModal"
-      :title="title || '查看思维导图'"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"></circle>
-        <circle cx="4" cy="6" r="2"></circle>
-        <circle cx="20" cy="6" r="2"></circle>
-        <circle cx="4" cy="18" r="2"></circle>
-        <circle cx="20" cy="18" r="2"></circle>
-        <line x1="9.5" y1="10" x2="5.5" y2="7"></line>
-        <line x1="14.5" y1="10" x2="18.5" y2="7"></line>
-        <line x1="9.5" y1="14" x2="5.5" y2="17"></line>
-        <line x1="14.5" y1="14" x2="18.5" y2="17"></line>
-      </svg>
-    </button>
+    <!-- 浮动按钮 (位置由全局容器 #mindmap-fab-container 控制) -->
+    <Teleport to="#mindmap-fab-container" :disabled="!hasContainer" v-if="isMounted">
+      <button 
+        class="mindmap-action-btn"
+        @click="openModal"
+        :title="title || '查看思维导图'"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <circle cx="4" cy="6" r="2"></circle>
+          <circle cx="20" cy="6" r="2"></circle>
+          <circle cx="4" cy="18" r="2"></circle>
+          <circle cx="20" cy="18" r="2"></circle>
+          <line x1="9.5" y1="10" x2="5.5" y2="7"></line>
+          <line x1="14.5" y1="10" x2="18.5" y2="7"></line>
+          <line x1="9.5" y1="14" x2="5.5" y2="17"></line>
+          <line x1="14.5" y1="14" x2="18.5" y2="17"></line>
+        </svg>
+      </button>
+    </Teleport>
 
     <!-- 弹框遮罩 -->
     <Teleport to="body">
