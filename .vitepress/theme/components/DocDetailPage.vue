@@ -457,6 +457,18 @@ onUnmounted(() => {
   transform: translateY(100%);
 }
 
+/* 8. Mermaid 流程图长文本截断/隐藏修复 */
+.mermaid-diagram foreignObject {
+  overflow: visible !important;
+}
+.mermaid-diagram foreignObject div,
+.mermaid-diagram .nodeLabel, 
+.mermaid-diagram .edgeLabel {
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+}
+
 /* 响应式调整 */
 @media (max-width: 1024px) {
   .doc-detail-wrapper { padding-top: 56px; }
