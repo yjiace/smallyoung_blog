@@ -10,8 +10,6 @@ keywords: [Claude Code, 上下文管理, Context Window, Auto Compact, Prompt Ca
 cover: //cdn.smallyoung.cn/smallyoung_blog/claude-context/1.png
 ---
 
-# Claude Code 上下文管理算法深度解析：7 层递进式防御体系
-
 > Claude Code 的上下文管理不是一个开关，而是一套由 7 层机制构成的递进式防御体系——从零 API 调用的廉价裁剪，到耗费算力的 LLM 全量摘要，每一层都在尽力阻止下一层被触发。本文基于 Claude Code 源码快照（2026-03-31，核心文件 `src/query.ts`、`src/services/compact/`、`src/utils/toolResultStorage.ts`），逐层拆解这套架构的设计决策与工程智慧。
 >
 > 📌 **适合人群**：AI Agent 开发者、对 LLM 系统工程感兴趣的后端工程师、希望理解生产级 AI 工具内部机制的技术读者
