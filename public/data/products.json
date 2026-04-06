@@ -9,7 +9,7 @@
   {
     "title": "足迹明信片",
     "type": "miniprogram",
-    "description": "3D 渲染实时展示窗外自然变幻，结合空气质量提供专属户外建议。让轻便的小程序也能拥有原生 APP 级别的视觉冲击。",
+    "description": "通过深度整合高德开放平台的多项核心能力，结合大语言模型的智能分析能力，为用户提供一站式智能旅行规划服务，并在旅程结束后自动生成精美的旅行纪念明信片。",
     "image": "https://cdn.smallyoung.cn/smallyoung_blog/footprint-postcard.jpg",
     "link": "#",
     "qrcode": "/images/qrcode/footprint-postcard.jpg"
@@ -20,5 +20,19 @@
     "description": "探索 Supabase 的强大功能，学习 API 使用方法，在线测试接口调用。为开发者提供完整的 Supabase 学习和实践环境。",
     "image": "https://cdn.smallyoung.cn/smallyoung_blog/supabase-api.gif",
     "link": "https://supabase.smallyoung.cn/"
+  },
+  {
+    "title": "A2UI",
+    "type": "web",
+    "description": "A2UI 使 AI 代理能够生成丰富的交互式用户界面，这些界面可以在 Web、移动设备和桌面设备上原生渲染，而无需执行任意代码。",
+    "image": "https://cdn.smallyoung.cn/smallyoung_blog/a2ui.png",
+    "link": "https://a2ui.smallyoung.cn/"
+  },
+  {
+    "title": "Mock Flow API",
+    "type": "web",
+    "description": "体验实时 API 调用与 SSE 数据流的魅力。快速生成、测试和集成高质量的模拟数据，加速您的开发流程。",
+    "image": "https://cdn.smallyoung.cn/smallyoung_blog/mfa.png",
+    "link": "https://mock.smallyoung.cn/"
   }
 ]

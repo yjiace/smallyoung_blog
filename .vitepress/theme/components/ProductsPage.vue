@@ -84,7 +84,7 @@
             <div 
               :class="[
                 'relative flex justify-center w-full animate-in zoom-in-95 duration-700',
-                index % 2 === 0 ? 'lg:col-span-6 lg:order-1' : 'lg:col-span-6 lg:order-2 lg:col-start-7'
+                index % 2 === 0 ? 'lg:col-span-6 lg:order-1' : 'lg:col-span-6 lg:order-2'
               ]"
             >
               <div 
@@ -97,9 +97,14 @@
                 <div v-if="item.type !== 'web'" class="absolute -inset-6 bg-primary/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 
                 <div 
-                  class="relative overflow-hidden shadow-3xl transition-all duration-500 group-hover:shadow-primary/40"
+                  class="relative overflow-hidden shadow-3xl transition-all duration-700 group-hover:shadow-primary/40"
                   :class="[
-                    item.type === 'web' ? 'rounded-[1rem] lg:rounded-[1.5rem] aspect-[16/10]' : 'rounded-[2rem] lg:rounded-[2.5rem] aspect-[9/16] border-[6px] lg:border-[8px] border-card-dark dark:border-border-dark max-h-[60vh] lg:max-h-[82vh]'
+                    item.type === 'web' 
+                      ? 'rounded-[1rem] lg:rounded-[1.5rem] aspect-[16/10]' 
+                      : [
+                          'rounded-[2rem] lg:rounded-[2.5rem] aspect-[9/16] border-[6px] lg:border-[8px] border-card-dark dark:border-border-dark max-h-[60vh] lg:max-h-[82vh]',
+                          index % 2 === 0 ? 'lg:-rotate-6 group-hover:lg:-rotate-3' : 'lg:rotate-6 group-hover:lg:rotate-3'
+                        ]
                   ]"
                 >
                   <img :src="item.image" :alt="item.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
@@ -111,8 +116,8 @@
             <!-- 文字区域 -->
             <div 
               :class="[
-                'lg:col-span-5 space-y-6 lg:space-y-8 animate-in slide-in-from-bottom-8 duration-700 delay-200',
-                index % 2 === 0 ? 'lg:order-2 lg:col-start-8' : 'lg:order-1 lg:col-start-1 lg:text-right lg:items-end flex flex-col'
+                'lg:col-span-6 space-y-6 lg:space-y-8 animate-in slide-in-from-bottom-8 duration-700 delay-200',
+                index % 2 === 0 ? 'lg:order-2' : 'lg:order-1 flex flex-col'
               ]"
             >
               <div class="space-y-2 lg:space-y-4">
@@ -120,10 +125,10 @@
                   {{ item.title }}
                 </h2>
               </div>
-              <p class="text-base lg:text-xl text-text-light/60 dark:text-text-dark/60 leading-relaxed font-medium">
+              <p class="text-base lg:text-xl text-text-light/60 dark:text-text-dark/60 leading-relaxed font-medium indent-8 lg:indent-[2em]">
                 {{ item.description }}
               </p>
-              <div :class="['flex gap-4 pt-2 lg:pt-4', index % 2 !== 0 && 'lg:justify-end']">
+              <div :class="['flex gap-4 pt-2 lg:pt-4']">
                 <button 
                   @click="handleAction(item)"
                   class="px-8 py-3 lg:px-10 lg:py-4 rounded-full bg-primary text-white font-bold text-sm shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
