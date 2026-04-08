@@ -27,7 +27,7 @@ author: smallyoung
 
 ![浏览器兼容性](//cdn.smallyoung.cn/article/5fd8476ee4b01dc74778c5c7/a3222bab89d14bf08453fd91fb2ee4a6.png)
 
-> 注意：jQuery 版本需要 >= 1.4.3
+> 注意：jQuery 版本需要 `>= 1.4.3`
 
 `HighchartsTable`的兼容性取决于`Highcharts`的兼容性，
 
@@ -57,7 +57,7 @@ author: smallyoung
 
 ### 3、创建HTML表格
 
-在<table>，你必须设置一些属性，如图表类型和图表渲染容器等，其中数据列（`Series`）的名字在<thead>中定义，值在<tbody>中定义<tr>的第一个<td>代表X轴（`xAxis`）的值，其他<td>代表每个系列的Y值（`Value`），在`data-graph-type`中，`column`代表柱状图、`pie`代表饼状图、`line`代表折线图、`area`代表区域、`spline`代表曲线图。示例代码如下：
+在 `<table>` 中，你必须设置一些属性，如图表类型和图表渲染容器等，其中数据列（`Series`）的名字在 `<thead>` 中定义，值在 `<tbody>` 中定义，`<tr>` 的第一个 `<td>` 代表 X 轴（`xAxis`）的值，其他 `<td>` 代表每个系列的 Y 值（`Value`），在 `data-graph-type` 中，`column` 代表柱状图、`pie` 代表饼状图、`line`代表折线图、`area` 代表区域、`spline` 代表曲线图。示例代码如下：
 
 ``` html
 <table class="highchart" data-graph-container-before="1" data-graph-type="line" style="display:none">
@@ -169,13 +169,6 @@ $(document).ready(function() {
       </tr>
   </tbody>
 </table>
-</div>
-</body>
-<script>
-	$(document).ready(function() {
-  		$('table.highchart').highchartTable();
-	});
-</script>
 ```
 
 效果：

@@ -126,7 +126,7 @@ docker run --name nginx-test -p 8080:80 -d nginx
 
 ### 5、访问Nginx
 
-在浏览器地址栏输入http://<IP>:8080访问Nginx服务
+在浏览器地址栏输入 `http://<IP>:8080` 访问Nginx服务
 
 ![访问Nginx](//cdn.smallyoung.cn/article/612d8ff5e4b07c4e9d65949d/7336458efb62418499e906629191a4e0.png!/format/webp)
 

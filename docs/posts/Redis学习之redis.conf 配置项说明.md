@@ -28,10 +28,10 @@ redis.conf 配置项说明如下：
   loglevel verbose
 7. 日志记录方式，默认为标准输出，如果配置Redis为守护进程方式运行，而这里又配置为日志记录方式为标准输出，则日志将会发送给/dev/null
   logfile stdout
-8. 设置数据库的数量，默认数据库为0，可以使用SELECT <dbid>命令在连接上指定数据库id
-  databases 16
+8. 设置数据库的数量，默认数据库为0，可以使用 `SELECT <dbid>` 命令在连接上指定数据库id
+  `databases 16`
 9. 指定在多长时间内，有多少次更新操作，就将数据同步到数据文件，可以多个条件配合
-  save <seconds> <changes>
+  `save <seconds> <changes>`
   Redis默认配置文件中提供了三个条件：
   save 900 1
   save 300 10
@@ -45,15 +45,15 @@ redis.conf 配置项说明如下：
 12. 指定本地数据库存放目录
   dir ./
 13. 设置当本机为slav服务时，设置master服务的IP地址及端口，在Redis启动时，它会自动从master进行数据同步
-  slaveof <masterip> <masterport>
+  `slaveof <masterip> <masterport>`
 14. 当master服务设置了密码保护时，slav服务连接master的密码
-  masterauth <master-password>
-15. 设置Redis连接密码，如果配置了连接密码，客户端在连接Redis时需要通过AUTH <password>命令提供密码，默认关闭
-  requirepass foobared
+  `masterauth <master-password>`
+15. 设置Redis连接密码，如果配置了连接密码，客户端在连接Redis时需要通过 `AUTH <password>` 命令提供密码，默认关闭
+  `requirepass foobared`
 16. 设置同一时间最大客户端连接数，默认无限制，Redis可以同时打开的客户端连接数为Redis进程可以打开的最大文件描述符数，如果设置 maxclients 0，表示不作限制。当客户端连接数到达限制时，Redis会关闭新的连接并向客户端返回max number of clients reached错误信息
   maxclients 128
 17. 指定Redis最大内存限制，Redis在启动时会把数据加载到内存中，达到最大内存后，Redis会先尝试清除已到期或即将到期的Key，当此方法处理 后，仍然到达最大内存设置，将无法再进行写入操作，但仍然可以进行读取操作。Redis新的vm机制，会把Key存放内存，Value会存放在swap区
-  maxmemory <bytes>
+  `maxmemory <bytes>`
 18. 指定是否在每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可能会在断电时导致一段时间内的数据丢失。因为 redis本身同步数据文件是按上面save条件来同步的，所以有的数据会在一段时间内只存在于内存中。默认为no
   appendonly no
 19. 指定更新日志文件名，默认为appendonly.aof
