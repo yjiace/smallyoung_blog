@@ -302,16 +302,29 @@ function hasChildren(slug: string, index: number) {
 }
 
 function findHeadingElement(slug: string, text: string) {
-  let el = document.getElementById(slug)
+  const decodedSlug = decodeURIComponent(slug)
+  let el = document.getElementById(decodedSlug) || document.getElementById(slug)
   if (el) return el
   
-  const alternativeId = slug.replace(/\./g, '-')
+  const alternativeId = slug.replace(/\./g, '-').replace(/、/g, '-')
   el = document.getElementById(alternativeId)
   if (el) return el
 
   const headings = document.querySelectorAll('.doc-content h2, .doc-content h3, .doc-content h4')
+  // 清理 text 中的特殊字符，用于模糊匹配
+  const cleanTargetText = text.replace(/\s/g, '').toLowerCase()
+
   for (const h of headings) {
-    if (h.textContent?.trim() === text || h.getAttribute('id')?.includes(slug)) {
+    // 获取标题文本并移除锚点链接
+    const headerAnchor = h.querySelector('.header-anchor')
+    let hText = h.textContent || ''
+    if (headerAnchor) {
+      hText = h.textContent?.replace(headerAnchor.textContent || '', '') || ''
+    }
+    
+    const cleanHText = hText.trim().replace(/\s/g, '').toLowerCase()
+    
+    if (cleanHText === cleanTargetText || h.getAttribute('id') === decodedSlug || h.getAttribute('id') === slug) {
       return h
     }
   }
