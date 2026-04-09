@@ -233,19 +233,6 @@ export default withMermaid(defineConfig({
       md.renderer.rules.image = (tokens: any, idx: any, options: any, env: any, self: any) => {
         const token = tokens[idx]
 
-        // 为 pub.smallyoung.cn 图片添加 CDN 前缀
-        const srcIndex = token.attrIndex('src')
-        if (srcIndex >= 0) {
-          const src = token.attrs![srcIndex][1]
-          if (src.includes('pub.smallyoung.cn') && !src.includes('/cdn-cgi/image/')) {
-            const newSrc = src.replace(
-              /\/\/pub\.smallyoung\.cn\//,
-              '//pub.smallyoung.cn/cdn-cgi/image/quality=80/'
-            )
-            token.attrSet('src', newSrc)
-          }
-        }
-
         // 添加懒加载
         token.attrSet('loading', 'lazy')
         return defaultImageRender(tokens, idx, options, env, self)
