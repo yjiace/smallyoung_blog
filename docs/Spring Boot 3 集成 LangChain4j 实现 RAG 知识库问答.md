@@ -10,8 +10,6 @@ keywords: [Spring Boot RAG, LangChain4j RAG, 检索增强生成, Java AI, Embedd
 cover: //cdn.smallyoung.cn/smallyoung_blog/springboot-langchain4j-rag/1.png
 ---
 
-# Spring Boot 3 集成 LangChain4j 实现 RAG 知识库问答
-
 > 你是否遇到过这样的场景：公司有一大堆内部文档、产品手册、FAQ，但每次员工提问都要人工翻找？把这些文档"喂"给大模型，让它像一个全知的客服一样实时回答——这正是 RAG（Retrieval-Augmented Generation）的核心价值。
 > 本文将带你用 **Spring Boot 3 + LangChain4j-spring-boot-starter 1.x** 从零搭建一个可运行的 RAG Demo，无需外部向量数据库，10分钟内跑通第一个知识库问答接口。
 >
