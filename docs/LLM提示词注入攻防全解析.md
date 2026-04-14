@@ -10,8 +10,6 @@ keywords: [提示词注入, Prompt Injection, LLM安全, AI安全, 间接注入,
 cover: //cdn.smallyoung.cn/smallyoung_blog/llm-prompt-injection/1.png
 ---
 
-# LLM提示词注入攻防全解析：真实事故案例与防御实践
-
 > 在AI应用爆炸式普及的今天，一行精心构造的文字，就可能让价值数百万美元的AI系统"叛变"——提示词注入（Prompt Injection）已连续在OWASP LLM Top 10中高居榜首。本文从攻击者视角拆解六大注入类型，用真实事故还原漏洞全貌，再从防御者视角构建可落地的工程方案，帮你在攻防博弈中站稳脚跟。
 >
 > 📌 **核心论文**：[Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection](https://arxiv.org/abs/2302.12173)（arXiv:2302.12173）
