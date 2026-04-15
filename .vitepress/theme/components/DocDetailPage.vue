@@ -35,6 +35,7 @@
           <!-- 文档内容 -->
           <article class="doc-content prose prose-lg dark:prose-invert max-w-none">
             <Content />
+            <Promotion />
           </article>
         </div>
       </main>
@@ -173,6 +174,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useData, useRouter } from 'vitepress'
 import type { Doc, TocItem } from '../../data/docs.data'
 import MindMapFloat from './MindMapFloat.vue'
+import Promotion from './Promotion.vue'
 
 const props = defineProps<{ doc: Doc | null }>()
 const { page } = useData()
