@@ -37,8 +37,7 @@
           AI · 大模型 · 软件架构
         </p>
         <p class="text-base lg:text-lg text-text-light/60 dark:text-text-dark/60 max-w-2xl mx-auto leading-relaxed mb-10">
-          专注于 AI 大模型、Agent、RAG、软件架构等前沿技术的深度解析与实践分享。<br/>
-          内容同步更新至今日头条、微信公众号、掘金等平台，欢迎关注。
+          如果你对 AI、软件架构感兴趣，欢迎关注我的社交账号。内容同步更新至今日头条、微信公众号、掘金、知乎等平台。
         </p>
 
         <!-- CTA 按钮 -->
@@ -67,7 +66,66 @@
         <h2 class="text-2xl font-black text-center mb-2">关注我</h2>
         <p class="text-center text-text-light/60 dark:text-text-dark/60 mb-10">内容同步更新，欢迎在各平台关注</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+          <!-- 微信公众号 -->
+          <div class="group relative flex flex-col items-center gap-6 p-8 rounded-3xl glass-card hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-green-500/10 rounded-full blur-3xl group-hover:bg-green-500/20 transition-colors"></div>
+
+            <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #07c160, #35d474)">
+              <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8.5 13.5C7.67 13.5 7 12.83 7 12S7.67 10.5 8.5 10.5 10 11.17 10 12 9.33 13.5 8.5 13.5zm7 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+              </svg>
+            </div>
+
+            <div class="relative w-40 h-40 flex-shrink-0 group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-green-500/20 to-transparent rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div class="relative qr-container w-full h-full rounded-2xl bg-white p-1 border border-gray-100 dark:border-gray-800 overflow-hidden shadow-inner">
+                <img src="/images/wechat.jpg" alt="微信公众号二维码" class="w-full h-full object-contain rounded-xl" />
+              </div>
+            </div>
+
+            <div class="text-center">
+              <p class="font-bold text-lg">微信公众号</p>
+              <p class="text-sm text-text-light/50 dark:text-text-dark/50 mt-1">SmallYoung</p>
+            </div>
+            
+            <div class="w-full py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-sm shadow-lg shadow-green-500/20 text-center">
+              微信扫码关注
+            </div>
+          </div>
+
+          <!-- 知乎 -->
+          <div class="group relative flex flex-col items-center gap-6 p-8 rounded-3xl glass-card hover:shadow-2xl hover:shadow-blue-400/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-400/10 rounded-full blur-3xl group-hover:bg-blue-400/20 transition-colors"></div>
+
+            <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #0084ff, #44a1ff)">
+              <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7.685 4.078c-.271.73-.5 1.434-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58.104 58.104 0 01-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.223 9.223 0 01-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125zM13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"/>
+              </svg>
+            </div>
+
+            <div class="relative w-40 h-40 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+              <div class="absolute inset-0 bg-blue-50 dark:bg-blue-950/20 rounded-2xl"></div>
+              <svg class="relative w-24 h-24 text-blue-500/40 drop-shadow-sm" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7.685 4.078c-.271.73-.5 1.434-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58.104 58.104 0 01-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.223 9.223 0 01-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125zM13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"/>
+              </svg>
+            </div>
+
+            <div class="text-center">
+              <p class="font-bold text-lg">知乎</p>
+              <p class="text-sm text-text-light/50 dark:text-text-dark/50 mt-1">深度问答与干货分享</p>
+            </div>
+            
+            <a
+              href="https://www.zhihu.com/people/zhilpd3fkw"
+              target="_blank"
+              class="relative z-10 w-full text-center py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-400 text-white font-bold text-sm shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all active:scale-95"
+            >
+              前往知乎
+            </a>
+          </div>
+
           <!-- 今日头条 -->
           <div class="group relative flex flex-col items-center gap-6 p-8 rounded-3xl glass-card hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
             <!-- 装饰性光影 -->
@@ -101,47 +159,20 @@
             </a>
           </div>
 
-          <!-- 微信公众号 -->
-          <div class="group relative flex flex-col items-center gap-6 p-8 rounded-3xl glass-card hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
-            <div class="absolute -top-10 -right-10 w-32 h-32 bg-green-500/10 rounded-full blur-3xl group-hover:bg-green-500/20 transition-colors"></div>
-
-            <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #07c160, #35d474)">
-              <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8.5 13.5C7.67 13.5 7 12.83 7 12S7.67 10.5 8.5 10.5 10 11.17 10 12 9.33 13.5 8.5 13.5zm7 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
-              </svg>
-            </div>
-
-            <div class="relative w-40 h-40 flex-shrink-0 group-hover:scale-105 transition-transform duration-500">
-              <div class="absolute -inset-2 bg-gradient-to-tr from-green-500/20 to-transparent rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div class="relative qr-container w-full h-full rounded-2xl bg-white p-1 border border-gray-100 dark:border-gray-800 overflow-hidden shadow-inner">
-                <img src="/images/wechat.jpg" alt="微信公众号二维码" class="w-full h-full object-contain rounded-xl" />
-              </div>
-            </div>
-
-            <div class="text-center">
-              <p class="font-bold text-lg">微信公众号</p>
-              <p class="text-sm text-text-light/50 dark:text-text-dark/50 mt-1">SmallYoung</p>
-            </div>
-            
-            <div class="w-full py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-sm shadow-lg shadow-green-500/20 text-center">
-              微信扫码关注
-            </div>
-          </div>
-
           <!-- 掘金 -->
           <div class="group relative flex flex-col items-center gap-6 p-8 rounded-3xl glass-card hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-colors"></div>
 
             <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #1e80ff, #4c9bff)">
               <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                <path d="m12 14.316 7.454-5.88-2.022-1.625L12 11.1l-0.004 0.003-5.432-4.288-2.02 1.624 7.452 5.88Zm0-7.247 2.89-2.298L12 2.453l-0.004-0.005-2.884 2.318 2.884 2.3Zm0 11.266-0.005 0.002-9.975-7.87L0 12.088l0.194 0.156 11.803 9.308 7.463-5.885L24 12.085l-2.023-1.624Z"/>
               </svg>
             </div>
 
             <div class="relative w-40 h-40 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
               <div class="absolute inset-0 bg-blue-50 dark:bg-blue-950/20 rounded-2xl"></div>
-              <svg class="relative w-24 h-24 text-blue-500/40 drop-shadow-sm" viewBox="0 0 48 48" fill="currentColor">
-                <path d="M24 4L4 18l4 3 16-11 16 11 4-3L24 4zM24 22l-14 9.5 4 2.5 10-6.5 10 6.5 4-2.5L24 22zM24 36l-8 5.5 8 2.5 8-2.5L24 36z"/>
+              <svg class="relative w-24 h-24 text-blue-500/40 drop-shadow-sm" viewBox="0 0 24 24" fill="currentColor">
+                <path d="m12 14.316 7.454-5.88-2.022-1.625L12 11.1l-0.004 0.003-5.432-4.288-2.02 1.624 7.452 5.88Zm0-7.247 2.89-2.298L12 2.453l-0.004-0.005-2.884 2.318 2.884 2.3Zm0 11.266-0.005 0.002-9.975-7.87L0 12.088l0.194 0.156 11.803 9.308 7.463-5.885L24 12.085l-2.023-1.624Z"/>
               </svg>
             </div>
 
