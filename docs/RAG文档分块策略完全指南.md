@@ -7,7 +7,7 @@ author: smallyoung
 date: 2026-04-24
 dateModified: 2026-04-24
 keywords: [RAG分块, Chunking策略, LangChain4j, 语义分块, 滑动窗口分块, 文档切分]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/rag-chunking/cover.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/rag-chunking/0.png
 ---
 
 # RAG 文档分块策略完全指南：从原理到 Java 实战
