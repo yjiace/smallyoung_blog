@@ -10,8 +10,6 @@ keywords: [RAG分块, Chunking策略, LangChain4j, 语义分块, 滑动窗口分
 cover: //cdn.smallyoung.cn/smallyoung_blog/rag-chunking/0.png
 ---
 
-# RAG 文档分块策略完全指南：从原理到 Java 实战
-
 > 分块（Chunking）是 RAG 系统里最容易被忽视却影响最大的环节——同样的嵌入模型、同样的向量数据库，只是换了分块策略，检索召回率就能相差 9% 以上。本文从"为什么必须分块"出发，系统拆解 5 种主流策略的原理与适用场景，再结合 2026 年最新基准测试结论，给出可直接落地的 LangChain4j Java 实战代码与生产配置建议。
 >
 > 📌 **适合人群**：正在构建或优化 RAG 系统的 Java 后端开发者、AI 应用开发者
