@@ -223,6 +223,10 @@ $$\text{RRF\_score}(d) = \sum_{r \in R} \frac{1}{k + \text{rank}_r(d)}$$
 首先在 `pom.xml` 中引入必要依赖：
 
 ```xml
+<properties>
+    <langchain4j.version>1.13.1</langchain4j.version>
+</properties>
+
 <dependencies>
     <!-- Spring Boot 基础 Web -->
     <dependency>
@@ -230,72 +234,282 @@ $$\text{RRF\_score}(d) = \sum_{r \in R} \frac{1}{k + \text{rank}_r(d)}$$
         <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
-    <!-- LangChain4j 核心 -->
+    <!-- LangChain4j 核心（1.x 正式版） -->
     <dependency>
         <groupId>dev.langchain4j</groupId>
         <artifactId>langchain4j</artifactId>
-        <version>0.36.2</version>
+        <version>${langchain4j.version}</version>
     </dependency>
 
-    <!-- LangChain4j Spring Boot Starter（自动配置） -->
+    <!-- OpenAI 模型实现 -->
     <dependency>
         <groupId>dev.langchain4j</groupId>
-        <artifactId>langchain4j-spring-boot-starter</artifactId>
-        <version>0.36.2</version>
+        <artifactId>langchain4j-open-ai</artifactId>
+        <version>${langchain4j.version}</version>
     </dependency>
 
-    <!-- Embedding 存储（示例使用内存版，生产替换为 Milvus/Elasticsearch） -->
+    <!-- 内置 Embedding 模型（本地语义检索） -->
     <dependency>
         <groupId>dev.langchain4j</groupId>
         <artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>
-        <version>0.36.2</version>
+        <version>${langchain4j.version}</version>
     </dependency>
+
+    <!-- (可选) LangChain4j Spring Boot Starter -->
+    <!-- 如果不使用 Starter，需手动配置 Bean，见下文 -->
+    <!--
+    <dependency>
+        <groupId>dev.langchain4j</groupId>
+        <artifactId>langchain4j-spring-boot-starter</artifactId>
+        <version>${langchain4j.version}</version>
+    </dependency>
+    -->
 </dependencies>
 ```
 
-### 4.2 构建 HybridRetriever（核心代码）
+### 4.2 构建混合检索器（核心代码）
 
-这是混合检索器的核心构建代码：
+#### 第一步：实现 BM25 关键词检索器
 
 ```java
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.rag.content.Content;
+import dev.langchain4j.rag.content.retriever.ContentRetriever;
+import dev.langchain4j.rag.query.Query;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * 基于 BM25 算法的内存关键词检索器
+ * <p>
+ * langchain4j 1.x 未内置 BM25 ContentRetriever，此类手动实现。
+ * 中文场景建议将 tokenize() 替换为 jieba 或 HanLP 分词器。
+ * 若已集成 Elasticsearch，可直接调用其 BM25 接口替换本类。
+ */
+public class BM25ContentRetriever implements ContentRetriever {
+
+    private static final double K1 = 1.5;   // 词频饱和参数
+    private static final double B  = 0.75;  // 文档长度归一化系数
+
+    private final List<TextSegment> corpus = new ArrayList<>();
+    private final int topK;
+
+    public BM25ContentRetriever(int topK) {
+        this.topK = topK;
+    }
+
+    /**
+     * 向 BM25 索引注册文档（文档入库时同步调用）
+     */
+    public void index(TextSegment segment) {
+        corpus.add(segment);
+    }
+
+    @Override
+    public List<Content> retrieve(Query query) {
+        if (corpus.isEmpty()) return Collections.emptyList();
+
+        String[] queryTerms = tokenize(query.text());
+        double avgdl = corpus.stream()
+                .mapToInt(s -> tokenize(s.text()).length)
+                .average()
+                .orElse(1.0);
+
+        return corpus.stream()
+                .map(seg -> Map.entry(seg, bm25Score(queryTerms, seg.text(), avgdl)))
+                .filter(e -> e.getValue() > 0)
+                .sorted(Map.Entry.<TextSegment, Double>comparingByValue().reversed())
+                .limit(topK)
+                .map(e -> Content.from(e.getKey()))
+                .collect(Collectors.toList());
+    }
+
+    private double bm25Score(String[] queryTerms, String docText, double avgdl) {
+        String[] docTerms = tokenize(docText);
+        Map<String, Long> tf = Arrays.stream(docTerms)
+                .collect(Collectors.groupingBy(t -> t, Collectors.counting()));
+
+        double score = 0.0;
+        int N = corpus.size();
+
+        for (String term : queryTerms) {
+            long df = corpus.stream()
+                    .filter(s -> s.text().toLowerCase().contains(term))
+                    .count();
+            if (df == 0) continue;
+
+            // IDF：文档频率越低，辨别力越强
+            double idf = Math.log((N - df + 0.5) / (df + 0.5) + 1);
+
+            // TF 饱和：词频越高加分越慢，防止词语堆砌
+            double termFreq = tf.getOrDefault(term, 0L);
+            double numerator   = termFreq * (K1 + 1);
+            double denominator = termFreq + K1 * (1 - B + B * (docTerms.length / avgdl));
+
+            score += idf * (numerator / denominator);
+        }
+        return score;
+    }
+
+    /** 简单空格/标点分词；中文场景请替换为 jieba / HanLP */
+    private String[] tokenize(String text) {
+        return text.toLowerCase().split("[\\s\\p{Punct}]+");
+    }
+}
+```
+
+#### 第二步：实现 RRF 融合检索器
+
+```java
+import dev.langchain4j.rag.content.Content;
+import dev.langchain4j.rag.content.retriever.ContentRetriever;
+import dev.langchain4j.rag.query.Query;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * RRF（倒数排名融合）多路检索融合器
+ * <p>
+ * 对任意数量的 ContentRetriever 结果按排名加权融合，不依赖原始分数。
+ * RRF 得分公式：score(d) = Σ 1 / (rrfK + rank_r(d))
+ */
+public class RrfFusionContentRetriever implements ContentRetriever {
+
+    private final List<ContentRetriever> retrievers;
+    private final int rrfK; // 平滑常数，业界标准值 60
+
+    /**
+     * @param retrievers 多路检索器列表（如 BM25 + 向量）
+     * @param rrfK       RRF 平滑常数（值越大，低排名文档贡献越平稳）
+     */
+    public RrfFusionContentRetriever(List<ContentRetriever> retrievers, int rrfK) {
+        this.retrievers = retrievers;
+        this.rrfK = rrfK;
+    }
+
+    @Override
+    public List<Content> retrieve(Query query) {
+        // 1. 依次调用各路检索器
+        List<List<Content>> allResults = retrievers.stream()
+                .map(r -> r.retrieve(query))
+                .collect(Collectors.toList());
+
+        // 2. 以文本内容为 Key，计算并累加 RRF 得分
+        Map<String, Double>  rrfScores  = new LinkedHashMap<>();
+        Map<String, Content> contentMap = new LinkedHashMap<>();
+
+        for (List<Content> results : allResults) {
+            for (int rank = 0; rank < results.size(); rank++) {
+                Content content = results.get(rank);
+                String  key     = content.textSegment().text(); // 文本去重
+                double  score   = 1.0 / (rrfK + rank + 1);     // rank 从 0 开始
+
+                rrfScores.merge(key, score, Double::sum);
+                contentMap.putIfAbsent(key, content);
+            }
+        }
+
+        // 3. 按 RRF 得分降序返回融合结果
+        return rrfScores.entrySet().stream()
+                .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+                .map(e -> contentMap.get(e.getKey()))
+                .collect(Collectors.toList());
+    }
+}
+```
+
+#### 第三步：Spring Configuration — 组装混合检索 Bean
+
+```java
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel;
+import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.rag.content.retriever.ContentRetriever;
+import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.rag.retriever.HybridRetriever;
+import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class HybridRetrieverConfig {
 
+    private static final int BM25_TOP_K   = 20;
+    private static final int VECTOR_TOP_K = 20;
+    private static final int RRF_K        = 60;
+
+    @Value("${langchain4j.open-ai.api-key:demo}")
+    private String apiKey;
+
     /**
-     * 构建混合检索器
-     * 同时使用 BM25 关键词检索 + 向量语义检索，通过 RRF 算法融合结果
-     *
-     * @param embeddingModel 向量化模型（将文本转为向量）
-     * @param embeddingStore 向量数据库（存储和检索向量）
+     * 手动定义 ChatModel Bean（非 Starter 模式）
      */
     @Bean
-    public HybridRetriever hybridRetriever(
+    public ChatModel chatModel() {
+        return OpenAiChatModel.builder()
+                .apiKey(apiKey)
+                .build();
+    }
+
+    /**
+     * 手动定义 EmbeddingModel Bean（本地模型）
+     */
+    @Bean
+    public EmbeddingModel embeddingModel() {
+        return new AllMiniLmL6V2EmbeddingModel();
+    }
+
+    /**
+     * 手动定义 EmbeddingStore Bean（内存存储）
+     */
+    @Bean
+    public EmbeddingStore<TextSegment> embeddingStore() {
+        return new InMemoryEmbeddingStore<>();
+    }
+
+    /**
+     * 构建混合检索器（BM25 + 向量语义 + RRF 融合）
+     * <p>
+     * langchain4j 1.x 已移除 HybridRetriever，
+     * 改为手动组合两路 ContentRetriever 并通过 RrfFusionContentRetriever 融合。
+     *
+     * @param embeddingModel 向量化模型（将文本转为语义向量）
+     * @param embeddingStore 向量数据库（存储 & 检索向量）
+     */
+    @Bean
+    public ContentRetriever hybridContentRetriever(
             EmbeddingModel embeddingModel,
-            EmbeddingStore embeddingStore) {
+            EmbeddingStore<TextSegment> embeddingStore) {
 
-        return HybridRetriever.builder()
-                // ── 向量检索配置 ──────────────────────────
-                .embeddingModel(embeddingModel)   // 语义检索的向量化模型
-                .vectorStore(embeddingStore)       // 向量数据库实例
+        // ── 向量语义检索器 ─────────────────────────────
+        // EmbeddingStoreContentRetriever 是 langchain4j 1.x 的标准向量检索实现
+        ContentRetriever vectorRetriever = EmbeddingStoreContentRetriever.builder()
+                .embeddingStore(embeddingStore)
+                .embeddingModel(embeddingModel)
+                .maxResults(VECTOR_TOP_K)    // 向量侧召回 Top-20 候选
+                .build();
 
-                // ── BM25 检索配置 ──────────────────────────
-                .bm25TopK(20)   // BM25 关键词检索召回前 20 条候选
-                .vectorTopK(20) // 向量语义检索召回前 20 条候选
+        // ── BM25 关键词检索器 ──────────────────────────
+        // langchain4j 1.x 不内置 BM25，使用自定义实现
+        // 文档入库时需同步调用 bm25Retriever.index(segment) 建立索引
+        BM25ContentRetriever bm25Retriever = new BM25ContentRetriever(BM25_TOP_K);
 
-                // ── RRF 融合配置 ──────────────────────────
-                // rrfK 是 RRF 公式中的平滑常数 k，业界标准值为 60
-                // 值越大：低排名文档的得分被削弱越少（结果更"民主"）
-                // 值越小：结果越集中于两路都排名靠前的文档
-                .rrfK(60)
-
-                .build()
-                .init(); // 初始化 BM25 索引
+        // ── RRF 融合：统一暴露为 ContentRetriever Bean ─
+        // RrfFusionContentRetriever 内部完成：
+        //   1. 并发调用两路检索器
+        //   2. 按排名倒数加权（公式：1 / (rrfK + rank)）
+        //   3. 去重 + 降序排列，返回最终候选列表
+        return new RrfFusionContentRetriever(
+                List.of(bm25Retriever, vectorRetriever),
+                RRF_K
+        );
     }
 }
 ```
@@ -303,9 +517,8 @@ public class HybridRetrieverConfig {
 ### 4.3 在 RAG Service 中使用混合检索器
 
 ```java
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
-import dev.langchain4j.rag.retriever.HybridRetriever;
 import dev.langchain4j.service.AiServices;
 import org.springframework.stereotype.Service;
 
@@ -314,24 +527,16 @@ public class KnowledgeBaseService {
 
     private final KnowledgeAssistant assistant;
 
+    /**
+     * langchain4j 1.13.1+：使用 ChatModel 替代 ChatLanguageModel
+     */
     public KnowledgeBaseService(
-            ChatLanguageModel chatModel,
-            HybridRetriever hybridRetriever) {
+            ChatModel chatModel,
+            ContentRetriever hybridContentRetriever) {
 
-        // 将 HybridRetriever 适配为 LangChain4j 的 ContentRetriever 接口
-        ContentRetriever contentRetriever = query -> {
-            // hybridRetriever 内部自动完成：
-            // 1. BM25 关键词检索（topK=20）
-            // 2. 向量语义检索（topK=20）
-            // 3. RRF 融合排序
-            // 4. 返回融合后的最终结果列表
-            return hybridRetriever.retrieve(query.text());
-        };
-
-        // 使用 AiServices 自动组装 RAG pipeline
         this.assistant = AiServices.builder(KnowledgeAssistant.class)
-                .chatLanguageModel(chatModel)
-                .contentRetriever(contentRetriever)
+                .chatModel(chatModel)
+                .contentRetriever(hybridContentRetriever)
                 .build();
     }
 
@@ -345,6 +550,9 @@ public class KnowledgeBaseService {
     }
 }
 ```
+
+> [!NOTE]
+> 与旧版的关键差异：0.x 中需要将 `HybridRetriever` 手动包装为 `ContentRetriever` 的 lambda；1.x 中 `hybridContentRetriever` Bean 本身就实现了 `ContentRetriever` 接口，Spring 可直接按类型注入。
 
 ### 4.4 定义 AI Service 接口
 
@@ -465,12 +673,12 @@ combined.addAll(bm25Results);
 combined.addAll(vectorResults); // 可能包含大量重复文档，且未按质量排序
 ```
 
-✅ **正确做法**：通过 `HybridRetriever` 统一调用，RRF 自动处理去重与排序
+✅ **正确做法**：通过 `hybridContentRetriever`（`ContentRetriever` Bean）统一调用，RRF 自动处理去重与排序
 
 ```java
-// ✅ 正确：HybridRetriever 内部完成两路召回 + RRF 融合 + 去重
-List<TextSegment> results = hybridRetriever.retrieve(userQuery);
-// results 已经是按 RRF 分数排序、去重后的结果
+// ✅ 正确：hybridContentRetriever 内部完成两路召回 + RRF 融合 + 去重
+List<Content> results = hybridContentRetriever.retrieve(Query.from(userQuery));
+// results 已按 RRF 分数降序排列，无重复文档
 ```
 
 ### 6.3 常见问题排查表
@@ -527,7 +735,8 @@ flowchart LR
 | **混合检索** | 同时运行 BM25 和向量检索两路召回，各取所长 |
 | **RRF 算法** | 不依赖原始分数，仅通过各榜单排名的倒数加权来公平融合多路结果 |
 | **rrfK=60** | RRF 平滑常数的业界标准值，平衡顶部排名优势与尾部文档贡献 |
-| **HybridRetriever** | LangChain4j 提供的混合检索器，内置两路召回 + RRF 融合能力 |
+| **HybridRetriever** | langchain4j 0.x 提供的混合检索器（1.x 已移除）；1.x 中改用 `ContentRetriever` + `RrfFusionContentRetriever` 手动组合 |
+| **ChatModel** | langchain4j 1.13.1+ 推荐的聊天模型接口（替代旧版的 `ChatLanguageModel`） |
 
 > [!TIP]
 > **推荐学习路径**：
