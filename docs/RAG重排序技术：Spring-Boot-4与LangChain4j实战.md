@@ -10,8 +10,6 @@ keywords: [RAG重排序, LangChain4j Reranking, OnnxScoringModel, ReRankingConte
 cover: //cdn.smallyoung.cn/smallyoung_blog/rag-reranking/1.png
 ---
 
-# RAG 重排序技术详解：Spring Boot 4 + LangChain4j 1.13.1 实战指南
-
 > 向量检索像大海捞针——能捞出几十根针，但哪根最锋利？重排序（Reranking）正是专门解决这个问题的精排技术。本文从原理出发，带你彻底理解"粗排 → 精排"两阶段检索模式，并通过 Spring Boot 4 + LangChain4j 1.13.1 原生 API（非 langchain4j-spring 包）实现完整的本地 ONNX 重排序流水线，提供开箱即用的 JUnit 5 测试代码。
 >
 > 📌 **适合人群**：有 Spring Boot 基础、正在构建或优化 RAG 系统的 Java 开发者
