@@ -4,10 +4,10 @@ category: 人工智能
 tags: [RAG, LangChain4j, Spring Boot, 重排序, 向量检索]
 description: 本文深入讲解 RAG 重排序（Reranking）技术原理，介绍双编码器与交叉编码器的核心差异，并结合 Spring Boot 4 + LangChain4j 1.13.1 原生 API，从零实现本地 ONNX 重排序与 Cohere 云端重排序，附完整可运行测试代码。
 author: smallyoung
-date: 2026-04-29
-dateModified: 2026-04-29
+date: 2026-04-28
+dateModified: 2026-04-28
 keywords: [RAG重排序, LangChain4j Reranking, OnnxScoringModel, ReRankingContentAggregator, Spring Boot 4 AI]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/rag-reranking/cover.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/rag-reranking/1.png
 ---
 
 # RAG 重排序技术详解：Spring Boot 4 + LangChain4j 1.13.1 实战指南
@@ -16,7 +16,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/rag-reranking/
 >
 > 📌 **适合人群**：有 Spring Boot 基础、正在构建或优化 RAG 系统的 Java 开发者
 
-![RAG 重排序技术详解](//pub.smallyoung.cn/course_slidev/rag-reranking/0.png)
+![RAG 重排序技术详解](//cdn.smallyoung.cn/smallyoung_blog/rag-reranking/0.png)
 
 <!--
   MindMapFloat 知识维度说明：
@@ -59,8 +59,6 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/rag-reranking/
 - ✅ 使用 OnnxScoringModel 在 JVM 内运行本地 ONNX 重排序模型
 - ✅ 将 ReRankingContentAggregator 接入 DefaultRetrievalAugmentor 完整 RAG 流水线
 - ✅ 可直接运行的 JUnit 5 测试代码与 Maven 依赖配置
-
----
 
 ## 1. 向量检索为什么还不够准
 
@@ -117,8 +115,6 @@ flowchart TB
     end
 ```
 
----
-
 ## 2. 双编码器 vs 交叉编码器：两种模型的本质差异
 
 ### 2.1 双编码器（Bi-Encoder）：向量检索的引擎
@@ -161,8 +157,6 @@ Output = 一个 0~1 的相关性分数（越高越相关）
 
 > [!TIP]
 > 实际生产中，两种模型是互补关系，不是竞争关系。标准做法：双编码器召回 Top-20 到 Top-50，交叉编码器从中精排取 Top-3 送给 LLM。
-
----
 
 ## 3. LangChain4j 重排序核心 API 解析
 
@@ -213,8 +207,6 @@ flowchart TB
     style I fill:#e8f5e9
 ```
 
----
-
 ## 4. Maven 依赖配置
 
 ### 4.1 核心依赖
@@ -258,13 +250,7 @@ flowchart TB
         <!-- 版本由 BOM 管理，无需显式声明 -->
     </dependency>
 
-    <!-- 本地 ONNX 重排序模型支持（含 ONNX Runtime CPU 推理） -->
-    <!-- ⚠️ onnx-scoring 属于 beta 模块，需显式指定 beta 版本号 -->
-    <dependency>
-        <groupId>dev.langchain4j</groupId>
-        <artifactId>langchain4j-onnx-scoring</artifactId>
-        <version>${langchain4j.beta.version}</version>
-    </dependency>
+
 
     <!-- 本地 ONNX 嵌入模型（bge-small-en-v1.5 量化版，24MB） -->
     <dependency>
@@ -288,50 +274,120 @@ flowchart TB
 </dependencies>
 ```
 
-### 4.2 模型文件准备
+### 4.2 阿里云百炼重排序 API 准备
 
-本地 ONNX 重排序需要从 HuggingFace 下载模型文件（ONNX 格式）。推荐使用 `BAAI/bge-reranker-v2-m3` 的量化版本，体积约 300MB，CPU 推理延迟约 50~200ms（取决于文本长度）。
+本项目不再需要在本地下载动辄几百 MB 的模型文件，而是直接通过网络调用阿里云百炼（Model Studio）提供的 `gte-rerank` 重排序模型 API。这种方式不仅降低了服务器配置要求（无需 GPU，甚至无需高配 CPU），而且接入极其轻量。
 
-| 模型 | 参数量 | ONNX 文件大小 | CPU 延迟（20条候选） | 适用场景 |
-|------|-------|-------------|-------------------|---------|
-| bge-reranker-base | 278M | ~280MB | ~200ms | 中文+英文 |
-| bge-reranker-v2-m3 | 278M | ~560MB | ~300ms | 多语言 |
-| ms-marco-MiniLM-L-6 | 22M | ~45MB | ~30ms | 纯英文，超低延迟 |
-| cross-encoder/ms-marco-MiniLM-L-12 | 33M | ~67MB | ~60ms | 英文，平衡精度与速度 |
+#### 获取 API Key：
+1. 访问 [阿里云百炼控制台](https://bailian.console.aliyun.com/)。
+2. 在左侧导航栏中，点击 **API Key**。
+3. 点击 **创建 API Key**（如果已有可以直接复制）。
+4. 保存该 Key（例如 `sk-xxxxxxxxxxxxxxxx`），稍后将配置在代码中。
 
-```bash
-# 安装 optimum 导出工具（需要 Python 环境）
-pip install optimum[exporters]
-
-# 将 HuggingFace 模型导出为 ONNX 格式
-optimum-cli export onnx \
-    --model BAAI/bge-reranker-v2-m3 \
-    --task text-classification \
-    ./models/bge-reranker-v2-m3/
-```
-
-导出后目录结构如下：
-```
-models/bge-reranker-v2-m3/
-├── model.onnx          ← 模型权重
-├── tokenizer.json      ← 分词器配置
-└── config.json
-```
-
----
+> [!TIP]
+> 阿里云百炼的 `gte-rerank` 模型在通用中文检索上表现极佳，单次调用限制为文档总 token 数不超过限制（详情请参考阿里云官方配额）。本示例将自己实现一个简单的 `ScoringModel` 对接该 API。
 
 ## 5. 代码实现
 
-### 5.1 核心 Bean 配置（纯 Java，不依赖 langchain4j-spring）
+### 5.1 自定义 DashScopeScoringModel 对接百炼 API
+
+由于 LangChain4j 原生暂未提供阿里云重排序的直接实现，我们需要根据其 `ScoringModel` 接口自行封装一个 HTTP 客户端调用百炼 API。
+
+```java
+// DashScopeScoringModel.java
+package com.example.rag.model;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.model.output.Response;
+import dev.langchain4j.model.scoring.ScoringModel;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class DashScopeScoringModel implements ScoringModel {
+
+    private final String apiKey;
+    private final String modelName;
+    private final HttpClient httpClient;
+    private final ObjectMapper objectMapper;
+    private static final String API_URL = "https://dashscope.aliyuncs.com/api/v1/services/rerank/text-rerank/text-rerank";
+
+    public DashScopeScoringModel(String apiKey, String modelName) {
+        this.apiKey = apiKey;
+        this.modelName = modelName;
+        this.httpClient = HttpClient.newHttpClient();
+        this.objectMapper = new ObjectMapper();
+    }
+
+    @Override
+    public Response<Double> score(TextSegment textSegment, String query) {
+        return Response.from(scoreAll(List.of(textSegment), query).content().get(0));
+    }
+
+    @Override
+    public Response<List<Double>> scoreAll(List<TextSegment> textSegments, String query) {
+        try {
+            List<String> docs = textSegments.stream().map(TextSegment::text).collect(Collectors.toList());
+
+            Map<String, Object> input = new HashMap<>();
+            input.put("query", query);
+            input.put("documents", docs);
+
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("model", this.modelName);
+            requestBody.put("input", input);
+
+            String jsonBody = objectMapper.writeValueAsString(requestBody);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(API_URL))
+                    .header("Authorization", "Bearer " + apiKey)
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                throw new RuntimeException("DashScope API call failed: " + response.body());
+            }
+
+            Map<String, Object> responseMap = objectMapper.readValue(response.body(), Map.class);
+            Map<String, Object> output = (Map<String, Object>) responseMap.get("output");
+            List<Map<String, Object>> results = (List<Map<String, Object>>) output.get("results");
+
+            Double[] scores = new Double[docs.size()];
+            for (Map<String, Object> res : results) {
+                int index = (Integer) res.get("index");
+                double score = (Double) res.get("relevance_score");
+                scores[index] = score;
+            }
+
+            return Response.from(List.of(scores));
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to score texts with DashScope API", e);
+        }
+    }
+}
+```
+
+### 5.2 核心 Bean 配置
 
 ```java
 // RerankingConfig.java
 package com.example.rag.config;
 
+import com.example.rag.model.DashScopeScoringModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
 import dev.langchain4j.model.scoring.ScoringModel;
-import dev.langchain4j.model.scoring.onnx.OnnxScoringModel;
 import dev.langchain4j.rag.DefaultRetrievalAugmentor;
 import dev.langchain4j.rag.RetrievalAugmentor;
 import dev.langchain4j.rag.content.aggregator.ContentAggregator;
@@ -345,28 +401,38 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * RAG 重排序核心配置类（纯 Java 风格，不依赖 langchain4j-spring 自动装配）
+ *
+ * <p>配置了完整的两阶段检索流水线：
+ * <ol>
+ *   <li>粗排：EmbeddingStoreContentRetriever 向量检索 Top-20</li>
+ *   <li>精排：ReRankingContentAggregator 交叉编码器重排序，取 Top-3</li>
+ * </ol>
+ * </p>
+ */
 @Configuration
 public class RerankingConfig {
 
-    // 模型路径从 application.properties 注入
-    @Value("${reranker.model.path}")
-    private String modelPath;
-
-    @Value("${reranker.tokenizer.path}")
-    private String tokenizerPath;
+    // 阿里云百炼 API Key，从 application.properties 注入
+    @Value("${dashscope.api.key}")
+    private String apiKey;
 
     /**
-     * 本地 ONNX 重排序模型 Bean
-     * 使用 CPU 推理，无需 GPU，开箱即用
+     * 云端重排序模型 Bean
+     *
+     * <p>使用自定义的 DashScopeScoringModel 对接百炼 gte-rerank 模型
+     * </p>
      */
     @Bean
     public ScoringModel scoringModel() {
-        return new OnnxScoringModel(modelPath, tokenizerPath);
+        return new DashScopeScoringModel(apiKey, "gte-rerank");
     }
 
     /**
      * 嵌入模型 Bean（用于向量化文档和查询）
-     * bge-small-en-v1.5 量化版，24MB，纯本地推理
+     *
+     * <p>bge-small-en-v1.5 量化版，24MB，内置于 JAR 中，纯本地推理，无需手动下载。</p>
      */
     @Bean
     public EmbeddingModel embeddingModel() {
@@ -383,7 +449,9 @@ public class RerankingConfig {
 
     /**
      * 向量检索器：粗排阶段，从库中捞出 Top-20 候选
-     * maxResults(20) 故意设大，给重排序提供足够候选
+     *
+     * <p>maxResults(20) 故意设大，给重排序提供足够候选；minScore(0.4) 适当放宽，
+     * 避免错过语义相关的文档。</p>
      */
     @Bean
     public ContentRetriever contentRetriever(
@@ -393,15 +461,17 @@ public class RerankingConfig {
                 .embeddingStore(embeddingStore)
                 .embeddingModel(embeddingModel)
                 .maxResults(20)          // 粗排多捞，给精排留余量
-                .minScore(0.5)           // 粗排阈值适当放宽
+                .minScore(0.4)           // 粗排阈值适当放宽
                 .build();
     }
 
     /**
      * 重排序内容聚合器：精排阶段，从 Top-20 中取最优 Top-3
      *
-     * minScore(0.7)：过滤掉精排后分数仍低的结果，防止低质量上下文污染 LLM
+     * <p>
+     * minScore(0.7)：过滤掉精排后分数仍低的结果，防止低质量上下文污染 LLM<br>
      * maxResults(3)：最终只保留 3 条最相关的内容送给 LLM
+     * </p>
      */
     @Bean
     public ContentAggregator contentAggregator(ScoringModel scoringModel) {
@@ -427,7 +497,7 @@ public class RerankingConfig {
 }
 ```
 
-### 5.2 独立使用 ScoringModel 打分（不集成 RAG 流水线）
+### 5.3 独立使用 ScoringModel 打分（不集成 RAG 流水线）
 
 有时只需要对自定义的候选列表做重排序，可以直接调用 `ScoringModel` 的 `scoreAll` 方法：
 
@@ -444,6 +514,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * 独立重排序服务（不与完整 RAG 流水线耦合）
+ *
+ * <p>当只需要对自定义候选列表做重排序，而不需要完整 RAG 流水线时使用此服务。
+ * 直接调用 {@link ScoringModel#scoreAll(List, String)} 进行批量打分。
+ * </p>
+ */
 @Service
 public class StandaloneRerankingService {
 
@@ -486,7 +563,7 @@ public class StandaloneRerankingService {
 }
 ```
 
-### 5.3 将 RetrievalAugmentor 集成到 AiServices
+### 5.4 将 RetrievalAugmentor 集成到 AiServices
 
 使用 LangChain4j 原生的 `AiServices` API（不依赖 langchain4j-spring 自动装配），手动将 `RetrievalAugmentor` 注入：
 
@@ -494,36 +571,50 @@ public class StandaloneRerankingService {
 // RagServiceFactory.java
 package com.example.rag.service;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.rag.RetrievalAugmentor;
 import dev.langchain4j.service.AiServices;
 import org.springframework.stereotype.Component;
 
+/**
+ * RAG 服务工厂（不使用 langchain4j-spring 自动装配）
+ *
+ * <p>使用 LangChain4j 原生的 {@link AiServices} API 手动构建 RAG 服务，
+ * 保持对流水线的完整控制，不依赖 {@code @AiService} 注解。
+ * </p>
+ */
 @Component
 public class RagServiceFactory {
 
     /**
      * 使用原始 AiServices API 手动构建 RAG 服务
-     * 这里不用 langchain4j-spring 的 @AiService 注解，保持对流水线的完整控制
+     *
+     * <p>这里不用 langchain4j-spring 的 @AiService 注解，保持对流水线的完整控制。</p>
+     *
+     * @param chatModel          对话语言模型（如 OpenAI GPT、Ollama 本地模型等）
+     * @param retrievalAugmentor 带重排序的 RAG 检索增强器
+     * @return 具备 RAG 能力的 Assistant 代理实例
      */
     public Assistant createAssistant(
-            ChatLanguageModel chatModel,
+            ChatModel chatModel,
             RetrievalAugmentor retrievalAugmentor) {
 
         return AiServices.builder(Assistant.class)
-                .chatLanguageModel(chatModel)
+                .chatModel(chatModel)
                 .retrievalAugmentor(retrievalAugmentor)  // 注入带重排序的增强器
                 .build();
     }
 
-    // AI 服务接口（由 AiServices 动态代理实现）
+    /**
+     * AI 服务接口（由 AiServices 动态代理实现）
+     *
+     * <p>LangChain4j 会在运行时生成代理实现，自动处理 RAG 检索与 LLM 调用。</p>
+     */
     public interface Assistant {
         String chat(String userMessage);
     }
 }
 ```
-
----
 
 ## 6. 完整可运行的 JUnit 5 测试代码
 
@@ -535,6 +626,7 @@ public class RagServiceFactory {
 // RerankingTest.java
 package com.example.rag;
 
+import com.example.rag.model.DashScopeScoringModel;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentSplitter;
 import dev.langchain4j.data.document.splitter.DocumentSplitters;
@@ -542,12 +634,7 @@ import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.bgesmallenv15q.BgeSmallEnV15QuantizedEmbeddingModel;
 import dev.langchain4j.model.scoring.ScoringModel;
-import dev.langchain4j.model.scoring.onnx.OnnxScoringModel;
-import dev.langchain4j.rag.DefaultRetrievalAugmentor;
-import dev.langchain4j.rag.RetrievalAugmentor;
-import dev.langchain4j.rag.content.aggregator.ContentAggregator;
-import dev.langchain4j.rag.content.aggregator.DefaultContentAggregator;
-import dev.langchain4j.rag.content.aggregator.ReRankingContentAggregator;
+import dev.langchain4j.rag.content.Content;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.rag.query.Query;
@@ -558,27 +645,25 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * 重排序功能集成测试
  *
- * 运行前提：
- * 1. 已从 HuggingFace 下载 BAAI/bge-reranker-base 的 ONNX 格式模型
- * 2. 设置环境变量或修改 MODEL_PATH / TOKENIZER_PATH 常量指向本地路径
- * 3. 如仅测试打分逻辑（不跑真实模型），可使用 MockScoringModel（见 6.2 节）
+ * <p><strong>运行前提：</strong></p>
+ * <ol>
+ *   <li>拥有阿里云百炼（DashScope）API Key</li>
+ *   <li>设置环境变量 DASHSCOPE_API_KEY</li>
+ * </ol>
  */
 class RerankingTest {
 
-    // ⚠️ 修改为你的本地模型路径
-    private static final String MODEL_PATH     = System.getenv().getOrDefault(
-            "RERANKER_MODEL_PATH", "/models/bge-reranker-base/model.onnx");
-    private static final String TOKENIZER_PATH = System.getenv().getOrDefault(
-            "RERANKER_TOKENIZER_PATH", "/models/bge-reranker-base/tokenizer.json");
+    // ⚠️ 从环境变量获取你的 API Key
+    private static final String API_KEY = System.getenv().getOrDefault("DASHSCOPE_API_KEY", "your-api-key");
 
     private static EmbeddingModel      embeddingModel;
     private static EmbeddingStore<TextSegment> embeddingStore;
@@ -586,7 +671,7 @@ class RerankingTest {
 
     @BeforeAll
     static void setUp() {
-        // 初始化嵌入模型（本地 ONNX，无需外部 API）
+        // 初始化嵌入模型（本地 ONNX，内置于 JAR，无需下载）
         embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         embeddingStore = new InMemoryEmbeddingStore<>();
 
@@ -618,54 +703,87 @@ class RerankingTest {
     }
 
     @Test
-    @DisplayName("对比：有无重排序的检索结果差异（通过直接调用 ContentRetriever + ScoringModel 验证）")
+    @DisplayName("嵌入模型初始化验证：BgeSmallEnV15QuantizedEmbeddingModel 应可正常加载")
+    void testEmbeddingModelInit() {
+        // 验证嵌入模型（内置于 JAR，无需手动下载）可以正常工作
+        assertThat(embeddingModel).isNotNull();
+
+        // 执行一次实际嵌入，确认模型可推理
+        var response = embeddingModel.embed("Java 线程池关闭方法");
+        assertThat(response).isNotNull();
+        assertThat(response.content()).isNotNull();
+        assertThat(response.content().vector().length).isGreaterThan(0);
+
+        System.out.println("✅ 嵌入模型初始化成功，向量维度：" + response.content().vector().length);
+    }
+
+    @Test
+    @DisplayName("内存向量库入库验证：知识库文档应正确入库")
+    void testEmbeddingStoreIngest() {
+        // 验证向量库有内容
+        assertThat(embeddingStore).isNotNull();
+
+        // 执行检索验证入库
+        List<Content> results = contentRetriever.retrieve(Query.from("Java 线程池"));
+        assertThat(results).isNotEmpty();
+
+        System.out.println("✅ 向量库入库成功，检索到 " + results.size() + " 条候选结果：");
+        results.forEach(c -> System.out.println("  · " + c.textSegment().text()));
+    }
+
+    @Test
+    @DisplayName("对比：有无重排序的检索结果差异（使用百炼 API）")
     void testRerankingVsNoReranking() {
+        // 如果没有配置真正的 API KEY，为了避免测试失败影响打包，可以跳过
+        assumeTrue(!API_KEY.equals("your-api-key"), "⏭️ 跳过：请设置 DASHSCOPE_API_KEY 环境变量");
+
         String query = "Java 如何安全地关闭线程池？";
 
         // ─── 场景 A：无重排序，直接取向量检索 Top-3 ───
-        List<dev.langchain4j.rag.content.Content> rawResults =
-                contentRetriever.retrieve(Query.from(query));
+        List<Content> rawResults = contentRetriever.retrieve(Query.from(query));
 
         System.out.println("=== 无重排序结果（向量相似度排序，取前 3）===");
         rawResults.stream().limit(3).forEach(c ->
                 System.out.println("  · " + c.textSegment().text()));
 
         // ─── 场景 B：有重排序，用 ScoringModel 对向量检索结果精排 ───
-        ScoringModel scoringModel = new OnnxScoringModel(MODEL_PATH, TOKENIZER_PATH);
+        ScoringModel scoringModel = new DashScopeScoringModel(API_KEY, "gte-rerank");
 
         // 提取文本段列表
         List<TextSegment> candidates = rawResults.stream()
-                .map(dev.langchain4j.rag.content.Content::textSegment)
+                .map(Content::textSegment)
                 .toList();
 
         // 批量打分
         List<Double> scores = scoringModel.scoreAll(candidates, query).content();
 
-        // 按分数降序排列，过滤 minScore < 0.6 的结果，取 Top-3
+        // 按分数降序排列，过滤 minScore < 0.1 的结果，取 Top-3
         List<String> rerankResults = IntStream.range(0, candidates.size())
                 .boxed()
-                .filter(i -> scores.get(i) >= 0.6)          // minScore 过滤
+                .filter(i -> scores.get(i) >= 0.1)          // minScore 过滤
                 .sorted((a, b) -> Double.compare(scores.get(b), scores.get(a)))
                 .limit(3)
                 .map(i -> String.format("[%.4f] %s", scores.get(i), candidates.get(i).text()))
                 .toList();
 
-        System.out.println("=== 有重排序结果（交叉编码器精排，minScore=0.6）===");
+        System.out.println("=== 有重排序结果（交叉编码器精排，minScore=0.1）===");
         rerankResults.forEach(r -> System.out.println("  · " + r));
 
         // 验证：重排序后结果数量不超过 3
         assertThat(rerankResults.size()).isLessThanOrEqualTo(3);
 
-        // 验证：重排序后第一条结果的分数应高于 0.6
+        // 验证：重排序后第一条结果的分数应高于 0.1
         if (!rerankResults.isEmpty()) {
             assertThat(rerankResults.get(0)).contains("Java");
         }
     }
 
     @Test
-    @DisplayName("直接使用 ScoringModel 打分验证")
+    @DisplayName("直接使用 ScoringModel 打分验证（使用百炼 API）")
     void testScoringModelDirectly() {
-        ScoringModel scoringModel = new OnnxScoringModel(MODEL_PATH, TOKENIZER_PATH);
+        assumeTrue(!API_KEY.equals("your-api-key"), "⏭️ 跳过：请设置 DASHSCOPE_API_KEY 环境变量");
+
+        ScoringModel scoringModel = new DashScopeScoringModel(API_KEY, "gte-rerank");
 
         String query = "Java 如何安全地关闭线程池？";
         List<TextSegment> candidates = List.of(
@@ -684,7 +802,7 @@ class RerankingTest {
         }
 
         // 验证：Java 线程池关闭的文本分数应明显高于 Python 和 Redis
-        double javaScore  = scores.get(0);
+        double javaScore   = scores.get(0);
         double pythonScore = scores.get(1);
         double redisScore  = scores.get(2);
 
@@ -692,6 +810,32 @@ class RerankingTest {
         assertThat(javaScore).isGreaterThan(redisScore);
     }
 }
+```
+
+运行结果
+
+```
+=== 相关性打分结果 ===
+  分数: 0.6898 | Java 线程池的 shutdown() 方法会平滑地关闭线程池。
+  分数: 0.4275 | Python 的 ThreadPoolExecutor 可以通过 shutdown() 关闭。
+  分数: 0.0293 | Redis 缓存穿透的解决方案是使用布隆过滤器。
+=== 无重排序结果（向量相似度排序，取前 3）===
+  · Java 线程池的 shutdown() 方法会平滑地关闭线程池，等待已提交的任务全部完成后再终止。
+  · Java 线程池最佳实践：使用 try-finally 确保 shutdown() 总是被调用，避免资源泄漏。
+  · Java 线程池 shutdownNow() 方法会立即尝试停止所有活跃任务，并返回等待中的任务列表。
+=== 有重排序结果（交叉编码器精排，minScore=0.1）===
+  · [0.6971] Java 线程池的 shutdown() 方法会平滑地关闭线程池，等待已提交的任务全部完成后再终止。
+  · [0.6786] Java 线程池最佳实践：使用 try-finally 确保 shutdown() 总是被调用，避免资源泄漏。
+  · [0.6199] Java 线程池 shutdownNow() 方法会立即尝试停止所有活跃任务，并返回等待中的任务列表。
+✅ 向量库入库成功，检索到 6 条候选结果：
+  · Java 线程池的 shutdown() 方法会平滑地关闭线程池，等待已提交的任务全部完成后再终止。
+  · Java 线程池最佳实践：使用 try-finally 确保 shutdown() 总是被调用，避免资源泄漏。
+  · Java 线程池 shutdownNow() 方法会立即尝试停止所有活跃任务，并返回等待中的任务列表。
+  · Redis 缓存穿透可以通过布隆过滤器（Bloom Filter）在数据库查询前过滤掉不存在的 key。
+  · 线程池的核心参数：corePoolSize、maximumPoolSize、keepAliveTime 和 BlockingQueue。
+  · Python 的 ThreadPoolExecutor 可以通过 shutdown(wait=True) 关闭线程池。
+✅ 嵌入模型初始化成功，向量维度：384
+
 ```
 
 ### 6.2 使用 Mock ScoringModel（无需真实模型文件）
@@ -715,6 +859,20 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 使用 Mock ScoringModel 验证重排序逻辑（无需真实模型文件）
+ *
+ * <p>此测试类不加载 Spring 容器，也不依赖任何 ONNX 模型文件，可以直接运行。
+ * 主要验证：
+ * <ol>
+ *   <li>ReRankingContentAggregator 能否正确构建</li>
+ *   <li>Mock ScoringModel 打分逻辑是否正确</li>
+ *   <li>minScore 过滤行为是否符合预期</li>
+ * </ol>
+ * </p>
+ *
+ * <p>运行命令：{@code mvn test -Dtest=MockScoringModelTest}</p>
+ */
 class MockScoringModelTest {
 
     @Test
@@ -762,16 +920,94 @@ class MockScoringModelTest {
 
         List<Double> scores = mockScoringModel.scoreAll(candidates, "Java 关闭线程池").content();
 
+        System.out.println("=== Mock ScoringModel 打分结果 ===");
+        for (int i = 0; i < candidates.size(); i++) {
+            System.out.printf("  分数: %.2f | %s%n", scores.get(i), candidates.get(i).text());
+        }
+
         // 验证分数排序符合预期
         assertThat(scores.get(0)).isGreaterThan(scores.get(1)); // Java > Python
         assertThat(scores.get(0)).isGreaterThan(scores.get(2)); // Java > Redis
         assertThat(scores.get(0)).isGreaterThanOrEqualTo(0.6);  // Java 通过阈值
         assertThat(scores.get(1)).isLessThan(0.6);              // Python 被过滤
+        assertThat(scores.get(2)).isLessThan(0.6);              // Redis 被过滤
+    }
+
+    @Test
+    @DisplayName("验证 ScoringModel 接口：批量打分 scoreAll() 返回类型正确")
+    void testScoringModelReturnType() {
+        // 验证文档中对 ScoringModel 接口返回类型的描述是否正确
+        // 文档声称：scoreAll() 返回 Response<List<Double>>
+        ScoringModel model = new ScoringModel() {
+            @Override
+            public Response<Double> score(TextSegment segment, String query) {
+                return Response.from(0.8);
+            }
+
+            @Override
+            public Response<List<Double>> scoreAll(List<TextSegment> segments, String query) {
+                return Response.from(segments.stream().mapToDouble(s -> 0.5).boxed().toList());
+            }
+        };
+
+        List<TextSegment> segments = List.of(
+            TextSegment.from("文本 A"),
+            TextSegment.from("文本 B")
+        );
+
+        // 验证 scoreAll 返回类型
+        Response<List<Double>> response = model.scoreAll(segments, "查询");
+        assertThat(response).isNotNull();
+        assertThat(response.content()).hasSize(2);
+        assertThat(response.content().get(0)).isEqualTo(0.5);
+
+        // 验证 score 返回类型
+        Response<Double> singleResponse = model.score(segments.get(0), "查询");
+        assertThat(singleResponse).isNotNull();
+        assertThat(singleResponse.content()).isEqualTo(0.8);
+
+        System.out.println("✅ ScoringModel 接口验证通过：scoreAll() 返回 Response<List<Double>>，score() 返回 Response<Double>");
+    }
+
+    @Test
+    @DisplayName("验证 ReRankingContentAggregator 构建器 API（minScore + maxResults）")
+    void testReRankingContentAggregatorBuilderApi() {
+        // 验证文档中的构建器 API 是否正确
+        // 文档声称：builder() 支持 scoringModel()、minScore()、maxResults()
+
+        ScoringModel dummyModel = new ScoringModel() {
+            @Override
+            public Response<Double> score(TextSegment segment, String query) {
+                return Response.from(0.9);
+            }
+
+            @Override
+            public Response<List<Double>> scoreAll(List<TextSegment> segments, String query) {
+                return Response.from(segments.stream().map(s -> 0.9).toList());
+            }
+        };
+
+        // 正确配置（文档 7.1 节的 ✅ 做法）
+        ContentAggregator aggregator = ReRankingContentAggregator.builder()
+                .scoringModel(dummyModel)
+                .maxResults(3)    // 精排严格，只取最优 3 条送 LLM
+                .minScore(0.7)    // 精排阈值严格，过滤低质量上下文
+                .build();
+
+        assertThat(aggregator).isNotNull();
+        System.out.println("✅ ReRankingContentAggregator.builder() API 验证通过");
     }
 }
 ```
 
----
+运行结果
+
+```
+=== Mock ScoringModel 打分结果 ===
+  分数: 0.95 | Java shutdown() 关闭线程池
+  分数: 0.40 | Python 关闭线程池
+  分数: 0.10 | Redis 缓存穿透解决方案
+```
 
 ## 7. 生产调优最佳实践
 
@@ -807,22 +1043,21 @@ ContentAggregator aggregator = ReRankingContentAggregator.builder()
 | 重排序结果为空 | `minScore` 设置过高 | 降低 minScore 至 0.5 观察 |
 | 重排序后精度未提升 | 粗排候选质量太差 | 增大粗排 maxResults，优化 Chunk 策略 |
 | 重排序延迟过高（>1s） | 候选文本过多或过长 | 减少粗排 maxResults；考虑量化模型 |
-| ONNX 模型加载失败 | 路径错误或文件格式不匹配 | 确认模型是 cross-encoder 而非 bi-encoder |
+| API 调用失败 | API Key 错误或网络问题 | 检查百炼 API Key 是否有效及余额 |
 | 打分结果全部相近 | 模型类型不对 | 确保使用 reranker 模型而非 embedding 模型 |
 
 > [!WARNING]
 > **重排序不是银弹**：如果知识库的 Chunk 划分质量很差（如 Chunk 太短导致上下文缺失，或 Chunk 太长导致主题混杂），重排序能提升的空间有限。**先优化 Chunking 策略，再上重排序**，效果提升往往更显著。
 
-### 7.3 何时应该用云端重排序 API
+### 7.3 统一抽象的优势
 
-将 `OnnxScoringModel` 替换为云端模型（如 Cohere Rerank）只需改一行代码，其余流水线完全不变——这正是 `ScoringModel` 接口统一抽象的价值。
+将 `DashScopeScoringModel` 替换为其他云端模型（如 Cohere Rerank）只需改一行代码，其余流水线完全不变——这正是 `ScoringModel` 接口统一抽象的价值。
 
 ```java
-// 从本地 ONNX 切换到 Cohere 云端 API，只需换这一个 Bean
+// 从阿里云百炼切换到 Cohere 云端 API，只需换这一个 Bean
 // （需要添加 langchain4j-cohere 依赖）
 @Bean
 public ScoringModel scoringModel() {
-    // 本地模式：return new OnnxScoringModel(modelPath, tokenizerPath);
     return CohereScoringModel.builder()
             .apiKey(System.getenv("COHERE_API_KEY"))
             .modelName("rerank-multilingual-v3.0")
@@ -831,9 +1066,7 @@ public ScoringModel scoringModel() {
 ```
 
 > [!TIP]
-> **选型建议（2026）**：开发与测试阶段用本地 ONNX 模型（零成本、数据不出境）；生产环境对精度要求极高且有预算时，再考虑 Cohere Rerank 或 Jina Reranker API。两者的 `ReRankingContentAggregator` 配置完全一致。
-
----
+> **选型建议（2026）**：通过 API 接入是目前的绝对主流。阿里云百炼、SiliconFlow、Cohere 和 Jina 都提供了极高精度的重排序服务。它们的 `ReRankingContentAggregator` 配置完全一致，随时可以热插拔。
 
 ## 8. 适用场景与局限
 
@@ -855,8 +1088,6 @@ public ScoringModel scoringModel() {
 > - **知识库极小（< 100 条）**：候选质量已经很高，重排序意义不大
 > - **Chunk 长度超过 512 Token**：多数重排序模型输入长度有限制，超长文本需提前截断
 
----
-
 ## 9. 总结
 
 | 核心概念 | 一句话解释 |
@@ -864,18 +1095,16 @@ public ScoringModel scoringModel() {
 | 重排序（Reranking） | 对粗排结果用交叉编码器精准打分并重新排序的"精排"技术 |
 | 双编码器（Bi-Encoder） | 独立编码查询和文档，适合大规模粗排 |
 | 交叉编码器（Cross-Encoder） | 联合编码查询和文档，精度高但只适合少量候选精排 |
-| OnnxScoringModel | LangChain4j 提供的本地 ONNX 重排序模型，无需外部 API |
+| DashScopeScoringModel | 自定义对接阿里云百炼重排序 API 的模型实现 |
 | ReRankingContentAggregator | 将重排序集成到 LangChain4j RAG 流水线的核心组件 |
 | minScore | 精排阈值，低于此值的候选结果被过滤，防止低质量上下文污染 LLM |
 
 > [!TIP]
 > **上手学习路径**：
-> 1. 先用 MockScoringModel 跑通 ReRankingContentAggregator 的流水线逻辑（5 分钟）
-> 2. 下载 `ms-marco-MiniLM-L-6`（仅 45MB），替换 Mock，体验真实重排序效果
+> 1. 先申请阿里云百炼 API Key
+> 2. 运行 `DashScopeScoringModel` 跑通 ReRankingContentAggregator 的流水线逻辑（5 分钟）
 > 3. 对比 `maxResults=20 + minScore=0.7 精排` 与 `maxResults=3 纯向量` 的 RAG 回答质量
-> 4. 生产环境根据延迟预算决定是否升级到 bge-reranker-v2-m3 或 Cohere Rerank API
-
----
+> 4. 生产环境根据延迟和成本预算，决定最适合的重排序接口方案
 
 ## 10. 参考资料
 
@@ -892,5 +1121,4 @@ public ScoringModel scoringModel() {
 - [LangChain4j 官方文档 - RAG 教程](https://docs.langchain4j.dev/tutorials/rag/)
 - [LangChain4j 官方文档 - Scoring/Reranking 模型集成](https://docs.langchain4j.dev/category/scoring-reranking-models/)
 - [LangChain4j GitHub 示例 - Advanced RAG with ReRanking](https://github.com/langchain4j/langchain4j-examples/blob/main/rag-examples/src/main/java/_3_advanced/_03_Advanced_RAG_with_ReRanking_Example.java)
-- [BAAI/bge-reranker-v2-m3 HuggingFace 模型卡片](https://huggingface.co/BAAI/bge-reranker-v2-m3)
-- [Optimum ONNX 导出工具文档](https://huggingface.co/docs/optimum/exporters/onnx/usage_guides/export_a_model)
+- [阿里云百炼 Rerank API 官方文档](https://help.aliyun.com/zh/model-studio/developer-reference/text-rerank)
