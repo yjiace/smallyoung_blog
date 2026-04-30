@@ -221,9 +221,9 @@
             <h2 class="text-2xl font-black mb-1">最新文章</h2>
             <p class="text-text-light/60 dark:text-text-dark/60 text-sm">持续更新中，覆盖 AI 前沿技术</p>
           </div>
-          <a href="/docs" class="inline-flex items-center gap-1 text-primary text-sm font-medium hover:underline">
+          <a href="/docs" class="group inline-flex items-center gap-1.5 text-text-light/60 dark:text-text-dark/60 hover:text-primary dark:hover:text-primary text-sm font-bold transition-all duration-300">
             查看全部
-            <span class="material-symbols-outlined text-base">arrow_forward</span>
+            <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform duration-300">arrow_forward</span>
           </a>
         </div>
 
