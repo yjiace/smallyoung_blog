@@ -14,7 +14,7 @@
             <h1 class="text-4xl lg:text-5xl font-black leading-[1.15] tracking-tight mb-4">{{ doc?.title }}</h1>
             
             <div class="flex flex-wrap gap-2 mb-6">
-              <span :class="getCategoryClass()">{{ doc?.category }}</span>
+              <span v-for="cat in doc?.categories" :key="cat" :class="getCategoryClass(cat)">{{ cat }}</span>
               <span v-for="(tag, index) in doc?.tags?.slice(0, 5)" :key="tag" :class="getTagClass(index)">
                 {{ tag }}
               </span>
@@ -239,8 +239,8 @@ function hashString(str: string): number {
   return Math.abs(hash)
 }
 
-function getCategoryClass() {
-  const color = colorStyles[hashString(props.doc?.category || '') % colorStyles.length]
+function getCategoryClass(category: string) {
+  const color = colorStyles[hashString(category || '') % colorStyles.length]
   return `inline-block rounded px-3 py-1 text-xs font-bold uppercase tracking-wider ${color.bg} ${color.text} ${color.darkBg} ${color.darkText}`
 }
 

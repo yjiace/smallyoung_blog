@@ -1,6 +1,6 @@
 ---
 title: RAG 检索增强生成入门指南
-category: 人工智能
+category: [人工智能, 后端开发]
 tags: [RAG, LLM, 向量检索, 知识库, AI]
 description: 全面介绍 RAG（检索增强生成）技术的核心概念、三种主流架构对比（Naive/Advanced/Modular）、2024 年前沿技术（GraphRAG、SELF-RAG、CRAG）以及实践指南。面向初学者的权威教程。
 author: smallyoung

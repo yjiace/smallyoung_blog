@@ -18,7 +18,7 @@
       </div>
 
       <div class="mt-2 flex flex-wrap gap-1">
-        <span :class="getCategoryClass()">{{ doc.category }}</span>
+        <span v-for="cat in doc.categories" :key="cat" :class="getCategoryClass(cat)">{{ cat }}</span>
         <span v-for="(tag, index) in doc.tags.slice(0, 3)" :key="tag" :class="getTagClass(index)">
           {{ tag }}
         </span>
@@ -64,8 +64,8 @@ function hashString(str: string): number {
   return Math.abs(hash)
 }
 
-function getCategoryClass() {
-  const color = colorStyles[hashString(props.doc.category) % colorStyles.length]
+function getCategoryClass(category: string) {
+  const color = colorStyles[hashString(category) % colorStyles.length]
   return `inline-block rounded px-2 py-0.5 text-xs font-medium ${color.bg} ${color.text} ${color.darkBg} ${color.darkText}`
 }
 
@@ -81,7 +81,8 @@ function getCoverStyle() {
     '人工智能': 'https://lh3.googleusercontent.com/aida-public/AB6AXuD4TnhrrWQ7z6SsV70vOVYk_5yS5jilZ2whlhXilx7Hy1ayM2q4kfpZo4EEMY3tqg8CtblKO11cFZzZn1jb665W-mbmZtq2Jjtd4xV5nD2xfrB3fb0yu91X0oJvpn42ylUiCsPaQKL-a6RJtm1E71TbjZThPsZUuXtjslfo6Pue-6KlMIwOlwqh0SEz8fKb7Y1SGQa2wM8TBXxlioQivFa_ZzJKVzysSE2SZ7wErGEfFnM_ZynLVbkPdSXBa6DSm5n6iMZBdbI8Q5c',
     '计算机基础': 'https://lh3.googleusercontent.com/aida-public/AB6AXuDEJaobfqb5gaGY-IQoPHdWPKbdn9bgaf5CCROx3s5yyieX9xXdqZ4FKmCHxRavtW6n6ls03RQyVQ9B-4KlYilRzLHGJ8l66c4r8aJq_jOzN2PDsX804ElcCKYsEu40X2t-A1E0Uf-4kzC0AD90nvtYjYoc44rkvTJgp8GroC9DgCe6K0MHakJMRo2UorJWEc2RqCXRRORGevMVtgc0QXyg0BWjvv6dia31dPTUm9TPEidpFiN1xxjcL3_mMdckcDbvImGNMaFWgEw',
   }
-  const imageUrl = props.doc.cover || defaultImages[props.doc.category] || defaultImages['计算机基础']
+  const firstCategory = props.doc.categories && props.doc.categories.length > 0 ? props.doc.categories[0] : ''
+  const imageUrl = props.doc.cover || defaultImages[firstCategory] || defaultImages['计算机基础']
   return { backgroundImage: `url("${imageUrl}")`, backgroundColor: '#e5e7eb' }
 }
 

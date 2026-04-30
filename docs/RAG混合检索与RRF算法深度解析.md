@@ -1,6 +1,6 @@
 ---
 title:    RAG 混合检索深度解析：BM25 + 向量检索 + RRF 算法，让 AI 真正"找到"你要的内容
-category: 人工智能
+category: [人工智能, 后端开发]
 tags: [RAG, 混合检索, LangChain4j, Spring Boot, BM25, RRF]
 description: 本文深入解析 RAG 系统中混合检索（Hybrid Retrieval）的核心原理，详细讲解 BM25 关键词检索与向量语义检索的优劣互补，以及 RRF（倒数排名融合）算法的工作机制，并通过 Spring Boot + LangChain4j 提供完整可运行的 Java 代码示例，帮助开发者搭建高召回率的生产级 RAG 检索系统。
 author: smallyoung

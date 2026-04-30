@@ -1,6 +1,6 @@
 ---
 title:    RAG 文档分块策略完全指南：从原理到 Java 实战
-category: 人工智能
+category: [人工智能, 后端开发]
 tags: [RAG, Chunking, LangChain4j, 向量检索, Spring AI]
 description: 本文系统讲解 RAG 文档分块（Chunking）的 5 种核心策略，涵盖滑动窗口、递归分块、语义分块等原理与对比，并提供完整 LangChain4j Java 代码示例和 2026 年最新基准测试结论，帮助开发者选对分块策略，大幅提升 RAG 检索精度。
 author: smallyoung

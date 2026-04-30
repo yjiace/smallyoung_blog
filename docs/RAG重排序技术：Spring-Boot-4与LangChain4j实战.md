@@ -1,6 +1,6 @@
 ---
 title:    RAG 重排序技术详解：Spring Boot 4 + LangChain4j 1.13.1 实战指南
-category: 人工智能
+category: [人工智能, 后端开发]
 tags: [RAG, LangChain4j, Spring Boot, 重排序, 向量检索]
 description: 本文深入讲解 RAG 重排序（Reranking）技术原理，介绍双编码器与交叉编码器的核心差异，并结合 Spring Boot 4 + LangChain4j 1.13.1 原生 API，从零实现本地 ONNX 重排序与 Cohere 云端重排序，附完整可运行测试代码。
 author: smallyoung

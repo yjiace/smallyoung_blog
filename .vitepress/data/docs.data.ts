@@ -12,7 +12,7 @@ export interface TocItem {
 export interface Doc {
     id: string
     title: string
-    category: string
+    categories: string[]
     tags: string[]
     description: string
     author: string
@@ -56,7 +56,10 @@ function generateDocsIndex(docs: Doc[]): DocIndex {
     // 统计每个分类的文档数量
     const categoryMap = new Map<string, number>()
     sortedDocs.forEach(d => {
-        categoryMap.set(d.category, (categoryMap.get(d.category) || 0) + 1)
+        const categories = d.categories || []
+        categories.forEach(cat => {
+            categoryMap.set(cat, (categoryMap.get(cat) || 0) + 1)
+        })
     })
     const categories: CategoryInfo[] = Array.from(categoryMap.entries()).map(([name, count]) => ({ name, count }))
 

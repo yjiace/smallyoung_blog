@@ -48,10 +48,11 @@ function parseFrontmatter(filePath) {
     }
 
     const tags = Array.isArray(data.tags) ? data.tags : [data.tags]
+    const categories = Array.isArray(data.category) ? data.category : [data.category]
 
     return {
       title: data.title,
-      category: data.category,
+      categories,
       tags,
       description: data.description,
       author: data.author || '未知作者',
@@ -162,7 +163,7 @@ export async function scanDocs(options = {}) {
       docs.push({
         id,
         title: meta.title,
-        category: meta.category,
+        categories: meta.categories,
         tags: meta.tags,
         description: meta.description,
         author: meta.author,
@@ -174,7 +175,7 @@ export async function scanDocs(options = {}) {
         meta
       })
 
-      console.log(`  ✓ ${meta.title} (${meta.category})`)
+      console.log(`  ✓ ${meta.title} (${meta.categories.join(', ')})`)
     }
 
     console.log(`\n[完成] 有效文档: ${docs.length} 篇`)

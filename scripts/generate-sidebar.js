@@ -14,14 +14,17 @@ async function generateSidebar() {
   // 按分类分组
   const categoryMap = new Map()
   for (const doc of docs) {
-    if (!categoryMap.has(doc.category)) {
-      categoryMap.set(doc.category, [])
+    const categories = doc.categories || []
+    for (const category of categories) {
+      if (!categoryMap.has(category)) {
+        categoryMap.set(category, [])
+      }
+      categoryMap.get(category).push({
+        text: doc.title,
+        link: doc.docUrl,
+        date: doc.date
+      })
     }
-    categoryMap.get(doc.category).push({
-      text: doc.title,
-      link: doc.docUrl,
-      date: doc.date
-    })
   }
 
   // 构建侧边栏

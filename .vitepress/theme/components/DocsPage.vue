@@ -109,14 +109,14 @@ const pageSize = 12
 const filteredDocs = computed(() => {
   let docs = docsData.docs || []
   if (selectedCategory.value) {
-    docs = docs.filter(d => d.category === selectedCategory.value)
+    docs = docs.filter(d => d.categories && d.categories.includes(selectedCategory.value as string))
   }
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase()
     docs = docs.filter(doc =>
       doc.title.toLowerCase().includes(query) ||
       doc.description.toLowerCase().includes(query) ||
-      doc.category.toLowerCase().includes(query) ||
+      (doc.categories && doc.categories.some(cat => cat.toLowerCase().includes(query))) ||
       doc.tags.some(tag => tag.toLowerCase().includes(query)) ||
       doc.author.toLowerCase().includes(query)
     )

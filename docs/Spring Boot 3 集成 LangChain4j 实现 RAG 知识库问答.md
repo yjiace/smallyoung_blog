@@ -1,6 +1,6 @@
 ---
 title: Spring Boot 3 集成 LangChain4j 实现 RAG 知识库问答
-category: 后端开发
+category: [人工智能, 后端开发]
 tags: [Spring Boot, LangChain4j, RAG, Java, AI]
 description: 手把手带你用 Spring Boot 3 + LangChain4j-spring-boot-starter 1.x 搭建一个可运行的 RAG 知识库问答 Demo，包含完整 pom.xml、配置、核心代码与踩坑指南，30 分钟跑通本地示例。
 author: smallyoung
