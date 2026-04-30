@@ -50,8 +50,6 @@ export default withMermaid(defineConfig({
     ['link', { rel: 'apple-touch-icon', href: '/favicon.png' }],
 
     // ========== 外部资源 ==========
-    // Tailwind CSS CDN
-    ['script', { src: 'https://cdn.tailwindcss.com?plugins=forms,container-queries' }],
     // Google Fonts - Preconnect
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
@@ -65,42 +63,7 @@ export default withMermaid(defineConfig({
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined'
     }],
-    // Tailwind 配置
-    ['script', {}, `
-      (function initTailwind() {
-        if (typeof tailwind !== 'undefined') {
-          tailwind.config = {
-            darkMode: "class",
-            theme: {
-              extend: {
-                colors: {
-                  "primary": "#137fec",
-                  "background-light": "#f6f7f8",
-                  "background-dark": "#101922",
-                  "text-light": "#0d141b",
-                  "text-dark": "#e0e0e0",
-                  "card-light": "#ffffff",
-                  "card-dark": "#1a2530",
-                  "border-light": "#e7edf3",
-                  "border-dark": "#2c3a47",
-                },
-                fontFamily: {
-                  "display": ["Inter", "sans-serif"]
-                },
-                borderRadius: {
-                  "DEFAULT": "0.25rem",
-                  "lg": "0.5rem",
-                  "xl": "0.75rem",
-                  "full": "9999px"
-                },
-              },
-            },
-          }
-        } else {
-          setTimeout(initTailwind, 10)
-        }
-      })()
-    `]
+
   ],
 
   // 主题配置

@@ -1,6 +1,9 @@
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 
+// 构建时 Tailwind CSS（替代 CDN 运行时加载，消除 FOUC）
+import './tailwind.css'
+
 // 导入自定义布局
 import Layout from './Layout.vue'
 
