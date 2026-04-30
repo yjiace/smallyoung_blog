@@ -45,7 +45,7 @@
             :aria-label="isDark ? '切换到浅色模式' : '切换到深色模式'"
           >
             <div class="switch-handle shadow-sm">
-              <span class="material-symbols-outlined text-[14px]">
+              <span class="material-symbols-outlined">
                 {{ isDark ? 'dark_mode' : 'light_mode' }}
               </span>
             </div>
@@ -361,6 +361,7 @@ onMounted(() => {
 
 .switch-handle {
   position: absolute;
+  top: 2px;
   left: 2px;
   width: 20px;
   height: 20px;
@@ -371,6 +372,14 @@ onMounted(() => {
   justify-content: center;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: #64748b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.switch-handle .material-symbols-outlined {
+  font-size: 12px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .theme-switch.is-dark .switch-handle {

@@ -8,10 +8,14 @@ export default {
   ],
   safelist: [
     // 动态拼接的颜色 class（DocCard / DocDetailPage 中通过 JS 生成）
-    { pattern: /^bg-(blue|red|yellow|green|purple|pink|indigo|teal|orange|cyan)-(100|900)$/ },
-    { pattern: /^text-(blue|red|yellow|green|purple|pink|indigo|teal|orange|cyan)-(800|200)$/ },
-    { pattern: /^dark:bg-(blue|red|yellow|green|purple|pink|indigo|teal|orange|cyan)-(100|900)$/ },
-    { pattern: /^dark:text-(blue|red|yellow|green|purple|pink|indigo|teal|orange|cyan)-(800|200)$/ },
+    { 
+      pattern: /^bg-(blue|red|yellow|green|purple|pink|indigo|teal|orange|cyan)-(100|900)$/,
+      variants: ['dark'] 
+    },
+    { 
+      pattern: /^text-(blue|red|yellow|green|purple|pink|indigo|teal|orange|cyan)-(800|200)$/,
+      variants: ['dark'] 
+    },
     // ProductsPage 的进场动画工具类
     'animate-in',
     'slide-in-from-left',
