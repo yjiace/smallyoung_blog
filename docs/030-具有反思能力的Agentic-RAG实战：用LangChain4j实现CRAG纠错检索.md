@@ -10,8 +10,6 @@ keywords: [CRAG, Agentic RAG, LangChain4j, Spring Boot 4, 纠错式检索, 反�
 cover: //cdn.smallyoung.cn/smallyoung_blog/agentic-rag-crag/1.png
 ---
 
-# 具有反思能力的 Agentic RAG 实战：用 LangChain4j 实现 CRAG 纠错检索
-
 > 传统 RAG 是"听天由命"——检索到什么就回答什么，检索质量决定了答案质量。CRAG（Corrective RAG，纠错式检索增强）引入了自我反思和纠错循环，让 AI 像一个负责任的研究员：先找资料，再评估资料是否可靠，不行就换个思路重新找。本文从原理到实战，提供基于 Spring Boot 4 + LangChain4j 1.x 原生 API 的完整 Java 实现代码，可直接运行。
 >
 > 📌 **核心论文**：[Corrective Retrieval Augmented Generation](https://arxiv.org/abs/2401.15884)（arXiv:2401.15884）
