@@ -1,7 +1,7 @@
 # SmallYoung 技术博客
 
 <p align="center">
-  <img src="./public/favicon.png" width="100" />
+  <img src="./public/logo.png" width="100" />
 </p>
 
 这是一个基于 **VitePress** 构建的现代化技术博客站点。主要涵盖 **AI 大模型**、**软件架构**、**智能体 (Agents)** 以及 **前沿技术** 的深度解析与实践分享。

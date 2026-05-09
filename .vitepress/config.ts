@@ -46,8 +46,8 @@ export default withMermaid(defineConfig({
     ['meta', { name: 'geo.placename', content: 'China' }],
 
     // ========== Favicon ==========
-    ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
-    ['link', { rel: 'apple-touch-icon', href: '/favicon.png' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/logo.png' }],
+    ['link', { rel: 'apple-touch-icon', href: '/logo.png' }],
 
     // ========== 外部资源 ==========
     // Google Fonts - Preconnect
@@ -260,7 +260,7 @@ export default withMermaid(defineConfig({
 
     // 处理封面图片 URL
     const getAbsoluteImageUrl = (cover: string | undefined): string => {
-      if (!cover) return `${siteUrl}/favicon.png`
+      if (!cover) return `${siteUrl}/logo.png`
       if (cover.startsWith('//')) return `https:${cover}`
       if (cover.startsWith('http')) return cover
       return `${siteUrl}${cover}`
@@ -321,7 +321,7 @@ export default withMermaid(defineConfig({
         publisher: {
           '@type': 'Organization',
           name: siteName,
-          logo: { '@type': 'ImageObject', url: `${siteUrl}/favicon.png` }
+          logo: { '@type': 'ImageObject', url: `${siteUrl}/logo.png` }
         },
         potentialAction: {
           '@type': 'SearchAction',
@@ -368,7 +368,7 @@ export default withMermaid(defineConfig({
       publisher: {
         '@type': 'Organization',
         name: siteName,
-        logo: { '@type': 'ImageObject', url: `${siteUrl}/favicon.png` }
+        logo: { '@type': 'ImageObject', url: `${siteUrl}/logo.png` }
       },
       mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
       keywords: fm.keywords?.join(', ') || fm.tags?.join(', ') || undefined
