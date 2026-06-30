@@ -61,7 +61,24 @@ function generateDocsIndex(docs: Doc[]): DocIndex {
             categoryMap.set(cat, (categoryMap.get(cat) || 0) + 1)
         })
     })
-    const categories: CategoryInfo[] = Array.from(categoryMap.entries()).map(([name, count]) => ({ name, count }))
+    const priorityCategories = ['人工智能', '后端开发']
+    const getPriority = (name: string) => {
+        const index = priorityCategories.indexOf(name)
+        return index !== -1 ? index : Infinity
+    }
+
+    const categories: CategoryInfo[] = Array.from(categoryMap.entries())
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => {
+            const priorityA = getPriority(a.name)
+            const priorityB = getPriority(b.name)
+
+            if (priorityA !== priorityB) {
+                return priorityA - priorityB
+            }
+
+            return b.name.localeCompare(a.name, 'zh-CN')
+        })
 
     const tags = [...new Set(sortedDocs.flatMap(d => d.tags))]
 
