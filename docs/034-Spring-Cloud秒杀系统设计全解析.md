@@ -10,8 +10,6 @@ keywords: [Spring Cloud 秒杀, Redis 预扣库存, Sentinel 限流, RocketMQ �
 cover: //cdn.smallyoung.cn/smallyoung_blog/spring-cloud-seckill/1.png
 ---
 
-# Spring Cloud 秒杀系统设计全解析：从 0 到百万 QPS 的架构实践
-
 > 双十一零点整，10 万用户同时疯抢 1000 件商品——这不是压测脚本，这是真实的电商战场。一套设计不当的秒杀系统会在 3 秒内把数据库打崩、库存超卖到负数、用户收到成功提示却等不到货。本文基于 Spring Cloud Alibaba 技术栈，从请求进门到订单落库，拆解每一个"炸点"并给出可直接落地的解决方案。
 >
 > 📌 **适合人群**：有 Spring Boot 基础、想系统学习高并发设计的后端开发者

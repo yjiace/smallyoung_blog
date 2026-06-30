@@ -10,8 +10,6 @@ keywords: [Spring AI 2.0, VectorStore, 向量数据库, RAG, PGVector]
 cover: //cdn.smallyoung.cn/smallyoung_blog/spring-ai-vectorstore/1.png
 ---
 
-# Spring AI 2.0 VectorStore 实战指南：从原理到生产级 RAG
-
 > Spring AI 2.0 通过 `VectorStore` 接口，把 Milvus、PGVector、Redis 等 20 多种向量数据库统一成了一套增删查改 API，业务代码不再被某一家厂商绑死。本文从接口设计讲到批量写入、相似性检索、元数据过滤，最后演示如何用 `QuestionAnswerAdvisor` 几行代码接出一个能用的 RAG 系统。
 >
 > 📌 **适合人群**：使用 Spring Boot 做后端开发、正在或即将接入大模型知识库（RAG）能力的 Java 工程师
