@@ -7,7 +7,7 @@
     >
       <!-- 封面图片 16:9 -->
       <div class="cover-image-wrapper relative w-full">
-        <div class="cover-image-inner absolute inset-0 rounded-lg bg-cover bg-center bg-no-repeat"
+        <div class="cover-image-inner absolute inset-0 rounded-lg bg-cover"
           :style="getCoverStyle()">
         </div>
       </div>
