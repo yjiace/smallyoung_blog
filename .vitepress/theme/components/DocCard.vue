@@ -6,10 +6,9 @@
       class="flex cursor-pointer flex-col gap-3 rounded-xl border border-solid border-transparent bg-card-light p-4 transition-all hover:-translate-y-1 hover:shadow-xl hover:border-primary/50 dark:bg-card-dark dark:hover:border-primary/50"
     >
       <!-- 封面图片 16:9 -->
-      <div class="cover-image-wrapper relative w-full">
-        <div class="cover-image-inner absolute inset-0 rounded-lg bg-cover"
-          :style="getCoverStyle()">
-        </div>
+      <div class="cover-image-wrapper relative w-full rounded-lg" style="background-color: #e5e7eb;">
+        <img class="cover-image-inner absolute inset-0 w-full h-full object-cover object-center rounded-lg"
+          :src="getCoverUrl()" alt="cover" />
       </div>
 
       <div class="flex flex-1 flex-col">
@@ -74,7 +73,7 @@ function getTagClass(index: number) {
   return `inline-block rounded px-2 py-0.5 text-xs font-medium ${color.bg} ${color.text} ${color.darkBg} ${color.darkText}`
 }
 
-function getCoverStyle() {
+function getCoverUrl() {
   const defaultImages: Record<string, string> = {
     '前端开发': 'https://lh3.googleusercontent.com/aida-public/AB6AXuBRSEXY--Hk7J2XlV4dBEpAfn3UCQekdd7xQnNeo1SR7BAjxEAfmxNCZjLrFm9usH_TVvDtKze4AqbOa2Q3-LFxAn6jvdWGuK5R8yRNiVJWev8Zxb1aUUTKQJ-uypQFJccGHKuOuIJnDkNLO24BAHBa_y2cy9qosL2TZMQBjSLqP5tRnY_gPc25WzhB3U7YXQWDOdHF5VBd4DqyQ0bQHysZHY2urj8Sie_2YuBaJEumg5yWzMdsebnYoDbSeIzCr2PMKJb5M7_f0HI',
     '后端开发': 'https://lh3.googleusercontent.com/aida-public/AB6AXuCuV5CHD57Gp-9tG4WyPkAqbzMojatT8xDnCH0CzK9-RvdCWvdRx9yYqaAsywJPCd8IrR4uw-maRQVxk84ARzW9Z-P5VJnG1PvuvYPoM9fHSc3s04KX60rzwUpc1RWxpCqd576F7ERUD7ca87MM040jGmabXZxaUhj1hNjNXUo8-yE6JCAI0IDlVHqT4yvha5ZV62kq9cAK8iHsc5l8iYtahOHouhdNxB59WqKC764rvABRd0rRna7G6HOuzVsD0MZcILyW4232T9E',
@@ -82,8 +81,7 @@ function getCoverStyle() {
     '计算机基础': 'https://lh3.googleusercontent.com/aida-public/AB6AXuDEJaobfqb5gaGY-IQoPHdWPKbdn9bgaf5CCROx3s5yyieX9xXdqZ4FKmCHxRavtW6n6ls03RQyVQ9B-4KlYilRzLHGJ8l66c4r8aJq_jOzN2PDsX804ElcCKYsEu40X2t-A1E0Uf-4kzC0AD90nvtYjYoc44rkvTJgp8GroC9DgCe6K0MHakJMRo2UorJWEc2RqCXRRORGevMVtgc0QXyg0BWjvv6dia31dPTUm9TPEidpFiN1xxjcL3_mMdckcDbvImGNMaFWgEw',
   }
   const firstCategory = props.doc.categories && props.doc.categories.length > 0 ? props.doc.categories[0] : ''
-  const imageUrl = props.doc.cover || defaultImages[firstCategory] || defaultImages['计算机基础']
-  return { backgroundImage: `url("${imageUrl}")`, backgroundColor: '#e5e7eb' }
+  return props.doc.cover || defaultImages[firstCategory] || defaultImages['计算机基础']
 }
 
 function formatDate(dateStr: string) {
