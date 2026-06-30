@@ -26,7 +26,7 @@ cover: //cdn.smallyoung.cn/smallyoung_blog/spring-cloud-seckill/1.png
 ## 为什么难
 - 瞬时流量洪峰：10万QPS vs 正常100QPS
 - 超卖风险：多线程并发扣减库存
-- 数据一致性：Redis与MySQL状态同步
+- 数据一致性：Redis与PostgreSQL状态同步
 ## 架构分层
 - CDN + 静态化：拦截90%前端流量
 - Gateway网关：统一限流熔断入口
@@ -110,7 +110,7 @@ flowchart TB
         G[RocketMQ 异步下单]
     end
     subgraph 数据层["🗄️ 持久化层"]
-        H[MySQL 最终落库]
+        H[PostgreSQL 最终落库]
     end
     前端层 --> 网关层 --> 服务层 --> 数据层
     style 前端层 fill:#e3f2fd
@@ -129,13 +129,15 @@ flowchart TB
 
 | 组件 | 选型 | 版本 | 职责 |
 |------|------|------|------|
-| 服务注册发现 | Nacos 2.x | 2.3.2 | 服务注册、配置中心 |
+| 核心框架 | Spring Boot | 3.2.4 | 提供基础的微服务环境 |
+| 微服务框架 | Spring Cloud | 2023.0.1 | 提供微服务治理基础组件 |
+| 阿里微服务 | Spring Cloud Alibaba | 2023.0.1.0 | 提供流量控制、服务注册等核心组件 |
+| 服务注册发现 | Nacos 2.x | 2.x | 服务注册、配置中心 |
 | API 网关 | Spring Cloud Gateway | 4.x | 统一入口、路由、限流 |
 | 流量控制 | Sentinel 2.x | 2.0.0 | 限流、熔断、降级 |
-| 缓存 | Redis 7.x | 7.2 | 库存预热、预扣 |
-| 消息队列 | RocketMQ 5.x | 5.1 | 异步下单、削峰填谷 |
-| 数据库 | MySQL 8.x | 8.0 | 订单持久化 |
-| 分布式事务 | Seata | 1.7 | 跨服务数据一致性 |
+| 缓存 | Redis | 7.x | 库存预热、预扣 |
+| 消息队列 | RocketMQ 5.x | 2.3.1 (Starter) | 异步下单、削峰填谷 |
+| 数据库 | PostgreSQL | 8.x | 订单持久化 |
 
 ![](//cdn.smallyoung.cn/smallyoung_blog/spring-cloud-seckill/4.png)
 
@@ -157,7 +159,7 @@ flowchart TB
     subgraph 中间件["🔧 中间件层"]
         RD[(Redis 集群)]
         MQ[(RocketMQ)]
-        DB[(MySQL 分库)]
+        DB[(PostgreSQL 分库)]
     end
     GW --> SK
     SK --> RD
@@ -175,6 +177,35 @@ flowchart TB
 
 ```xml
 <!-- pom.xml 核心依赖 -->
+<dependencyManagement>
+    <dependencies>
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>3.2.4</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <!-- Spring Cloud -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>2023.0.1</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <!-- Spring Cloud Alibaba -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+            <version>2023.0.1.0</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
 <dependencies>
     <!-- Spring Cloud Gateway 网关 -->
     <dependency>
@@ -204,7 +235,7 @@ flowchart TB
     <dependency>
         <groupId>org.apache.rocketmq</groupId>
         <artifactId>rocketmq-spring-boot-starter</artifactId>
-        <version>2.3.0</version>
+        <version>2.3.1</version>
     </dependency>
 
     <!-- Redis -->
@@ -249,7 +280,7 @@ spring:
     sentinel:
       transport:
         # Sentinel 控制台地址
-        dashboard: localhost:8080
+        dashboard: localhost:9000
       # 开启 Gateway 适配
       scg:
         fallback:
@@ -403,7 +434,7 @@ public class StockRedisService {
     }
 
     /**
-     * 重置 Redis 库存（以 MySQL 为准，用于定时校对）
+     * 重置 Redis 库存（以 PostgreSQL 为准，用于定时校对）
      */
     public void resetStock(Long skuId, int stock) {
         String key = "seckill:stock:" + skuId;
@@ -412,13 +443,13 @@ public class StockRedisService {
 }
 ```
 
-### 4.3 乐观锁方案（MySQL 兜底）
+### 4.3 乐观锁方案（PostgreSQL 兜底）
 
-当 Redis 不可用时，MySQL 乐观锁方案作为降级兜底：
+当 Redis 不可用时，PostgreSQL 乐观锁方案作为降级兜底：
 
 ```java
 /**
- * MySQL 乐观锁扣减库存（降级兜底方案）
+ * PostgreSQL 乐观锁扣减库存（降级兜底方案）
  * 使用 WHERE stock > 0 条件防止超卖，无需显式加锁
  */
 @Mapper
@@ -440,7 +471,7 @@ public interface StockMapper {
 ```
 
 > [!NOTE]
-> MySQL 的 `WHERE stock >= count` 利用了数据库自身的行级锁保证原子性。这比应用层先查后改要安全，但并发吞吐量远低于 Redis 方案，仅作降级使用。
+> PostgreSQL 的 `WHERE stock >= count` 利用了数据库自身的行级锁保证原子性。这比应用层先查后改要安全，但并发吞吐量远低于 Redis 方案，仅作降级使用。
 
 ![](//cdn.smallyoung.cn/smallyoung_blog/spring-cloud-seckill/7.png)
 
@@ -463,7 +494,7 @@ flowchart TB
     J -->|扣减成功| L[发送 MQ 异步下单消息]
     L --> M[返回排队中请求ID]
     M --> N[消费者创建订单]
-    N --> O[MySQL 落库 + 通知用户]
+    N --> O[PostgreSQL 落库 + 通知用户]
     style C fill:#ffebee
     style E fill:#ffebee
     style G fill:#ffebee
@@ -626,7 +657,7 @@ public class SeckillOrderMessage implements Serializable {
 
 ### 6.1 为什么秒杀需要消息队列
 
-秒杀的流量曲线是"脉冲型"的：0 点整的那一秒可能涌入 10 万请求，之后瞬间回落到正常水平。如果把订单写入 MySQL 这个耗时操作放在主流程里，数据库在那一秒会被打崩。
+秒杀的流量曲线是"脉冲型"的：0 点整的那一秒可能涌入 10 万请求，之后瞬间回落到正常水平。如果把订单写入 PostgreSQL 这个耗时操作放在主流程里，数据库在那一秒会被打崩。
 
 消息队列的作用是把这一秒的 10 万个请求"存起来"，然后以数据库能承受的速度（比如 5000 TPS）慢慢消费——这就是**削峰填谷**，如同水库蓄洪。
 
@@ -652,7 +683,7 @@ gantt
 ```java
 /**
  * 秒杀订单消费者
- * 监听 seckill-order-topic，异步创建订单并更新 MySQL 库存
+ * 监听 seckill-order-topic，异步创建订单并更新 PostgreSQL 库存
  */
 @RocketMQMessageListener(
     topic = "seckill-order-topic",
@@ -689,11 +720,11 @@ public class SeckillOrderConsumer implements RocketMQListener<SeckillOrderMessag
         }
 
         try {
-            // ② 扣减 MySQL 实际库存（最终持久化）
+            // ② 扣减 PostgreSQL 实际库存（最终持久化）
             int affected = stockMapper.deductStockWithOptimisticLock(msg.getSkuId(), 1);
             if (affected == 0) {
-                // MySQL 扣减失败（极端情况下 Redis 放行但 DB 无库存），抛出异常让消息进入重试/死信队列，人工排查不一致原因
-                log.error("MySQL 库存扣减失败, skuId={}", msg.getSkuId());
+                // PostgreSQL 扣减失败（极端情况下 Redis 放行但 DB 无库存），抛出异常让消息进入重试/死信队列，人工排查不一致原因
+                log.error("PostgreSQL 库存扣减失败, skuId={}", msg.getSkuId());
                 throw new RuntimeException("库存扣减失败");
             }
 
@@ -753,7 +784,7 @@ public ResponseEntity<SeckillResult> querySeckillResult(@PathVariable String req
 }
 ```
 
-## 7. 数据一致性：Redis 与 MySQL 的最终同步
+## 7. 数据一致性：Redis 与 PostgreSQL 的最终同步
 
 ### 7.1 一致性挑战：三个可能失败的环节
 
@@ -762,8 +793,8 @@ public ResponseEntity<SeckillResult> querySeckillResult(@PathVariable String req
 | 失败场景 | 结果 | 处理方案 |
 |---------|------|---------|
 | Redis 扣减成功，MQ 发送失败 | Redis 少了库存，订单没创建（少卖） | MQ 失败回调回滚 Redis |
-| MQ 消费成功，MySQL 写入失败 | Redis 库存已扣，数据库未落库 | 消费者事务 + MQ 重试 |
-| MySQL 落库成功，通知失败 | 订单已创建，用户未收到通知 | 定时任务补推 |
+| MQ 消费成功，PostgreSQL 写入失败 | Redis 库存已扣，数据库未落库 | 消费者事务 + MQ 重试 |
+| PostgreSQL 落库成功，通知失败 | 订单已创建，用户未收到通知 | 定时任务补推 |
 
 > [!IMPORTANT]
 > 秒杀系统选择**最终一致性**而非强一致性（分布式事务），因为强一致性（如 Seata AT 模式）会带来大量锁等待，在秒杀高并发场景下是性能杀手。
@@ -773,7 +804,7 @@ public ResponseEntity<SeckillResult> querySeckillResult(@PathVariable String req
 ```java
 /**
  * 库存校对定时任务
- * 每 5 分钟检查 Redis 库存与 MySQL 库存是否一致
+ * 每 5 分钟检查 Redis 库存与 PostgreSQL 库存是否一致
  * 兜底保障，应对极端情况下的数据不一致
  */
 @Component
@@ -792,14 +823,14 @@ public class StockSyncTask {
         List<Long> activeSkuIds = stockMapper.findActiveSeckillSkuIds();
 
         for (Long skuId : activeSkuIds) {
-            // 查询 MySQL 实际库存
+            // 查询 PostgreSQL 实际库存
             int dbStock = stockMapper.getStock(skuId);
             // 查询 Redis 缓存库存
             int redisStock = stockRedisService.getStock(skuId);
 
             if (dbStock != redisStock) {
                 log.warn("库存不一致 skuId={}, DB={}, Redis={}", skuId, dbStock, redisStock);
-                // 以 MySQL 为准，修复 Redis
+                // 以 PostgreSQL 为准，修复 Redis
                 stockRedisService.resetStock(skuId, dbStock);
             }
         }
@@ -859,7 +890,7 @@ public class SeckillCompensationTask {
 ### 8.1 库存预热：活动前提前加载
 
 > [!WARNING]
-> 秒杀活动开始瞬间，如果商品数据不在 Redis 中，大量请求会穿透到 MySQL 查询，数据库在活动开始的第一秒就宕机——这叫**缓存击穿**。必须提前预热！
+> 秒杀活动开始瞬间，如果商品数据不在 Redis 中，大量请求会穿透到 PostgreSQL 查询，数据库在活动开始的第一秒就宕机——这叫**缓存击穿**。必须提前预热！
 
 ```java
 /**
@@ -946,14 +977,14 @@ public String getSeckillToken(@PathVariable Long activityId,
 
 | 维度 | 小型（< 1万 QPS） | 中型（1万~10万 QPS） | 大型（> 10万 QPS） |
 |------|---------|---------|---------|
-| 库存扣减 | MySQL + WHERE stock > 0 | Redis Lua 脚本 | Redis Cluster Lua |
+| 库存扣减 | PostgreSQL + WHERE stock > 0 | Redis Lua 脚本 | Redis Cluster Lua |
 | 限流 | Nginx 限流 | Sentinel 网关限流 | Sentinel 集群限流 |
-| 下单方式 | 同步写 MySQL | RocketMQ 异步 | RocketMQ 顺序消息 |
+| 下单方式 | 同步写 PostgreSQL | RocketMQ 异步 | RocketMQ 顺序消息 |
 | 服务部署 | 单体应用 | 微服务 | 微服务 + 热点隔离 |
 | 一致性方案 | 数据库事务 | Redis + MQ 最终一致 | 自研补偿框架 |
 
 > [!TIP]
-> **选型建议**：流量小于 1 万 QPS 的活动用 MySQL 方案即可，不要为了技术而技术。只有真正达到 Redis 单节点性能瓶颈（约 10 万 QPS）时，才需要引入集群和顺序消息等复杂方案。
+> **选型建议**：流量小于 1 万 QPS 的活动用 PostgreSQL 方案即可，不要为了技术而技术。只有真正达到 Redis 单节点性能瓶颈（约 10 万 QPS）时，才需要引入集群和顺序消息等复杂方案。
 
 ![](//cdn.smallyoung.cn/smallyoung_blog/spring-cloud-seckill/12.png)
 
@@ -966,7 +997,7 @@ public String getSeckillToken(@PathVariable Long activityId,
 | 防超卖 | Redis + Lua 原子脚本 | 库存不变负数 |
 | 异步削峰 | RocketMQ 异步下单 | 数据库不被瞬时压垮 |
 | 幂等控制 | Redis SETNX | 同一用户不重复下单 |
-| 最终一致 | 定时校对 + 消息补偿 | Redis 与 MySQL 数据同步 |
+| 最终一致 | 定时校对 + 消息补偿 | Redis 与 PostgreSQL 数据同步 |
 
 > [!TIP]
 > **学习路径建议**：
@@ -992,3 +1023,4 @@ public String getSeckillToken(@PathVariable Long activityId,
 ### 推荐延伸阅读
 
 - [Sentinel 网关限流官方 Wiki](https://github.com/alibaba/Sentinel/wiki/网关限流)
+- [本文配套实战 Demo 源码 (GitHub)](https://github.com/yjiace/spring-cloud-seckill)：包含文档中涉及的微服务架构、Redis预扣减、RocketMQ异步下单等核心代码实现，可供本地运行与参考测试。
