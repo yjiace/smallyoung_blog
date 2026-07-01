@@ -7,7 +7,7 @@
     >
       <!-- 封面图片 16:9 -->
       <div class="cover-image-wrapper relative w-full rounded-lg" style="background-color: #e5e7eb;">
-        <img class="cover-image-inner absolute inset-0 w-full h-full object-cover object-center rounded-lg"
+        <img class="cover-image-inner absolute inset-0 w-full h-full rounded-lg"
           :src="getCoverUrl()" alt="cover" />
       </div>
 
