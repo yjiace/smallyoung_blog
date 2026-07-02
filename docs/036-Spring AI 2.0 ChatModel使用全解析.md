@@ -8,14 +8,14 @@ author: smallyoung
 date: 2026-07-03
 dateModified: 2026-07-03
 keywords: [Spring AI 2.0, ChatModel, ChatClient, Tool Calling, 多模态, ChatMemory, Spring Boot AI]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/spring-ai-chatmodel/cover.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/1.png
 ---
 
 > Spring AI 2.0 已于 2026 年 6 月正式 GA，ChatModel 仍是所有大模型交互的底层引擎，但围绕它的依赖注入方式、工具调用循环、多模态输入等细节在 2.0 中都发生了实质性变化。本文用可运行的 Java 代码，把 ChatModel 相关的每一个核心接口和常见场景讲清楚，读完即可直接用于项目。
 >
 > 📌 **适合人群**：有 Spring Boot 基础、正在或准备用 Spring AI 2.0 做大模型应用开发的 Java 后端工程师
 
-![Spring AI 2.0 ChatModel 全解析](//pub.smallyoung.cn/course_slidev/spring-ai-chatmodel/0.png)
+![Spring AI 2.0 ChatModel 全解析](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/0.png)
 
 <MindMapFloat title="Spring AI 2.0 ChatModel 知识图谱">
 
@@ -94,6 +94,8 @@ flowchart LR
 
 > [!IMPORTANT]
 > 现有方案的核心矛盾是：业务只想要"发一条消息、拿到一个回答"，但底层却要求开发者去理解十几种模型各自的 API 细节。
+
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/2.png)
 
 ### 1.3 ChatModel 的核心思想
 
@@ -206,6 +208,8 @@ flowchart TB
 
 > [!WARNING]
 > 2.0.0-RC2 把这一步的策略从"合并"改回了"替换"：运行时只要传了 `ChatOptions`，就会整体替换启动时的默认配置，而不是逐字段合并。升级时如果发现某些默认参数（如 `temperature`）"消失"了，先检查这里。
+
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/3.png)
 
 ## 3. 依赖注入方式全解析（含多个 Bean 场景）
 
@@ -386,6 +390,8 @@ public class MultiModelConfig {
 > [!TIP]
 > 团队协作中建议把 `ChatClient` 的 Bean 名称和业务语义绑定（如 `weatherChatClient`、`customerServiceChatClient`），而不是用 `chatClient1`、`chatClient2` 这类无意义命名，`@Qualifier` 报错信息也会更易读。
 
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/4.png)
+
 ## 4. 系统提示词与 Prompt 模板
 
 ### 4.1 三种设置系统提示词的方式
@@ -477,6 +483,8 @@ String answer = ChatClient.create(chatModel).prompt()
 > [!NOTE]
 > `TemplateRenderer` 底层默认基于 StringTemplate（ST4）引擎实现变量替换，这是 Spring AI Prompt 模板体系的技术基础，也是官方文档中反复强调的"可替换"扩展点（注：`TemplateRenderer` 默认基于开源 StringTemplate 引擎实现变量渲染，支持自定义分隔符，参见 Spring AI 官方 Prompts 文档）。
 
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/5.png)
+
 ## 5. 多模态输入：让 ChatModel "看懂"图片和音频
 
 ### 5.1 Media 类型是多模态的核心抽象
@@ -557,6 +565,8 @@ ChatResponse response = chatModel.call(new Prompt(
 
 > [!WARNING]
 > 并不是所有模型都支持多模态输入。用纯文本模型（如部分 `qwen-plus` 系列）接收图片请求，通常会直接报错或静默忽略图片内容，调用前务必确认所选模型的多模态能力清单。
+
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/6.png)
 
 ## 6. 多轮对话与记忆管理
 
@@ -665,6 +675,8 @@ public class MemoryController {
 }
 ```
 
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/7.png)
+
 ### 6.4 三种记忆 Advisor 对比
 
 | Advisor | 注入方式 | 优点 | 适用场景 |
@@ -678,6 +690,8 @@ public class MemoryController {
 
 > [!WARNING]
 > **JDBC 存储用户注意**：若使用 `JdbcChatMemoryRepository`，从 1.x 升级到 2.0 时必须对数据库表执行 Schema 变更——2.0 在 `SPRING_AI_CHAT_MEMORY` 表中新增了 `sequence_id BIGINT` 列来保证消息顺序的可靠性（旧版依赖 `timestamp` 精度不足，在 MySQL/MariaDB 等数据库上存在排序混乱问题）。如果使用 Flyway/Liquibase 管理迁移，需将 `spring.ai.chat.memory.repository.jdbc.initialize-schema` 设置为 `never` 并手动执行 `ALTER TABLE` 语句。
+
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/8.png)
 
 ## 7. Tool Calling：让模型调用真实业务逻辑
 
@@ -811,6 +825,9 @@ String content = chatClient.prompt()
 | `FunctionToolCallback` 函数式 | ⭐⭐ | ⭐⭐⭐⭐ | 已有 `Function`/`Supplier` 实现，或需要动态构造工具 |
 | `MethodToolCallback` 编程式 | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 需要自定义 Schema、结果转换器等底层细节 |
 
+
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/9.png)
+
 ### 7.6 Spring AI 2.0 的工具调用循环重构
 
 1.x 中每个 `ChatModel` 实现内部各自维护自己的工具调用循环，不同模型之间行为存在细微差异。2.0 把这一循环统一收敛到 `ChatClient` 的 Advisor 链中，由框架自动注册的 `ToolCallingAdvisor` 驱动完整的"调用—执行—回填"往返流程，开发者不再需要关心某个具体模型内部是怎么跑循环的（注：Spring AI 2.0 将工具调用循环统一收敛到 `ChatClient` 的 Advisor 链中，由自动注册的 `ToolCallingAdvisor` 驱动完整往返流程，参见腾讯云开发者社区《Spring AI 2.0 正式发布：Java 程序员必须关注的 8 个升级清单》）。
@@ -855,6 +872,8 @@ public ChatClient chatClient(ChatClient.Builder builder, ToolSearchToolAdvisor a
 
 > [!TIP]
 > 工具数量较多的 Agent 类应用强烈建议接入 `ToolSearchToolAdvisor`，它是 2.0 版本针对"工具爆炸导致 Prompt 过长"问题给出的官方解法。实测可减少 60–90% 的工具相关 token 消耗。
+
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/10.png)
 
 ## 8. 结构化输出：让模型直接返回 Java 对象
 
@@ -926,6 +945,8 @@ ActorFilms result = chatClient.prompt()
 > [!TIP]
 > 两个选项可以同时启用，形成双重保障：先用原生结构化输出降低出错概率，再用 Schema 校验兜底。但每次重试都会额外消耗 token，不宜对实时性要求高的接口无脑开启。
 
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/12.png)
+
 ### 8.4 低层 Converter：BeanOutputConverter、MapOutputConverter、ListOutputConverter
 
 如果你使用的是底层 `ChatModel` API，或者需要对转换过程做精细控制，可以直接使用各种 `StructuredOutputConverter`。
@@ -979,6 +1000,8 @@ List<String> flavors = ChatClient.create(chatModel).prompt()
 > [!NOTE]
 > 优先选择 `.entity()` 方式（ChatClient 的高层 API），它会自动帮你选择合适的 Converter 并处理 Prompt 扩充；只有在使用底层 `ChatModel` 或需要高度自定义转换逻辑时，才需要手动操作 Converter。
 
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/11.png)
+
 ## 9. Spring AI 2.0 相较 1.x 的关键变化
 
 ### 9.1 版本升级速览
@@ -999,6 +1022,8 @@ Spring AI 2.0.0 GA 于 2026 年 6 月 12 日正式发布，距离首个里程碑
 > 升级前建议重点自查三处：`options` 相关的 setter 方法是否被删除、`PromptChatMemoryAdvisor` 的使用是否需要替换、自定义的 `MiniMaxChatModel` 等第三方模型实现是否有新的替代方案。这些是社区反馈的高频迁移痛点。
 
 由于 Spring Boot 3.5 / Spring Framework 6.2 已进入生命周期终点，继续停留在 Spring AI 1.1.x 意味着无法获得后续安全更新，因此对生产项目而言，升级到 2.0 GA 基本是必选项而非可选项。
+
+![](//cdn.smallyoung.cn/smallyoung_blog/spring-ai-chatmodel/13.png)
 
 ## 10. 最佳实践与常见问题
 
@@ -1060,8 +1085,4 @@ private ChatModel chatModel;
 | [多模态 API](https://docs.springjava.cn/spring-ai/reference/api/multimodality.html) | Spring AI 参考文档镜像 | `Media` 类型与多模态输入用法 |
 | [结构化输出](https://docs.spring.io/spring-ai/reference/api/structured-output-converter.html) | Spring 官方文档 | `BeanOutputConverter` 及 `.entity()` 方法全解 |
 
-### 推荐资源
 
-- [Spring AI 2.x 全面指南：架构升级、高效的工具调用、多模型生态与实战示例](https://www.cnblogs.com/yangykaifa/p/19745500)
-- [如何在 Spring AI 中配置多个 LLM 客户端](https://didispace.com/posts/451)
-- [Spring AI 聊天记忆功能实战：从接口设计到生产实践](https://www.cnblogs.com/cyanty/p/18935807)
