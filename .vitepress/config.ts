@@ -64,6 +64,20 @@ export default withMermaid(defineConfig({
       href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined'
     }],
 
+    // ========== 百度统计 ==========
+    [
+      'script',
+      {},
+      `
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?6cd88d7023984eb080797844c918ad33";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+      `
+    ]
   ],
 
   // 主题配置
