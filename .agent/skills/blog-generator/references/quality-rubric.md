@@ -15,7 +15,7 @@
 | 3 | 标题层级 | H2 → H3 → H4，不跳级 | 无跳级，层级清晰 |
 | 4 | 关键词分布 | 核心词出现在标题、首段、至少一个小标题 | ≥3 处自然出现 |
 | 5 | 图片 Alt | 文章封面图和插图均有描述性 alt 文本 | 所有 `![]()` 有 alt |
-| 6 | Frontmatter 完整性 | title / description / keywords / cover 全部填写；title_blog / title_toutiao / title_juejin / title_zhihu / title_wechat 均填写且符合各平台字数限制；cover_prompt 已填写且包含主题名称 | 无空字段，字数未超限 |
+| 6 | Frontmatter 完整性 | title / description / keywords / cover 全部填写；title 填写且符合字数限制（≤35字） | 无空字段，字数未超限 |
 
 ---
 
@@ -97,8 +97,7 @@ GEO（Generative Engine Optimization）：让 AI 搜索引擎愿意引用这篇�
 
 ### 📐 格式规范
 - ⚠️ 不符合模板处：{具体问题，如有，否则写"无"}
-- 平台标题：title_blog / title_toutiao / title_juejin / title_zhihu / title_wechat {是否全部填写；字数是否在限制内，否则列出超限项}
-- 封面提示词：cover_prompt {是否包含主题名称占位符 {主题}；否则写"无问题"}
+- 标题：title {是否填写；字数是否在限制内（≤35字），否则列出超限说明}
 
 ### 📊 综合评分
 | 维度 | 评分 |
@@ -138,4 +137,4 @@ GEO（Generative Engine Optimization）：让 AI 搜索引擎愿意引用这篇�
 6. 所有 H2 和 H3 标题是否贴合主题？有没有"基础概念解释""深入原理讲解"这类通用名？
 7. MindMapFloat 的节点是"知识维度"还是"章节标题的复制"？节点数是否少于 H2 章节数？
 8. MindMapFloat 的二级节点，是否都能在正文中找到对应的论点？有无虚构内容或占位词？
-9. 五个平台标题（title_blog / title_toutiao / title_juejin / title_zhihu / title_wechat）是否全部填写？是否符合各平台字数上限（头条≤25字，微信≤28字，其余≤40字）？cover_prompt 是否包含主题名称？
+9. title 标签是否填写，字数是否符合限制（≤35字）？

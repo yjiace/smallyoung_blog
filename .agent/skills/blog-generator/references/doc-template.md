@@ -6,14 +6,7 @@
 
 ```yaml
 ---
-# ── 平台推荐标题（人工选用后删除其余）──
-title_blog:    {博客标题：含核心关键词，简洁权威，≤40字}
-title_toutiao: {今日头条：突出数字/实用价值/反差感，≤25字}
-title_juejin:  {掘金：技术感强，面向开发者，可含版本/框架名，≤40字}
-title_zhihu:   {知乎：问题式或"深度解析"风格，引发思考，≤40字}
-title_wechat:  {微信公众号：情感共鸣/痛点触发，口语化，≤28字}
-# ── 封面提示词（风格：深蓝星空+3D等距芯片+霓虹发光）──
-cover_prompt: [英文提示词，含主题名占位符，描述附图风格]
+title: {博客标题：含核心关键词，简洁权威，≤35字}
 category: {人工智能 | 前端开发 | 后端开发 | DevOps | 数据库}
 tags: [标签1, 标签2, 标签3]
 description: {SEO 描述，100-160 字符，包含核心关键词，有引导点击的价值主张}
@@ -21,7 +14,7 @@ author: smallyoung
 date: {YYYY-MM-DD}
 dateModified: {YYYY-MM-DD}
 keywords: [关键词1, 关键词2, 关键词3]
-cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/{主题简称}/cover.png
+cover: //cdn.smallyoung.cn/smallyoung_blog/{主题简称}/1.png
 ---
 ```
 
@@ -32,7 +25,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/{主题简称}
 | `title` | 含核心关键词，≤60 字符 | `Agentic RAG：让 AI 主动检索的下一代架构` |
 | `category` | 从五个预设值选一 | `人工智能` |
 | `description` | 100-160 字符，回答"读完能得到什么" | `本文带你从零理解 Agentic RAG 的工作原理…` |
-| `cover` | 固定 CDN 前缀 + 主题简称 | `//pub.smallyoung.cn/…/agentic-rag/cover.png` |
+| `cover` | 固定 CDN 前缀 + 主题简称 | `//cdn.smallyoung.cn/smallyoung_blog/agentic-rag/1.png` |
 
 ## 正文结构模板
 
@@ -46,7 +39,7 @@ cover: //pub.smallyoung.cn/cdn-cgi/image/quality=60/course_slidev/{主题简称}
 > 📌 **核心论文**：[论文标题](https://arxiv.org/abs/XXXX.XXXXX)（arXiv:XXXX.XXXXX）
 > 📌 **适合人群**：{目标读者，如：AI 初学者、后端开发者}
 
-![{文章标题}](//pub.smallyoung.cn/course_slidev/{主题简称}/0.png)
+![{文章标题}](//cdn.smallyoung.cn/smallyoung_blog/{主题简称}/0.png)
 
 <!--
   MindMapFloat 填写规范：
