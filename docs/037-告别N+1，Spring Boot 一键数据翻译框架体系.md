@@ -4,8 +4,8 @@ category: 后端开发
 tags: [Spring Boot, 数据翻译, 字典翻译, N+1查询, ResponseBodyAdvice, 架构设计]
 description: 接口只返回 ID、前端却要展示名称怎么办？本文手写一套通用声明式数据翻译框架：一个注解自动回填用户名、字典、枚举，批量聚合根治 N+1 查询，并附经本地编译验证的 Java 源码与生产避坑清单，读完即可落地。
 author: smallyoung
-date: 2026-10-20
-dateModified: 2026-10-20
+date: 2026-10-19
+dateModified: 2026-10-19
 keywords: [Spring Boot 数据翻译, 字典翻译, ID转名称, N+1查询, ResponseBodyAdvice, 声明式注解]
 cover: //cdn.smallyoung.cn/smallyoung_blog/springboot-data-trans/1.png
 ---
