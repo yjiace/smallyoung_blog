@@ -357,7 +357,7 @@ public record ClassTransMetadata(List<TransFieldMetadata> transFields, List<Fiel
 }
 ```
 
-再看缓存与扫描逻辑。有几处细节值得留意：配置写错时**启动即抛异常**（fail-fast）；泛型擦除后的 `Object` 字段（如 `Result<T>.data`）会被当作可遍历字段；框架内部包（Spring、Hibernate、Jackson）下的字段类型不会往下钻，避免误触 ORM 代理的懒加载。
+再看缓存与扫描逻辑。有几处细节值得留意：配置写错时抛出专用的 TransConfigException，且不会被引擎的降级逻辑吞掉；泛型擦除后的 `Object` 字段（如 `Result<T>.data`）会被当作可遍历字段；框架内部包（Spring、Hibernate、Jackson）下的字段类型不会往下钻，避免误触 ORM 代理的懒加载。
 
 ```java
 package cn.example.framework.translate.core;
@@ -416,7 +416,7 @@ public final class TransMetaCache {
                 Field from = fieldMap.get(anno.from());
                 if (from == null) {
                     // 配置错误尽早暴露，而不是悄悄不生效
-                    throw new IllegalStateException(clazz.getName() + "#" + field.getName()
+                    throw new TransConfigException(clazz.getName() + "#" + field.getName()
                             + " 的 @AutoTrans(from=\"" + anno.from() + "\") 找不到对应字段");
                 }
                 field.setAccessible(true);
@@ -557,6 +557,8 @@ public class TransEngine {
             Map<BatchKey, Map<String, Object>> results = query(keysByBatch);
             // ③ 回填：逐字段写回
             fill(targets, results);
+        } catch (TransConfigException e) {
+            throw e; // 注解配置错误：不降级，直接暴露
         } catch (Exception e) {
             log.error("[TransEngine] 数据翻译失败，已降级返回原始数据", e);
         }
@@ -685,7 +687,8 @@ public class TransEngine {
 
         Class<?> targetType = tfm.targetField().getType();
         if (Collection.class.isAssignableFrom(targetType)) {
-            tfm.targetField().set(bean, values);                       // 目标是 List：直接放入
+            // 目标是 Set 用 LinkedHashSet 保序去重，其余集合类型（如 List）直接放入
+            tfm.targetField().set(bean, Set.class.isAssignableFrom(targetType) ? new LinkedHashSet<>(values) : values);
         } else if (targetType == String.class) {
             String sep = tfm.separator().isEmpty() ? "," : tfm.separator();
             StringJoiner joiner = new StringJoiner(sep);
@@ -813,7 +816,7 @@ public class UserTransProvider implements TransProvider {
 
     private Map<Long, UserDTO> loadMissing(Set<? extends Long> missingIds) {
         return userApi.listByIds(new ArrayList<>(missingIds)).stream()
-                .collect(Collectors.toMap(UserDTO::getId, Function.identity()));
+                .collect(Collectors.toMap(UserDTO::getId, Function.identity(), (a, b) -> a));
     }
 }
 
@@ -1019,7 +1022,7 @@ public class TaskResponse {
     @AutoTrans(from = "assigneeIds", type = "USER", field = "username", separator = ",")
     private String assigneeNames;
 
-    /** 源字段本身就是集合时，不用写 separator；目标字段用 List 接收 */
+    /** 源字段本身就是集合时，不用写 separator；目标字段可用 List 或 Set 接收 */
     private List<Long> watcherIds;
 
     @AutoTrans(from = "watcherIds", type = "USER", field = "username")
@@ -1143,7 +1146,7 @@ public Map<?, ?> batchTranslate(Set<Object> keys, String group) {
 public Map<?, ?> batchTranslate(Set<Object> keys, String group) {
     List<Long> ids = keys.stream().map(k -> Long.valueOf(k.toString())).toList();
     return userApi.listByIds(ids).stream()
-            .collect(Collectors.toMap(UserDTO::getId, Function.identity()));
+            .collect(Collectors.toMap(UserDTO::getId, Function.identity(), (a, b) -> a));
 }
 ```
 
@@ -1167,12 +1170,18 @@ public Map<?, ?> batchTranslate(Set<Object> keys, String group) {
 | 找不到对应类型的 Provider | 记录 `warn` 日志并跳过 | 字段为空，日志可定位拼写错误 |
 | 某个 key 查不到 | 该字段保持 `null` | 仅这一条数据缺名称 |
 | 单个字段回填异常（类型不兼容等） | 记录 `warn`，继续其他字段 | 不影响同一对象的其他字段 |
-| 注解 `from` 写错 | 首次扫描时抛出明确异常并记录日志 | 配置错误尽早暴露 |
+| 注解 from 写错 | 首次扫描该 DTO 时抛出 TransConfigException，不降级 | 首次请求即报错（500），开发联调阶段就能发现 |
 
 引擎有一个构造方法不依赖 Spring 容器，所以可以**不启动应用**就写单元测试。下面这个测试同时断言了"结果正确"和"只批量查询一次"这两件最重要的事（与本文本地验证用例同构）：
 
 ```java
 class OrderTransTest {
+
+    @Test
+    void dtoAnnotationsShouldBeValid() {
+        // 直接触发扫描，from 写错会在 CI 阶段失败，而不是等到线上首次请求
+        assertDoesNotThrow(() -> TransMetaCache.getMetadata(OrderResponse.class));
+    }
 
     @Test
     void shouldTranslateInOneBatch() {
