@@ -236,6 +236,7 @@ const onCanPlay = () => {
 
 // 键盘快捷键
 const handleKeydown = (event: KeyboardEvent) => {
+  if (event.ctrlKey || event.metaKey || event.altKey) return
   if (event.target !== document.body) return
   
   switch (event.code) {

@@ -1249,6 +1249,7 @@ flowchart LR
 
 | 阶段 | 能力 | 做法 |
 | :--- | :--- | :--- |
+| ① 原型 | 跑通核心闭环，根治 N+1 查询 | 实现 `@AutoTrans` 注解、`TransEngine` 攒批引擎与 `TransProvider` SPI，配合 `ResponseBodyAdvice` 实现自动回填 |
 | ② Starter 化 | 开箱即用，多项目复用 | 抽成独立模块，通过自动装配注册 Bean，提供 `trans.*` 配置项（开关、`batchSize` 等） |
 | ③ 两级缓存 | 多实例下命中率更高 | 本地 Caffeine 做一级，Redis 做二级，设置合理的失效策略 |
 | ④ 并行查询 | 多个维度的 Provider 同时查询 | 引擎里对不同批次使用线程池并发，总耗时从"相加"变成"取最大" |

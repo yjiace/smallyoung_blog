@@ -357,6 +357,9 @@ const onFullscreenChange = () => {
 
 // 键盘快捷键
 const handleKeydown = (event: KeyboardEvent) => {
+  // 忽略组合键（如 Ctrl+F 搜索、Cmd+F 等），避免劫持浏览器原生快捷键
+  if (event.ctrlKey || event.metaKey || event.altKey) return
+
   if (!containerRef.value?.contains(document.activeElement) && document.activeElement !== document.body) return
   
   switch (event.code) {
