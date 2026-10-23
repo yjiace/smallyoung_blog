@@ -380,19 +380,19 @@ public class EtlPipeline {
 Spring AI 通过统一的 `VectorStore` 接口屏蔽了底层差异，但选哪种数据库仍要结合团队现有基础设施。核心思路是：优先考虑"能否复用现有运维能力"，而不是一味追求参数最优。
 
 ```mermaid
-flowchart LR
-    subgraph 关系型["已有PostgreSQL的团队"]
-        A1[PgVector：复用现有运维经验]
-    end
-    subgraph 缓存["已有Redis的团队"]
-        B1[Redis Stack：内存级低延迟]
-    end
-    subgraph 专用["超大规模/专业检索场景"]
-        C1[Milvus：为大规模向量设计]
-    end
-    style 关系型 fill:#e3f2fd
-    style 缓存 fill:#fff3e0
-    style 专用 fill:#e8f5e9
+flowchart TB
+    Q[向量库选型] --> D1{团队已有 PostgreSQL？}
+    D1 -->|是| A1[PgVector：复用现有运维经验]
+    D1 -->|否| D2{已有带搜索能力的 Redis？}
+    D2 -->|是| B1[Redis Stack：内存级低延迟]
+    D2 -->|否| D3{数据量很大或需要专业检索？}
+    D3 -->|是| C1[Milvus：为大规模向量设计]
+    D3 -->|否| A2[新部署 PgVector：中小规模最省心]
+    
+    style A1 fill:#e3f2fd
+    style A2 fill:#e3f2fd
+    style B1 fill:#fff3e0
+    style C1 fill:#e8f5e9
 ```
 
 | 对比维度 | PgVector | Redis | Milvus |
