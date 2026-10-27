@@ -1,6 +1,6 @@
 ---
 title: Spring AI 2.0 实战：用Java快速搭建RAG知识库系统
-category: 人工智能
+category: [人工智能, 后端开发]
 tags: [Spring AI, RAG, Java, 向量数据库, Spring Boot 4]
 description: 基于 Spring AI 2.0.1 官方文档与源码，手把手用 Java 搭建 RAG 知识库：讲清两种 Advisor 的区别、ETL 入库、PgVector 选型，附可运行代码与 2.0 依赖避坑清单。
 author: smallyoung
