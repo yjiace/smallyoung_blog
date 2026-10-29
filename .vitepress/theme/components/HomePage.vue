@@ -37,7 +37,7 @@
           AI · 大模型 · 软件架构
         </p>
         <p class="text-base lg:text-lg text-text-light/60 dark:text-text-dark/60 max-w-2xl mx-auto leading-relaxed mb-10">
-          如果你对 AI、软件架构感兴趣，欢迎关注我的社交账号。内容同步更新至今日头条、微信公众号、掘金、知乎等平台。
+          如果你对 AI、软件架构感兴趣，欢迎关注我的社交账号。内容同步更新至今日头条、微信公众号、掘金、知乎、CSDN 等平台。
         </p>
 
         <!-- CTA 按钮 -->
@@ -62,14 +62,14 @@
 
     <!-- 社交平台 & 二维码区域 -->
     <section class="py-16 px-6">
-      <div class="mx-auto max-w-5xl">
+      <div class="mx-auto max-w-7xl">
         <h2 class="text-2xl font-black text-center mb-2">关注我</h2>
         <p class="text-center text-text-light/60 dark:text-text-dark/60 mb-10">内容同步更新，欢迎在各平台关注</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         
           <!-- 微信公众号 -->
-          <div class="group relative flex flex-col items-center gap-6 p-8 rounded-3xl glass-card hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+          <div class="group relative flex flex-col items-center gap-5 p-6 rounded-3xl glass-card hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-green-500/10 rounded-full blur-3xl group-hover:bg-green-500/20 transition-colors"></div>
 
             <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #07c160, #35d474)">
@@ -96,7 +96,7 @@
           </div>
 
           <!-- 知乎 -->
-          <div class="group relative flex flex-col items-center gap-6 p-8 rounded-3xl glass-card hover:shadow-2xl hover:shadow-blue-400/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+          <div class="group relative flex flex-col items-center gap-5 p-6 rounded-3xl glass-card hover:shadow-2xl hover:shadow-blue-400/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-400/10 rounded-full blur-3xl group-hover:bg-blue-400/20 transition-colors"></div>
 
             <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #0084ff, #44a1ff)">
@@ -127,14 +127,12 @@
           </div>
 
           <!-- 今日头条 -->
-          <div class="group relative flex flex-col items-center gap-6 p-8 rounded-3xl glass-card hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+          <div class="group relative flex flex-col items-center gap-5 p-6 rounded-3xl glass-card hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
             <!-- 装饰性光影 -->
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-colors"></div>
             
-            <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #fe2c55, #ff6384)">
-              <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
-              </svg>
+            <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden bg-white">
+              <img src="/images/toutiao-icon.png" alt="今日头条" class="w-full h-full object-cover" />
             </div>
 
             <!-- 二维码显示区 -->
@@ -160,7 +158,7 @@
           </div>
 
           <!-- 掘金 -->
-          <div class="group relative flex flex-col items-center gap-6 p-8 rounded-3xl glass-card hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+          <div class="group relative flex flex-col items-center gap-5 p-6 rounded-3xl glass-card hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-colors"></div>
 
             <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #1e80ff, #4c9bff)">
@@ -187,6 +185,37 @@
               class="relative z-10 w-full text-center py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold text-sm shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all active:scale-95"
             >
               前往掘金
+            </a>
+          </div>
+
+          <!-- CSDN -->
+          <div class="group relative flex flex-col items-center gap-5 p-6 rounded-3xl glass-card hover:shadow-2xl hover:shadow-red-500/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-red-500/10 rounded-full blur-3xl group-hover:bg-red-500/20 transition-colors"></div>
+
+            <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden bg-[#fc5531]">
+              <img src="/images/csdn-icon.svg" alt="CSDN" class="w-full h-full object-cover" />
+            </div>
+
+            <div class="relative w-40 h-40 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+              <div class="absolute inset-0 bg-red-50 dark:bg-red-950/20 rounded-2xl"></div>
+              <svg class="relative w-24 h-24 text-[#fc5531] drop-shadow-sm" viewBox="0 0 128 128" fill="none">
+                <g transform="skewX(-10) translate(14, 0)">
+                  <path fill="currentColor" d="M 88 38 C 82 28 72 22 60 22 C 38 22 22 39 22 64 C 22 89 38 106 60 106 C 73 106 83 99 89 88 C 91.5 83.5 88 78 83 78 C 79.5 78 76.5 80 75 83 C 71 89 66 93 60 93 C 44 93 35 80 35 64 C 35 48 44 35 60 35 C 66 35 71 39 74 44 C 76 47 79 49 82.5 49 C 87.5 49 91 43.5 88 38 Z"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="text-center">
+              <p class="font-bold text-lg">CSDN</p>
+              <p class="text-sm text-text-light/50 dark:text-text-dark/50 mt-1">博客专栏与技术沉淀</p>
+            </div>
+            
+            <a
+              href="https://blog.csdn.net/yjc_1111"
+              target="_blank"
+              class="relative z-10 w-full text-center py-2.5 rounded-xl bg-gradient-to-r from-[#fc5531] to-red-500 text-white font-bold text-sm shadow-lg shadow-red-500/20 hover:shadow-red-500/40 transition-all active:scale-95"
+            >
+              前往 CSDN
             </a>
           </div>
         </div>
