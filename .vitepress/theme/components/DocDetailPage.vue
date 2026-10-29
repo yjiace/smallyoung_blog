@@ -387,12 +387,27 @@ onUnmounted(() => {
   filter: brightness(0.9) contrast(1.1);
 }
 
-/* 1. 标题渲染修复 */
-.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4 {
+/* 1. 标题渲染与彻底隐藏锚点 # 号 */
+.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4, .vp-doc h5, .vp-doc h6 {
   line-height: 1.35 !important;
   font-weight: 800;
   letter-spacing: -0.025em;
   color: var(--vp-c-text-1);
+}
+
+/* 彻底隐藏所有标题前方的 # 锚点（无论悬停、点击均不显示） */
+.vp-doc .header-anchor,
+.doc-content .header-anchor {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.vp-doc .header-anchor::before,
+.doc-content .header-anchor::before {
+  content: "" !important;
+  display: none !important;
 }
 
 /* 2. 内容与图片/组件边距修复 */

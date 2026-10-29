@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 全局彻底隐藏标题前的 # 锚点（悬停、点击、聚焦均不显示） */
+.vp-doc .header-anchor,
+.doc-content .header-anchor {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.vp-doc .header-anchor::before,
+.doc-content .header-anchor::before {
+  content: "" !important;
+  display: none !important;
+}
