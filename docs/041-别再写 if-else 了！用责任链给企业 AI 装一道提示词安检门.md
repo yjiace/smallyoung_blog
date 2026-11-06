@@ -10,8 +10,6 @@ keywords: [责任链模式, 提示词过滤, 提示词注入, AI网关, Spring A
 cover: //cdn.smallyoung.cn/smallyoung_blog/chain-prompt-filter/1.png
 ---
 
-# 责任链模式实战：企业 AI 接入的提示词前置过滤
-
 > 企业接入大模型时，最稳妥的做法是在提示词到达模型之前，用**责任链模式**串起限流、规范化、注入检测、脱敏、合规校验等独立处理者，每个环节只管一件事，任何一环都能拦截或改写请求。这样新增一条规则只需新增一个类，而不用去翻动一堆 `if-else`。本文先讲清责任链模式，再用可运行的 Java 代码搭一条提示词过滤链，最后接入 Spring AI 的 Advisor 机制。
 >
 > 📌 **权威参考**：[OWASP LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)（OWASP Top 10 for LLM Applications 2025 第一位风险）
