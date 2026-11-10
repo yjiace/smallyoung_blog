@@ -3,14 +3,35 @@
     "title": "流萤守护",
     "type": "app",
     "description": "专为独居人群设计的安全辅助工具。实时位置共享、智能超时预警、一键报平安。让在乎你的人更安心，让你的每一步都充满从容。",
-    "image": "https://guard.smallyoung.cn/how-it-works.png",
+    "image": "/images/products/how-it-works.png",
     "link": "https://guard.smallyoung.cn/"
+  },
+  {
+    "title": "AI 生图参考库助手",
+    "type": "web",
+    "description": "一款面向主流 AI 生图对话平台的浏览器脚本。内置中文脸库、服装库与姿势库，支持多视角、3D 白模与深度图切换，一键把高清参考图与结构化提示词注入输入框，让出图更可控。",
+    "image": "/images/products/ai-ref-autofill.svg",
+    "link": "https://github.com/yjiace/ai-ref-autofill"
+  },
+  {
+    "title": "EdgeOne TTS",
+    "type": "web",
+    "description": "基于腾讯 EdgeOne 边缘节点与微软 Edge 神经语音引擎的免费文本转语音服务。支持多语言音色、情感风格与语速音调调节，并提供兼容阅读 APP 的标准 API 接口。",
+    "image": "/images/products/edgeone-tts.svg",
+    "link": "https://tts.smallyoung.cn/"
+  },
+  {
+    "title": "MD2Post",
+    "type": "web",
+    "description": "一键将 Markdown 技术文章优雅转换为微信公众号、头条号、掘金、知乎等平台的排版工具。支持 Mermaid 图表、数学公式与多套主题，纯前端离线运行，草稿只留在本地。",
+    "image": "/images/products/MD2Post.svg",
+    "link": "https://m.smallyoung.cn/"
   },
   {
     "title": "足迹明信片",
     "type": "miniprogram",
     "description": "通过深度整合高德开放平台的多项核心能力，结合大语言模型的智能分析能力，为用户提供一站式智能旅行规划服务，并在旅程结束后自动生成精美的旅行纪念明信片。",
-    "image": "https://cdn.smallyoung.cn/smallyoung_blog/footprint-postcard.jpg",
+    "image": "/images/products/footprint-postcard.jpg",
     "link": "#",
     "qrcode": "/images/qrcode/footprint-postcard.jpg"
   },
@@ -18,21 +39,14 @@
     "title": "Supabase API",
     "type": "web",
     "description": "探索 Supabase 的强大功能，学习 API 使用方法，在线测试接口调用。为开发者提供完整的 Supabase 学习和实践环境。",
-    "image": "https://cdn.smallyoung.cn/smallyoung_blog/supabase-api.gif",
+    "image": "/images/products/supabase-api.gif",
     "link": "https://supabase.smallyoung.cn/"
   },
   {
     "title": "A2UI",
     "type": "web",
     "description": "A2UI 使 AI 代理能够生成丰富的交互式用户界面，这些界面可以在 Web、移动设备和桌面设备上原生渲染，而无需执行任意代码。",
-    "image": "https://cdn.smallyoung.cn/smallyoung_blog/a2ui.png",
+    "image": "/images/products/a2ui.svg",
     "link": "https://a2ui.smallyoung.cn/"
-  },
-  {
-    "title": "Mock Flow API",
-    "type": "web",
-    "description": "体验实时 API 调用与 SSE 数据流的魅力。快速生成、测试和集成高质量的模拟数据，加速您的开发流程。",
-    "image": "https://cdn.smallyoung.cn/smallyoung_blog/mfa.png",
-    "link": "https://mock.smallyoung.cn/"
   }
 ]

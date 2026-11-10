@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" font-family="system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef2ff"/>
+      <stop offset="0.55" stop-color="#f6f3ff"/>
+      <stop offset="1" stop-color="#fdf2f8"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="thumbA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fde2e7"/><stop offset="1" stop-color="#e9d5ff"/>
+    </linearGradient>
+    <linearGradient id="thumbB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dbeafe"/><stop offset="1" stop-color="#c7d2fe"/>
+    </linearGradient>
+    <linearGradient id="thumbC" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dcfce7"/><stop offset="1" stop-color="#a7f3d0"/>
+    </linearGradient>
+    <linearGradient id="thumbD" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fef3c7"/><stop offset="1" stop-color="#fed7aa"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#312e81" flood-opacity="0.16"/>
+    </filter>
+    <filter id="panelShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="20" flood-color="#1e1b4b" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <circle cx="1070" cy="80" r="210" fill="#c7d2fe" opacity="0.35"/>
+  <circle cx="120" cy="700" r="190" fill="#e9d5ff" opacity="0.45"/>
+
+  <!-- 宿主 AI 对话页面 -->
+  <g filter="url(#shadow)">
+    <rect x="56" y="66" width="1088" height="618" rx="22" fill="#ffffff"/>
+  </g>
+  <rect x="56" y="66" width="1088" height="48" rx="22" fill="#f8fafc"/>
+  <rect x="56" y="96" width="1088" height="20" fill="#f8fafc"/>
+  <circle cx="88" cy="90" r="6" fill="#f87171"/>
+  <circle cx="108" cy="90" r="6" fill="#fbbf24"/>
+  <circle cx="128" cy="90" r="6" fill="#34d399"/>
+  <rect x="162" y="76" width="430" height="28" rx="14" fill="#eef2f7"/>
+  <text x="182" y="95" font-size="13" fill="#64748b">gemini.google.com</text>
+  <rect x="56" y="114" width="172" height="530" fill="#fafbff"/>
+  <rect x="76" y="146" width="132" height="12" rx="6" fill="#e2e8f0"/>
+  <rect x="76" y="178" width="104" height="12" rx="6" fill="#e2e8f0"/>
+  <rect x="76" y="210" width="120" height="12" rx="6" fill="#e2e8f0"/>
+  <rect x="76" y="242" width="90" height="12" rx="6" fill="#e2e8f0"/>
+  <rect x="76" y="292" width="132" height="34" rx="10" fill="#eef2ff"/>
+  <text x="256" y="160" font-size="16" font-weight="600" fill="#334155">与 AI 一起创作图片</text>
+  <rect x="256" y="186" width="330" height="64" rx="14" fill="#f1f5f9"/>
+  <rect x="276" y="206" width="250" height="9" rx="4" fill="#cbd5e1"/>
+  <rect x="276" y="224" width="180" height="9" rx="4" fill="#cbd5e1"/>
+  <rect x="256" y="272" width="300" height="86" rx="14" fill="#eef2ff"/>
+  <rect x="276" y="294" width="220" height="9" rx="4" fill="#c7d2fe"/>
+  <rect x="276" y="312" width="250" height="9" rx="4" fill="#c7d2fe"/>
+  <rect x="276" y="330" width="150" height="9" rx="4" fill="#c7d2fe"/>
+  <rect x="256" y="566" width="360" height="58" rx="16" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="278" y="601" font-size="13" fill="#94a3b8">输入提示词或上传参考图…</text>
+
+  <!-- 悬浮参考库面板 -->
+  <g filter="url(#panelShadow)">
+    <rect x="686" y="146" width="424" height="494" rx="18" fill="#ffffff"/>
+  </g>
+  <text x="710" y="182" font-size="17" font-weight="700" fill="#1e293b">AI 生图参考库</text>
+  <circle cx="1058" cy="176" r="10" fill="#f1f5f9"/>
+  <circle cx="1080" cy="176" r="10" fill="#f1f5f9"/>
+  <rect x="710" y="202" width="96" height="30" rx="9" fill="url(#accent)"/>
+  <text x="738" y="222" font-size="13" fill="#ffffff">脸库</text>
+  <rect x="816" y="202" width="96" height="30" rx="9" fill="#f1f5f9"/>
+  <text x="837" y="222" font-size="13" fill="#64748b">服装库</text>
+  <rect x="922" y="202" width="96" height="30" rx="9" fill="#f1f5f9"/>
+  <text x="943" y="222" font-size="13" fill="#64748b">姿势库</text>
+  <rect x="710" y="244" width="188" height="30" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="722" y="264" font-size="12" fill="#64748b">发长：全部</text>
+  <text x="876" y="264" font-size="12" fill="#94a3b8">▾</text>
+  <rect x="908" y="244" width="178" height="30" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="920" y="264" font-size="12" fill="#64748b">发型：全部</text>
+  <text x="1064" y="264" font-size="12" fill="#94a3b8">▾</text>
+
+  <!-- 参考图缩略网格 -->
+  <g>
+    <rect x="710" y="288" width="116" height="96" rx="10" fill="url(#thumbA)"/>
+    <circle cx="768" cy="326" r="18" fill="#ffffff" opacity="0.75"/>
+    <path d="M742 378 q26 -34 52 0 z" fill="#ffffff" opacity="0.75"/>
+    <rect x="836" y="288" width="116" height="96" rx="10" fill="url(#thumbB)"/>
+    <circle cx="894" cy="326" r="18" fill="#ffffff" opacity="0.75"/>
+    <path d="M868 378 q26 -34 52 0 z" fill="#ffffff" opacity="0.75"/>
+    <rect x="962" y="288" width="124" height="96" rx="10" fill="url(#thumbC)"/>
+    <circle cx="1024" cy="326" r="18" fill="#ffffff" opacity="0.75"/>
+    <path d="M998 378 q26 -34 52 0 z" fill="#ffffff" opacity="0.75"/>
+    <rect x="710" y="394" width="116" height="96" rx="10" fill="url(#thumbD)"/>
+    <path d="M750 414 l18 10 -6 22 14 30 -14 8 -14 -8 14 -30 -6 -22 z" fill="#ffffff" opacity="0.8"/>
+    <rect x="836" y="394" width="116" height="96" rx="10" fill="url(#thumbB)"/>
+    <path d="M874 414 l20 10 -8 22 16 30 -16 8 -16 -8 16 -30 -8 -22 z" fill="#ffffff" opacity="0.8"/>
+    <rect x="962" y="394" width="124" height="96" rx="10" fill="url(#thumbA)"/>
+    <path d="M1004 414 l20 10 -8 22 16 30 -16 8 -16 -8 16 -30 -8 -22 z" fill="#ffffff" opacity="0.8"/>
+  </g>
+
+  <!-- 已选托盘 -->
+  <text x="710" y="514" font-size="12" fill="#64748b">已选参考图</text>
+  <rect x="710" y="522" width="40" height="40" rx="8" fill="url(#thumbA)"/>
+  <rect x="758" y="522" width="40" height="40" rx="8" fill="url(#thumbB)"/>
+  <rect x="806" y="522" width="40" height="40" rx="8" fill="url(#thumbC)"/>
+  <rect x="854" y="522" width="40" height="40" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="4 3"/>
+  <text x="868" y="548" font-size="20" fill="#94a3b8">+</text>
+  <rect x="908" y="522" width="178" height="40" rx="8" fill="#f8fafc"/>
+  <text x="920" y="547" font-size="12" fill="#64748b">正面 · 3D 白模 / 深度图</text>
+
+  <!-- 提示词与操作 -->
+  <rect x="710" y="574" width="376" height="28" rx="9" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="722" y="593" font-size="12" fill="#475569">图1 保留五官 · 图2 继承服装 · 图3 参考动作构图</text>
+  <rect x="710" y="606" width="150" height="30" rx="9" fill="#eef2ff"/>
+  <text x="726" y="626" font-size="12" fill="#4f46e5">写实摄影 ▾</text>
+  <rect x="880" y="606" width="160" height="30" rx="10" fill="url(#accent)"/>
+  <text x="898" y="626" font-size="13" font-weight="600" fill="#ffffff">填充到对话框</text>
+
+  <!-- 可拖拽悬浮图标 -->
+  <circle cx="1092" cy="646" r="30" fill="url(#accent)"/>
+  <rect x="1082" y="636" width="8" height="8" rx="2" fill="#ffffff"/>
+  <rect x="1094" y="636" width="8" height="8" rx="2" fill="#ffffff"/>
+  <rect x="1082" y="648" width="8" height="8" rx="2" fill="#ffffff"/>
+  <rect x="1094" y="648" width="8" height="8" rx="2" fill="#ffffff"/>
+</svg>

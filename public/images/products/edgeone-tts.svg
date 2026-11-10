@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" font-family="system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef2fb"/>
+      <stop offset="1" stop-color="#e8e6ff"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6c63ff"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="26" flood-color="#1e1b4b" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <circle cx="1100" cy="90" r="200" fill="#c7d2fe" opacity="0.35"/>
+  <circle cx="90" cy="690" r="180" fill="#ddd6fe" opacity="0.45"/>
+
+  <!-- 应用深色窗口 -->
+  <g filter="url(#shadow)">
+    <rect x="64" y="64" width="1072" height="622" rx="24" fill="#0b0d12"/>
+  </g>
+  <rect x="96" y="86" width="34" height="34" rx="10" fill="url(#accent)"/>
+  <rect x="110" y="94" width="6" height="12" rx="3" fill="#ffffff"/>
+  <rect x="107" y="100" width="12" height="10" rx="3" fill="#ffffff"/>
+  <text x="144" y="110" font-size="20" font-weight="700" fill="#f8fafc">EdgeOne TTS</text>
+  <rect x="872" y="84" width="232" height="34" rx="17" fill="#1c202d" stroke="#2b3244"/>
+  <text x="892" y="106" font-size="13" fill="#a5adc2">免费在线 · 边缘节点合成</text>
+  <line x1="64" y1="134" x2="1136" y2="134" stroke="#202634"/>
+
+  <!-- 左侧：文本输入 -->
+  <text x="100" y="172" font-size="14" fill="#9aa3b8">输入文本</text>
+  <rect x="100" y="186" width="560" height="246" rx="16" fill="#141720" stroke="#262c3c"/>
+  <text x="124" y="228" font-size="17" fill="#e8eaf3">在边缘节点上，把文字变成</text>
+  <text x="124" y="258" font-size="17" fill="#e8eaf3">自然流畅的声音。</text>
+  <text x="124" y="302" font-size="15" fill="#8b93a7">支持中文方言、多语言音色，以及</text>
+  <text x="124" y="328" font-size="15" fill="#8b93a7">情感风格与语速、音调的细粒度调节。</text>
+  <rect x="124" y="356" width="2" height="20" fill="#8b7cff"/>
+  <rect x="124" y="398" width="512" height="1" fill="#262c3c"/>
+  <text x="124" y="418" font-size="12" fill="#6b7488">38 字 / 5000</text>
+
+  <text x="100" y="462" font-size="14" fill="#9aa3b8">语音角色</text>
+  <rect x="100" y="476" width="560" height="52" rx="12" fill="#141720" stroke="#262c3c"/>
+  <circle cx="128" cy="502" r="12" fill="#252b3c"/>
+  <text x="152" y="507" font-size="14" fill="#e8eaf3">晓晓 · zh-CN-XiaoxiaoNeural</text>
+  <text x="628" y="507" font-size="14" fill="#8b93a7">▾</text>
+
+  <!-- 波形预览 -->
+  <text x="100" y="548" font-size="13" fill="#6b7488">音频波形预览</text>
+  <g fill="url(#wave)">
+    <rect x="100" y="586" width="8" height="22" rx="4"/>
+    <rect x="116" y="578" width="8" height="38" rx="4"/>
+    <rect x="132" y="568" width="8" height="58" rx="4"/>
+    <rect x="148" y="582" width="8" height="30" rx="4"/>
+    <rect x="164" y="562" width="8" height="70" rx="4"/>
+    <rect x="180" y="574" width="8" height="46" rx="4"/>
+    <rect x="196" y="556" width="8" height="82" rx="4"/>
+    <rect x="212" y="570" width="8" height="54" rx="4"/>
+    <rect x="228" y="584" width="8" height="26" rx="4"/>
+    <rect x="244" y="560" width="8" height="74" rx="4"/>
+    <rect x="260" y="572" width="8" height="50" rx="4"/>
+    <rect x="276" y="586" width="8" height="22" rx="4"/>
+    <rect x="292" y="564" width="8" height="66" rx="4"/>
+    <rect x="308" y="578" width="8" height="38" rx="4"/>
+    <rect x="324" y="554" width="8" height="86" rx="4"/>
+    <rect x="340" y="570" width="8" height="54" rx="4"/>
+    <rect x="356" y="584" width="8" height="26" rx="4"/>
+    <rect x="372" y="562" width="8" height="70" rx="4"/>
+    <rect x="388" y="576" width="8" height="42" rx="4"/>
+    <rect x="404" y="588" width="8" height="18" rx="4"/>
+    <rect x="420" y="566" width="8" height="62" rx="4"/>
+    <rect x="436" y="580" width="8" height="34" rx="4"/>
+    <rect x="452" y="558" width="8" height="78" rx="4"/>
+    <rect x="468" y="574" width="8" height="46" rx="4"/>
+    <rect x="484" y="586" width="8" height="22" rx="4"/>
+    <rect x="500" y="568" width="8" height="58" rx="4"/>
+    <rect x="516" y="580" width="8" height="34" rx="4"/>
+    <rect x="532" y="562" width="8" height="70" rx="4"/>
+    <rect x="548" y="576" width="8" height="42" rx="4"/>
+    <rect x="564" y="588" width="8" height="18" rx="4"/>
+    <rect x="580" y="570" width="8" height="54" rx="4"/>
+    <rect x="596" y="584" width="8" height="26" rx="4"/>
+    <rect x="612" y="566" width="8" height="62" rx="4"/>
+    <rect x="628" y="580" width="8" height="34" rx="4"/>
+    <rect x="644" y="590" width="8" height="14" rx="4"/>
+  </g>
+  <text x="100" y="664" font-size="12" fill="#6b7488">兼容 OpenAI API · 阅读 APP 朗读接口</text>
+
+  <!-- 右侧：参数面板 -->
+  <text x="700" y="172" font-size="14" fill="#9aa3b8">情感风格 · 18 种可选</text>
+  <g font-size="13">
+    <rect x="700" y="186" width="94" height="32" rx="10" fill="url(#accent)"/>
+    <text x="726" y="207" fill="#ffffff">自然</text>
+    <rect x="802" y="186" width="94" height="32" rx="10" fill="#1c202d"/>
+    <text x="828" y="207" fill="#a5adc2">温柔</text>
+    <rect x="904" y="186" width="94" height="32" rx="10" fill="#1c202d"/>
+    <text x="930" y="207" fill="#a5adc2">活力</text>
+    <rect x="1006" y="186" width="94" height="32" rx="10" fill="#1c202d"/>
+    <text x="1032" y="207" fill="#a5adc2">沉稳</text>
+    <rect x="700" y="226" width="94" height="32" rx="10" fill="#1c202d"/>
+    <text x="726" y="247" fill="#a5adc2">亲切</text>
+    <rect x="802" y="226" width="94" height="32" rx="10" fill="#1c202d"/>
+    <text x="828" y="247" fill="#a5adc2">播报</text>
+    <rect x="904" y="226" width="94" height="32" rx="10" fill="#1c202d"/>
+    <text x="930" y="247" fill="#a5adc2">兴奋</text>
+    <rect x="1006" y="226" width="94" height="32" rx="10" fill="#1c202d"/>
+    <text x="1032" y="247" fill="#a5adc2">更多 ▾</text>
+  </g>
+
+  <text x="700" y="292" font-size="14" fill="#9aa3b8">声音调节</text>
+  <g font-size="13" fill="#c9cede">
+    <text x="700" y="326">语速</text><text x="1052" y="326" fill="#8b7cff">1.0x</text>
+    <line x1="700" y1="336" x2="1100" y2="336" stroke="#2b3244" stroke-width="6" stroke-linecap="round"/>
+    <line x1="700" y1="336" x2="900" y2="336" stroke="url(#accent)" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="900" cy="336" r="9" fill="#ffffff"/>
+    <text x="700" y="382">音调</text><text x="1052" y="382" fill="#8b7cff">1.0x</text>
+    <line x1="700" y1="392" x2="1100" y2="392" stroke="#2b3244" stroke-width="6" stroke-linecap="round"/>
+    <line x1="700" y1="392" x2="900" y2="392" stroke="url(#accent)" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="900" cy="392" r="9" fill="#ffffff"/>
+    <text x="700" y="438">音量</text><text x="1052" y="438" fill="#8b7cff">1.0x</text>
+    <line x1="700" y1="448" x2="1100" y2="448" stroke="#2b3244" stroke-width="6" stroke-linecap="round"/>
+    <line x1="700" y1="448" x2="930" y2="448" stroke="url(#accent)" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="930" cy="448" r="9" fill="#ffffff"/>
+  </g>
+
+  <text x="700" y="492" font-size="14" fill="#9aa3b8">输出音频格式</text>
+  <rect x="700" y="504" width="400" height="40" rx="10" fill="#141720" stroke="#262c3c"/>
+  <text x="716" y="529" font-size="13" fill="#e8eaf3">MP3 24kHz · 48kbps（标准推荐）</text>
+  <text x="1072" y="529" font-size="13" fill="#8b93a7">▾</text>
+
+  <circle cx="720" cy="582" r="20" fill="url(#accent)"/>
+  <path d="M715 573 l13 9 -13 9 z" fill="#ffffff"/>
+  <line x1="752" y1="582" x2="1100" y2="582" stroke="#2b3244" stroke-width="6" stroke-linecap="round"/>
+  <line x1="752" y1="582" x2="880" y2="582" stroke="url(#accent)" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="880" cy="582" r="8" fill="#ffffff"/>
+  <text x="752" y="608" font-size="12" fill="#6b7488">00:00</text>
+  <text x="1064" y="608" font-size="12" fill="#6b7488">00:12</text>
+
+  <rect x="700" y="626" width="400" height="46" rx="12" fill="url(#accent)"/>
+  <text x="852" y="655" font-size="16" font-weight="700" fill="#ffffff">生成并播放语音</text>
+</svg>
